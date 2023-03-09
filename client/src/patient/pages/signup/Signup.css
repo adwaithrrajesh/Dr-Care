@@ -1,0 +1,7 @@
+.signup {
+    background-image: url("../../assets/login-back.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+  }  
