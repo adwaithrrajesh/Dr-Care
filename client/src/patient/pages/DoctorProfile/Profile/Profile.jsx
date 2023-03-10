@@ -75,7 +75,7 @@ const Profile = () => {
       <div class=" flex items-center justify-center">
       <div class=" flex justify-center items-center">
       <img src="https://icons-for-free.com/download-icon-chat+icon-1320184411998302345_256.png" onClick={()=>navigate('/chat')}  className="h-10 w-10 cursor-pointer hover:scale-105 ease-in-out duration-200" alt="" />
-        <img src="https://www.pngitem.com/pimgs/m/76-762567_vector-bible-free-book-icon-round-png-transparent.png" className="h-10 w-10 cursor-pointer hover:scale-105 ease-in-out duration-200" alt="" />
+        <img src="https://www.pngitem.com/pimgs/m/76-762567_vector-bible-free-book-icon-round-png-transparent.png" onClick={()=>navigate('/book')} className="h-10 w-10 cursor-pointer hover:scale-105 ease-in-out duration-200" alt="" />
       </div>
       </div>
     </div>

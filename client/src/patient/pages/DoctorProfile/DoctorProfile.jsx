@@ -12,7 +12,6 @@ const DoctorProfile = () => {
             <Profile />
             <About />
             <Footer />
-
         </div>
     );
 }

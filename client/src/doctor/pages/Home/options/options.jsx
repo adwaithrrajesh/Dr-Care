@@ -60,13 +60,13 @@ const Options = () => {
           
             <div class="my-1 px-1 w-full md:w-1/2 sm:w-1/3 lg:my-4 lg:px-4 lg:w-1/4 cursor-pointer hover:scale-105 ease-in-out duration-200">
               <article class="overflow-hidden rounded-lg shadow-lg bg-white hover:bg-blue-50 h-[auto]">
-                <div className="flex items-center justify-center leading-tight p-2 md:p-4">
-                  <a href="#">
+                <div className="flex items-center justify-center leading-tight p-2 md:p-4" onClick={()=>navigate('/doctor/Appointments')}>
+                  <div>
                     <img
                       alt="Placeholder"
                       class="block h-48 w-48 rounded-full object-cover"
                       src='https://cdn-icons-png.flaticon.com/512/3301/3301556.png' />
-                  </a>
+                  </div>
                 </div>
 
                 <header class="flex items-center justify-center leading-tight">
@@ -81,7 +81,7 @@ const Options = () => {
               </article>
             </div>
 
-            <div class="my-1 px-1 w-full md:w-1/2 sm:w-1/3 lg:my-4 lg:px-4 lg:w-1/4 cursor-pointer hover:scale-105 ease-in-out duration-200">
+            <div class="my-1 px-1 w-full md:w-1/2 sm:w-1/3 lg:my-4 lg:px-4 lg:w-1/4 cursor-pointer hover:scale-105 ease-in-out duration-200" onClick={()=>navigate('/doctor/chat')}>
               <article class="overflow-hidden rounded-lg shadow-lg bg-white hover:bg-blue-50 h-[auto]">
                 <div className="flex items-center justify-center leading-tight p-2 md:p-4">
                   <a href="#">
