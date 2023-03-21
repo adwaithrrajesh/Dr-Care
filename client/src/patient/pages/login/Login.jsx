@@ -1,5 +1,7 @@
 import React from "react";
 import "./Login.css";
+import { Link } from "react-router-dom";
+
 
 const Login = () => {
   return (
@@ -11,8 +13,9 @@ const Login = () => {
             <div className="mt-4">
               <div>
                 <label className="block" for="email">
-                  Email
+                  Email 
                 </label>
+              
                 <input
                   type="text"
                   placeholder="Email"
@@ -41,9 +44,9 @@ const Login = () => {
             </div>
           </form>
           <div className="flex items-baseline  mt-6 justify-center">
-            <a href="/signup" className="text-sm text-gray-600">
+            <Link to={'/signup'} className="text-sm text-gray-600">
               Create an account
-            </a>
+            </Link>
           </div>
         </div>
       </div>
