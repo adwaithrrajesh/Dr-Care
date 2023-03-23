@@ -1,9 +1,10 @@
 const express = require('express')
 const cors = require('cors')
 const morgan  = require('morgan')
-
 const database = require('./database/config')
 const userRouter = require('./routes/userRouter')
+const doctorRouter = require('./routes/doctorRouter')
+
 
 // Requiring DOTENV
 require('dotenv').config()
@@ -16,16 +17,16 @@ app.use(express.json())
 app.use(cors())
 app.use(morgan('tiny'))
 
+
 // Port 
 const port = process.env.PORT
 
-// Get Request
-app.get('/',(req,res)=>{
-    res.status(201).json('Home Get Request')
-})
+
 
 // API 
-app.use('/api/users',userRouter)
+app.use('/api',userRouter)
+app.use('/api/doctor',doctorRouter)
+
 
 
 // Start server

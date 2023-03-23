@@ -22,6 +22,7 @@
     "react-hot-toast": "^2.4.0",
     "react-icon": "^1.0.0",
     "react-icons": "^4.8.0",
+    "react-otp-input": "^2.4.0",
     "react-router-dom": "^6.8.2",
     "styled-components": "^5.3.8",
     "tailwind-scrollbar-hide": "^1.1.7"

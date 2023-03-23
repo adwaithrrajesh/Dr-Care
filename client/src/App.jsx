@@ -2,32 +2,32 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 
 // Import Patient Page
-import Login from './patient/pages/login/Login'
-import Signup from './patient/pages/signup/Signup'
-import Home from './patient/pages/home/Home'
-import Departments from './patient/pages/DepartmentList/Departments'
-import Doctors from './patient/pages/DoctorsList/Doctors'
-import DoctorProfile from './patient/pages/DoctorProfile/DoctorProfile'
-import Chat from './patient/pages/chat/Chat'
-import About from './patient/pages/About/About'
+import Login from './components/patient/pages/login/Login'
+import Signup from './components/patient/pages/signup/Signup'
+import Home from './components/patient/pages/home/Home'
+import Departments from './components/patient/pages/DepartmentList/Departments'
+import Doctors from './components/patient/pages/DoctorsList/Doctors'
+import DoctorProfile from './components/patient/pages/DoctorProfile/DoctorProfile'
+import Chat from './components/patient/pages/chat/Chat'
+import About from './components/patient/pages/About/About'
 
 // Import Doctor Page
-import DoctorLogin from './doctor/pages/DoctorLogin/DoctorLogin'
-import DoctorSignup from './doctor/pages/DoctorSignup/DoctorSignup'
-import DoctorHome from './doctor/pages/Home/DoctorHome'
-import Profile from './doctor/pages/Profile/Profile'
-import UploadDetails from './doctor/pages/uploadDetails/UploadDetails'
+import DoctorLogin from './components/doctor/pages/DoctorLogin/DoctorLogin'
+import DoctorSignup from './components/doctor/pages/DoctorSignup/DoctorSignup'
+import DoctorHome from './components/doctor/pages/Home/DoctorHome'
+import Profile from './components/doctor/pages/Profile/Profile'
+import UploadDetails from './components/doctor/pages/uploadDetails/UploadDetails'
+import DrOtp from './components/doctor/pages/Otp/DrOtp'
 
 // Import Admin Page
-import AdminLogin from './admin/login/adminLogin'
-import AdminHome from './admin/home/AdminHome'  
-import DrChat from './doctor/pages/DrChat/DrChat'
-import DoctorBooking from './patient/pages/booking/DoctorBooking'
-import Appointments from './doctor/pages/Appointments/Appointments'
+import AdminLogin from './components/admin/login/adminLogin'
+import AdminHome from './components/admin/home/AdminHome'  
+import DrChat from './components/doctor/pages/DrChat/DrChat'
+import DoctorBooking from './components/patient/pages/booking/DoctorBooking'
+import Appointments from './components/doctor/pages/Appointments/Appointments'
 
-
-
-
+// Otp
+import Otp from './components/patient/pages/otp/Otp'
 
 function App() {
 
@@ -46,6 +46,8 @@ function App() {
         <Route path='/chat' element={<Chat/>}/>
         <Route path='/book' element={<DoctorBooking/>}/>
         <Route path='/about' element={<About/>}/>
+        <Route path='/otp' element={<Otp/>}/>
+
 
         {/* Doctor */}
         <Route path='/doctor/login' element={<DoctorLogin/>}/>
@@ -55,6 +57,7 @@ function App() {
         <Route path='/doctor/uploadDetails' element={<UploadDetails/>}/>
         <Route path='/doctor/chat' element={<DrChat/>}/>
         <Route path='/doctor/appointments' element={<Appointments/>}/>
+        <Route path='/doctor/otp' element={<DrOtp/>}/>
 
         {/* Admin */}
         <Route path='/admin/login' element={<AdminLogin/>}/>
