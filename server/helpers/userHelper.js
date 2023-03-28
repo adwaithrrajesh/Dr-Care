@@ -3,25 +3,40 @@ const bcrypt = require("bcrypt");
 
 module.exports = {
   userStore: (user) => {
-    return new Promise((resolve,reject)=>{
-        const response ={}
+    return new Promise(async(resolve,reject)=>{
         const newUser = new userModel(user);
         const saltRounds = 10;
+
         bcrypt.hash(newUser.password, saltRounds, (err, hash) => {
           if (err) throw err;
-    
           newUser.password = hash;
           newUser.save().then(() => {
-            response.status=true;
-            resolve(response)
+            resolve(true)
             }).catch((err) => {
-                response.status = false;
-                resolve(response)
+                resolve(false)
             });
         });
     })
-
   },
+  doLogin:(user,userDatabase)=>{
+    return new Promise(async(resolve,reject)=>{
+      const password = user.password
+      const realPassword = userDatabase.password
+      const passwordMatch = await bcrypt.compare(password,realPassword)
+      if(passwordMatch){
+        const userData = {
+          firstName:userDatabase.firstName,
+          lastName:userDatabase.lastName,
+          email:userDatabase.email,
+          phoneNumber:userDatabase.phoneNumber,
+          block:userDatabase.block
+        }
+        resolve(userData)
+      }else{
+        resolve(false) 
+      }
+    })
+  }
 
 
 };

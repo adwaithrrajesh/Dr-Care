@@ -26,16 +26,19 @@ const DoctorSignup = () => {
     onSubmit: async(value) =>{
       // Loading
       toast.loading('Processing')
-      setTimeout(() => {
-        toast.dismiss()
-      }, 1500);
 
-      await drinstance.post('/otp',{value}).then((response)=>{
-        toast.success(response.data.message);
-        setTimeout(() => {
-          navigate('/doctor/otp');
-        }, 2000);
-      })
+      try {
+        await drinstance.post('/otp',{value}).then((response)=>{
+          toast.dismiss()
+          toast.success(response.data.message);
+          setTimeout(() => {
+            navigate('/doctor/otp');
+          }, 2000);
+        })
+      } catch (error) {
+        toast.dismiss()
+        toast.error(error.response.data.message)
+      }
     }
   })
 

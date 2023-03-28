@@ -4,8 +4,19 @@ import { Link } from "react-router-dom";
 import {toast,Toaster} from 'react-hot-toast'
 import {Formik, useFormik} from 'formik'
 import { loginValidation } from '../../../../helper/validate'
+import instance from "../../instance/instance";
+import { useDispatch, useSelector } from "react-redux";
+import { setuserData } from "../../../../redux/Slices/userSlice";
+import { useNavigate } from "react-router-dom";
+import Header from "../Components/header/Header";
+
 
 const Login = () => {
+
+  const dispatch = useDispatch()
+  const user = useSelector(state=>state.user)
+  console.log(user)
+  const navigate = useNavigate()
 
   const Formik = useFormik({
     initialValues:{
@@ -18,11 +29,15 @@ const Login = () => {
 
     // Submit
     onSubmit: async(value) =>{
-      // Loading
-      toast.loading('Processing...')
-      setTimeout(()=>{
-        toast.dismiss()
-      },[3000])
+      try {
+        await instance.post('/login',{value}).then((response)=>{
+          localStorage.setItem = response.data
+          dispatch(setuserData(response.data.userData))
+          navigate('/')
+        })
+      } catch (error) {
+        toast.error(error.response.data.message)
+      }
     }
 
   })

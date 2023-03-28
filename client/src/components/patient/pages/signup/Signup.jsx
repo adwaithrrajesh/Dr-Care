@@ -28,13 +28,16 @@ const Signup = () => {
     onSubmit: async(value) =>{
 
       try {
+        toast.loading('processing')
         await instance.post('/otp',{value}).then((response)=>{
+          toast.dismiss()
           toast.success(response.data.message);
           setTimeout(() => {
             navigate('/otp');
           }, 2000);
         })
       } catch (error) {
+        toast.dismiss()
         toast.error(error.response.data.message)
       }
 

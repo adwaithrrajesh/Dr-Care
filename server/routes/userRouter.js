@@ -6,7 +6,7 @@ const Controller = require('../controllers/userControllers')
 router.post('/login',Controller.login)
 router.post('/otp',Controller.otp)
 router.post('/otpVerify',Controller.otpVerify)
-
+router.post('/login',Controller.login)
 
 
 
