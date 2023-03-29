@@ -15,7 +15,6 @@ const Login = () => {
 
   const dispatch = useDispatch()
   const user = useSelector(state=>state.user)
-  console.log(user)
   const navigate = useNavigate()
 
   const Formik = useFormik({
@@ -75,9 +74,9 @@ const Login = () => {
                 />
 
                 <div className="flex items-baseline justify-end mt-2">
-                  <a href="#" className="text-sm text-gray-600 hover:text-cyan-800">
+                  <Link to='/forgotPassword' className="text-sm text-gray-600 hover:text-cyan-800">
                    forgot password?
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className="flex items-baseline justify-center">

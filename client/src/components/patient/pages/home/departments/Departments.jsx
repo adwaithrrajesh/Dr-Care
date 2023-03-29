@@ -1,5 +1,6 @@
 import React from "react";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const Departments = () => {
   const departments = [
@@ -82,7 +83,7 @@ const Departments = () => {
             </div>
             <div className="bg-blue-100 max-w-[2000px] h-[400px] px-10 text-center rounded-3xl justify-center ">
               <div className="flex flex-col justify-center items-end">
-                <p className="mt-4 text-cyan-700">View all</p>
+              <Link className="mt-4 text-cyan-700" to={"/departments"}>View all</Link>
               </div>
               <div className="relative flex items-center">
                 <MdChevronLeft

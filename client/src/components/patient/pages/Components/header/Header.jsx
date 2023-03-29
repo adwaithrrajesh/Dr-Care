@@ -3,12 +3,20 @@ import logo from "../../../assets/logo.png";
 import { useNavigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { useState,useEffect } from "react";
 
 const Header = () => {
 
   const navigate = useNavigate()
   const user = useSelector(state => state.user)
-  console.log(user,"BIngoo")
+
+
+  // useEffect(() => {
+  //   const localStorageData = localStorage.getItem(userData)
+  //   console.log(localStorageData)
+  // }, []);
+
 
   return (
     <div>
@@ -48,41 +56,40 @@ const Header = () => {
               </li> */}
              
               <li>
-                <a
-                  onClick={()=>navigate('/')}
-                  class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-cyan-700 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent hover:scale-105 ease-in-out duration-200">
+                <Link to={'/'} className={'block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-cyan-700 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent hover:scale-105 ease-in-out duration-200'}>
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  onClick={()=>navigate('/about')}
-                  class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-cyan-700 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent hover:scale-105 ease-in-out duration-200">
+                <Link to={'/about'} className={'block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-cyan-700 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent hover:scale-105 ease-in-out duration-200'}>
                   About
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  onClick={()=>navigate('/departments')}
-                  class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-cyan-700 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent hover:scale-105 ease-in-out duration-200">
+              <Link to={'/Departments'} className={'block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-cyan-700 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent hover:scale-105 ease-in-out duration-200'}>
                   Departments
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  onClick={()=>navigate('/doctors')}
-                  class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-cyan-700 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent hover:scale-105 ease-in-out duration-200">
+              <Link to={'/doctors'} className={'block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-cyan-700 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent hover:scale-105 ease-in-out duration-200'}>
                   Doctors
-                </a>
+                </Link>
               </li>
               <li>
-                 <a
+              <Link to={'/login'} className={'block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-cyan-700 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent hover:scale-105 ease-in-out duration-200'}>
+                  Login
+                </Link>
+              </li>
+              <li>
+                  <a
                   onClick={()=>navigate('/login')}
                   class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-cyan-700 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent hover:scale-105 ease-in-out duration-200">
-                  Login
+                  {user.userData.firstName}
                 </a>
-             
               </li>
+
+
+              
             </ul>
           </div>
         </div>

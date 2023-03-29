@@ -1,6 +1,7 @@
 import React from "react";
 import logo from "../../../assets/logo.png";
 import doctor from "../../../assets/doctor-about.png";
+import { Link } from "react-router-dom";
 
 const About = () => {
   return (
@@ -16,8 +17,8 @@ const About = () => {
             This is one of the best online treatment center ever. You can find best doctors and you can chat with them.
             You can even video call with them and tell about your problems.     
           </p>
-          <a
-            href="#"
+          <Link
+          to={'/about'}
             class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-white bg-cyan-700 rounded-lg hover:bg-cyan-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-cyan-900">
             Learn more
             <svg
@@ -30,7 +31,7 @@ const About = () => {
                 d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
                 clip-rule="evenodd"></path>
             </svg>
-          </a>
+          </Link>
       </div>
     </div>
   );

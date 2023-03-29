@@ -10,6 +10,9 @@ import Doctors from './components/patient/pages/DoctorsList/Doctors'
 import DoctorProfile from './components/patient/pages/DoctorProfile/DoctorProfile'
 import Chat from './components/patient/pages/chat/Chat'
 import About from './components/patient/pages/About/About'
+import ForgotPassword from './components/patient/pages/forgotPassword/ForgotPassword'
+import OtpForgotPassword from './components/patient/pages/forgotPassword/Otp/OtpForgotPassword'
+import ResetPassword from './components/patient/pages/forgotPassword/resetpassword/ResetPassword'
 
 // Import Doctor Page
 import DoctorLogin from './components/doctor/pages/DoctorLogin/DoctorLogin'
@@ -47,7 +50,9 @@ function App() {
         <Route path='/book' element={<DoctorBooking/>}/>
         <Route path='/about' element={<About/>}/>
         <Route path='/otp' element={<Otp/>}/>
-
+        <Route path='/forgotpassword' element={<ForgotPassword/>}/>
+        <Route path='/forgot-password-otp' element={<OtpForgotPassword/>}/>
+        <Route path='/resetPassword' element={<ResetPassword/>}/>
 
         {/* Doctor */}
         <Route path='/doctor/login' element={<DoctorLogin/>}/>

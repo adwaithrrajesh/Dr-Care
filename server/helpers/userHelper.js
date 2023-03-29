@@ -36,6 +36,18 @@ module.exports = {
         resolve(false) 
       }
     })
+  },
+  resetPassword:(userEmail,Password)=>{
+    return new Promise(async(resolve,reject)=>{
+      const saltRound = 10
+      const newPassword = await bcrypt.hash(Password,saltRound)
+      const passwordUpdate = await userModel.updateOne({email:userEmail},{password:newPassword})
+      if(passwordUpdate){
+        resolve(true)
+      }else{
+        resolve(false)
+      }
+    })
   }
 
 

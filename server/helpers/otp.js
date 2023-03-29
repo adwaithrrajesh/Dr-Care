@@ -20,14 +20,14 @@ module.exports = {
         from: process.env.OTP_EMAIL,
         to: mail,
         subject: 'OTP Verification',
-        html: `<h1>Verification code : ${OTP}</h1>`,
+        html: `<h1>Here is your OTP Verification code : ${OTP}</h1>`,
       };
     
       try {
         await transporter.sendMail(mailOptions);
         resolve(OTP)
       } catch (error) {
-        console.log('Error sending OTP:', error);
+        resolve(error)
       }
     });
   }

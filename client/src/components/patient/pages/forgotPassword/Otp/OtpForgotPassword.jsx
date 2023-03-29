@@ -2,10 +2,10 @@ import React from "react";
 import OtpInput from "react-otp-input";
 import { useState, useEffect } from "react";
 import { toast, Toaster } from "react-hot-toast";
-import instance from "../../instance/instance";
+import instance from "../../../instance/instance";
 import { useNavigate } from "react-router-dom";
 
-const Otp = () => {
+const OtpForgotPassword = () => {
   const [otpCode, setCode] = useState("");
   const [counter, setCounter] = useState(5);
 
@@ -23,10 +23,10 @@ const Otp = () => {
       toast.error("Please enter Otp");
     } else {
       try {
-        await instance.post("/otpVerify", { otpCode }).then((response) => {
+        await instance.post("/ForgotPasswordOtpVerify", { otpCode }).then((response) => {
           toast.success(response.data.message);
           setTimeout(() => {
-            navigate("/login");
+            navigate("/resetPassword");
           }, 1500);
         });
       } catch (error) {
@@ -127,4 +127,4 @@ const Otp = () => {
   );
 };
 
-export default Otp;
+export default OtpForgotPassword;

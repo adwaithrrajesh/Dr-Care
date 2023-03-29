@@ -43,3 +43,29 @@ export async function loginValidation(value){
         return error.password = toast.error('Invalid Password...!')
     }
 }
+
+// fogot password validation
+
+// Email validation
+export async function emailValidation(value){
+    const error = {}
+
+    if(!value.email){
+        return error.email = toast.error('Email Required...!')
+    }else if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i.test(value.email)){
+        return error.email = toast.error('Invalid Email...!')
+    }
+}
+// Password validation
+export async function passwordValidation(value){
+    const error = {}
+    if(!value.password){
+        return error.password = toast.error('Password Required ...!')
+    }else if(value.password.length < 5){
+        return error.password = toast.error('Your Password must contain atleast 5 characters')
+    }else if(!value.confirmPassword){
+        return error.confirmPassword = toast.error('Please Confirm your password')
+    }else if(value.confirmPassword != value.password){
+        return error.confirmPassword = toast.error('Password Doesnot Match')
+    }
+}
