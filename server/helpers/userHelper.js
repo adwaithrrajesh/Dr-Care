@@ -25,11 +25,8 @@ module.exports = {
       const passwordMatch = await bcrypt.compare(password,realPassword)
       if(passwordMatch){
         const userData = {
-          firstName:userDatabase.firstName,
-          lastName:userDatabase.lastName,
-          email:userDatabase.email,
-          phoneNumber:userDatabase.phoneNumber,
-          block:userDatabase.block
+          userId : userDatabase._id,
+          email: userDatabase.email
         }
         resolve(userData)
       }else{

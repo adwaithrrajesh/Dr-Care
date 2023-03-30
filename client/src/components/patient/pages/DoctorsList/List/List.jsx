@@ -54,7 +54,7 @@ const List = () => {
           <div class="flex flex-wrap -mx-1 lg:-mx-4">
             {Doctors.map((doctor) => (
               <div class="my-1 px-1 w-full md:w-1/2 sm:w-1/3 lg:my-4 lg:px-4 lg:w-1/4 cursor-pointer hover:scale-105 ease-in-out duration-200">
-                <article class="overflow-hidden rounded-lg shadow-lg bg-white hover:bg-blue-50 h-[auto]">
+                <article class="overflow-hidden rounded-lg shadow-lg bg-white hover:bg-blue-50 h-[auto]"  onClick={()=>navigate('/doctorProfile')}>
                   <div className="flex items-center justify-center leading-tight p-2 md:p-4">
                     <a href="#">
                       <img
@@ -126,7 +126,6 @@ const List = () => {
                     <p class="inline-flex items-center ml-16 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800">
                       View profile
                       <svg
-                      onClick={()=>navigate('/doctorProfile')}
                         aria-hidden="true"
                         class="w-4 h-4 ml-2 -mr-1"
                         fill="currentColor"

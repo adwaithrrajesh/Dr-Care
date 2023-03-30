@@ -6,7 +6,7 @@ import { emailValidation } from "../../../../helpers/validate";
 import instance from "../../../../instance/instance";
 
 
-const ForgotPassword = () => {
+const DoctorForgotPassword = () => {
 
     const navigate = useNavigate()
 
@@ -21,10 +21,10 @@ const ForgotPassword = () => {
         // Submit
         onSubmit: async(value) =>{
             toast.loading('processing...')
-            instance.post('/forgotPasswordOtp',{value}).then((response)=>{
+            instance.post('/doctor/forgotPasswordOtp',{value}).then((response)=>{
                 toast.dismiss()
                 toast.success(response.data.message)
-                navigate('/forgot-password-otp')
+                navigate('/doctor/forgot-password-otp')
             }).catch((error)=>{
                 toast.dismiss()
                 toast.error(error.response.data.message)
@@ -35,7 +35,7 @@ const ForgotPassword = () => {
 
   return (
     <div>
-      <div className="login">
+      <div className="doctorLogin">
         <div className="flex items-center justify-center min-h-screen">
           <div className="px-28 py-12 mt-7 text-left bg-blue-300 shadow-lg rounded-lg">
             <p className="text-2xl text-center">Enter Your Email</p>
@@ -64,4 +64,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default DoctorForgotPassword;

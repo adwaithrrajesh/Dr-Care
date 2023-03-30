@@ -3,18 +3,14 @@ import "./Login.css";
 import { Link } from "react-router-dom";
 import {toast,Toaster} from 'react-hot-toast'
 import {Formik, useFormik} from 'formik'
-import { loginValidation } from '../../../../helper/validate'
-import instance from "../../instance/instance";
-import { useDispatch, useSelector } from "react-redux";
-import { setuserData } from "../../../../redux/Slices/userSlice";
+import { loginValidation } from '../../../../helpers/validate'
+import instance from "../../../../instance/instance";
 import { useNavigate } from "react-router-dom";
-import Header from "../Components/header/Header";
 
 
 const Login = () => {
 
-  const dispatch = useDispatch()
-  const user = useSelector(state=>state.user)
+
   const navigate = useNavigate()
 
   const Formik = useFormik({
@@ -30,8 +26,8 @@ const Login = () => {
     onSubmit: async(value) =>{
       try {
         await instance.post('/login',{value}).then((response)=>{
-          localStorage.setItem = response.data
-          dispatch(setuserData(response.data.userData))
+          localStorage.setItem('clientToken', JSON.stringify(response.data.token));
+          toast.success(response.data.message)
           navigate('/')
         })
       } catch (error) {
@@ -44,7 +40,6 @@ const Login = () => {
 
   return (
     <div className="login">
-      <Toaster position="top-center"></Toaster>
       <div className="flex items-center justify-center min-h-screen">
         <div className="px-12 py-20 mt-7 text-left bg-blue-100 shadow-lg rounded-lg">
           <p className="text-2xl text-center">Login to your account</p>
@@ -74,7 +69,7 @@ const Login = () => {
                 />
 
                 <div className="flex items-baseline justify-end mt-2">
-                  <Link to='/forgotPassword' className="text-sm text-gray-600 hover:text-cyan-800">
+                  <Link to='/doctor/forgotPassword' className="text-sm text-gray-600 hover:text-cyan-800">
                    forgot password?
                   </Link>
                 </div>

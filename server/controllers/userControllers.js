@@ -3,7 +3,8 @@ const userHelper = require('../helpers/userHelper')
 const userModel = require('../model/user')
 const TokenHelper = require('../helpers/tokenHelper')
 const _ = require('lodash');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken')
 let user;
 
 module.exports = {
@@ -54,7 +55,7 @@ module.exports = {
                 if(response){
                     const userData = response
                     TokenHelper.generateToken(userData).then((token)=>{
-                        res.status(200).json({token , userData})
+                        res.status(200).json({token , message:"Login successful!"})
                     })
                 }else{
                     res.status(404).json({message:'Incorrect Password'})
@@ -100,6 +101,20 @@ module.exports = {
                     res.status(404).json({message:'Unable to Change the password'})
                 }
             })
+        }
+    },
+    TokenVerify:(req,res)=>{
+        const authHeader = req.headers['authorization'];
+        const token = authHeader && authHeader.split(' ')[1];
+        if(token){
+            const jwtVerify = jwt.verify(token,process.env.JWT_SECRET_KEY)
+            if(jwtVerify){
+                console.log(jwtVerify)
+                res.status(200).json({message:'JWT Verified'})
+                console.log('here')
+            }else{
+                res.status(403).json({message:'JWT Expired'})
+            }
         }
     }
 }

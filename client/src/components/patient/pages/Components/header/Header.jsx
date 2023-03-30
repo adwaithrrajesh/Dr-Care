@@ -10,17 +10,11 @@ const Header = () => {
 
   const navigate = useNavigate()
   const user = useSelector(state => state.user)
-
-
-  // useEffect(() => {
-  //   const localStorageData = localStorage.getItem(userData)
-  //   console.log(localStorageData)
-  // }, []);
+  const token = JSON.parse(localStorage.getItem('clientToken'))
 
 
   return (
     <div>
-      <Toaster position="top-center"></Toaster>
       <nav class="bg-gray-100 border-gray-200 px-2 sm:px-4 py-2.5 rounded">
         <div class="container flex flex-wrap items-center justify-between mx-auto">
           <a href="#" class="flex items-center">
@@ -75,19 +69,20 @@ const Header = () => {
                   Doctors
                 </Link>
               </li>
+
               <li>
-              <Link to={'/login'} className={'block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-cyan-700 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent hover:scale-105 ease-in-out duration-200'}>
+                {
+                 token ?
+                 <Link onClick={()=>{localStorage.clear()}} to={'/login'} className={'block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-cyan-700 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent hover:scale-105 ease-in-out duration-200'}>
+                 Logout
+               </Link>
+                :
+                 <Link to={'/login'} className={'block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-cyan-700 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent hover:scale-105 ease-in-out duration-200'}>
                   Login
                 </Link>
+                }
+             
               </li>
-              <li>
-                  <a
-                  onClick={()=>navigate('/login')}
-                  class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-cyan-700 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent hover:scale-105 ease-in-out duration-200">
-                  {user.userData.firstName}
-                </a>
-              </li>
-
 
               
             </ul>

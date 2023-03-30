@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import logo from '../../../assets/logo.png'
+import { Link } from "react-router-dom";
 
 
 const DoctorHeader = () => {
@@ -13,9 +14,7 @@ const DoctorHeader = () => {
       <div>
         <nav class="bg-gray-100 border-gray-200 px-2 sm:px-4 py-2.5 rounded">
           <div class="container flex flex-wrap items-center justify-between mx-auto">
-            <a href="#" class="flex items-center">
               <img src={logo} class="h-10 mr-16 sm:h-10" alt="Dr Care logo" />
-            </a>
             <button
               data-collapse-toggle="navbar-default"
               type="button"
@@ -45,31 +44,29 @@ const DoctorHeader = () => {
                 </a>
               </li> */}
                 <li>
-                  <a
-                    onClick={() => navigate("/doctor/home")}
+                  <Link to={'/doctor/home'}
                     class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-cyan-700 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent hover:scale-105 ease-in-out duration-200">
                     Home
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
+                <Link to={'/doctor/Appointments'}
                     class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-cyan-700 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent hover:scale-105 ease-in-out duration-200">
-                    About
-                  </a>
+                      Appointments
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    onClick={() => navigate("/doctor/chat")}
+                <Link to={'/doctor/chat'}
                     class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-cyan-700 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent hover:scale-105 ease-in-out duration-200">
-                    Messages
-                  </a>
+                      Chat
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    onClick={() => navigate("/doctor/login")}
+                <Link to={'/doctor/login'}
+                    onClick={()=>localStorage.clear()}
                     class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-cyan-700 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent hover:scale-105 ease-in-out duration-200">
-                    Logout
-                  </a>
+                      Logout
+                  </Link>
                 </li>
               </ul>
             </div>

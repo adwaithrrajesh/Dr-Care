@@ -3,15 +3,15 @@ require('dotenv').config()
 
 
 module.exports = {
-    generateToken:(user)=>{
-        return new Promise((resolve)=>{
-            // const payload = {
-            //     id: user._id,
-            //     firstName : user.firstName
-            // }
-            const token = jwt.sign(user,process.env.JWT_SECRET_KEY,{expiresIn:'1h'})
-            resolve(token)
-        })
+    generateToken:async (user)=>{
+        try {
+            return await new Promise((resolve) => {
+                const token  = jwt.sign(user, process.env.JWT_SECRET_KEY, { expiresIn: '2d' })
+                resolve(token)
+            })
+        } catch (err) {
+            console.log(err)
+        }
     },
     verifyToken:(token)=>{
         return new Promise((resolve,reject)=>{

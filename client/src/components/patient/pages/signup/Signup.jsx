@@ -2,9 +2,9 @@ import React from "react";
 import './Signup.css'
 import {toast,Toaster} from 'react-hot-toast'
 import {useFormik} from 'formik'
-import {signupValidation} from '../../../../helper/validate'
+import {signupValidation} from '../../../../helpers/validate'
 import { Link, useNavigate } from "react-router-dom";
-import instance from "../../instance/instance";
+import instance from "../../../../instance/instance";
 
 
 
@@ -32,9 +32,7 @@ const Signup = () => {
         await instance.post('/otp',{value}).then((response)=>{
           toast.dismiss()
           toast.success(response.data.message);
-          setTimeout(() => {
             navigate('/otp');
-          }, 2000);
         })
       } catch (error) {
         toast.dismiss()
@@ -47,7 +45,6 @@ const Signup = () => {
   
   return (
     <div className="signup">
-      <Toaster position="top-center"></Toaster>
       <div>
         <div className="flex items-center justify-center min-h-screen">
           <div className="px-16 py-20 mt-7 text-left bg-blue-100 shadow-lg rounded-lg">

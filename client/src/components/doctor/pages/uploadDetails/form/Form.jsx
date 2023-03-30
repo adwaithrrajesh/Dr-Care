@@ -4,7 +4,7 @@ const Form = () => {
   return (
     <div>
       <div className="flex items-center justify-center min-h-screen">
-        <div className="px-24 py-36 mt-7 text-left bg-blue-100 shadow-lg rounded-lg">
+        <div className="px-24 py-14 mt-4 text-left bg-blue-100 shadow-lg rounded-lg">
           <p className="text-2xl text-center">Upload Details</p>
 
           <form action="">

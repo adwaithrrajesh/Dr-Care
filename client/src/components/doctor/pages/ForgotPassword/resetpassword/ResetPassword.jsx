@@ -6,7 +6,7 @@ import { passwordValidation } from "../../../../../helpers/validate";
 import instance from "../../../../../instance/instance";
 
 
-const ResetPassword = () => {
+const DoctorResetPassword = () => {
   const navigate = useNavigate();
 
   const Formik = useFormik({
@@ -20,11 +20,9 @@ const ResetPassword = () => {
 
     // Submit
     onSubmit: async (value) => {
-        instance.post('/resetPassword',{value}).then((response)=>{
+        instance.post('/doctor/resetPassword',{value}).then((response)=>{
             toast.success(response.data.message)
-            setTimeout(() => {
-                navigate('/login')
-            }, 1500);
+            navigate('/doctor/login')
         }).catch((error)=>{
             toast.error(error.response.data.message)
         })
@@ -32,7 +30,7 @@ const ResetPassword = () => {
   });
 
   return (
-    <div className="login">
+    <div className="doctorLogin">
       <div className="flex items-center justify-center min-h-screen">
        
         <div className="px-12 py-20 mt-7 text-left bg-blue-100 shadow-lg rounded-lg">
@@ -75,4 +73,4 @@ const ResetPassword = () => {
   );
 };
 
-export default ResetPassword;
+export default DoctorResetPassword;

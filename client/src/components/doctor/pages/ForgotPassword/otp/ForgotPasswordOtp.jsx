@@ -5,7 +5,7 @@ import { toast, Toaster } from "react-hot-toast";
 import instance from "../../../../../instance/instance";
 import { useNavigate } from "react-router-dom";
 
-const OtpForgotPassword = () => {
+const DoctorOtpForgotPassword = () => {
   const [otpCode, setCode] = useState("");
   const [counter, setCounter] = useState(5);
 
@@ -23,11 +23,9 @@ const OtpForgotPassword = () => {
       toast.error("Please enter Otp");
     } else {
       try {
-        await instance.post("/ForgotPasswordOtpVerify", { otpCode }).then((response) => {
+        await instance.post("/doctor/ForgotPasswordOtpVerify", { otpCode }).then((response) => {
           toast.success(response.data.message);
-          setTimeout(() => {
-            navigate("/resetPassword");
-          }, 1500);
+            navigate("/doctor/resetPassword");
         });
       } catch (error) {
         toast.error(error.response.data.message);
@@ -41,7 +39,7 @@ const OtpForgotPassword = () => {
     try {
       setCounter(60);
       toast.loading("Resending Otp");
-      instance.get("/resendOtp").then((response) => {
+      instance.get("/doctor/resendOtp").then((response) => {
         toast.dismiss()
         toast.success(response.data.message);
       });
@@ -127,4 +125,4 @@ const OtpForgotPassword = () => {
   );
 };
 
-export default OtpForgotPassword;
+export default DoctorOtpForgotPassword;

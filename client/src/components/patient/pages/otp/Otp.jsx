@@ -2,7 +2,7 @@ import React from "react";
 import OtpInput from "react-otp-input";
 import { useState, useEffect } from "react";
 import { toast, Toaster } from "react-hot-toast";
-import instance from "../../instance/instance";
+import instance from "../../../../instance/instance";
 import { useNavigate } from "react-router-dom";
 
 const Otp = () => {
@@ -52,7 +52,6 @@ const Otp = () => {
 
   return (
     <div>
-      <Toaster position="top-center"></Toaster>
       <div class=" bg-[url('https://www.uplead.com/wp-content/uploads/2022/05/How-to-write-an-email-to-ceo.png')] bg-no-repeat bg-cover relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-12">
         <div class="relative bg-blue-200 px-6 pt-10 pb-9 shadow-xl mx-auto w-full max-w-lg rounded-2xl">
           <div class="mx-auto flex w-full max-w-md flex-col space-y-16">
