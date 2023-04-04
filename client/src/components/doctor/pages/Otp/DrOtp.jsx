@@ -26,7 +26,7 @@ const Otp = () => {
         await instance.post("/doctor/otpVerify", { otpCode }).then((response) => {
           toast.success(response.data.message);
           setTimeout(() => {
-            navigate("/login");
+            navigate("/doctor/login");
           }, 1500);
         });
       } catch (error) {

@@ -15,6 +15,8 @@ router.post('/resetPassword',Controller.resetPassword)
 // Get Method
 router.get('/resendOtp',Controller.resendOtp)
 router.get('/tokenVerify',Controller.TokenVerify)
+router.get('/viewDepartments',Controller.viewDepartments)
+router.get('/viewDoctors',Controller.viewDoctors)
 
 
 

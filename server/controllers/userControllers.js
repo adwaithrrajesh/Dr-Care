@@ -5,6 +5,8 @@ const TokenHelper = require('../helpers/tokenHelper')
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
+const departmentModel = require('../model/department')
+const doctorModel = require('../model/doctor')
 let user;
 
 module.exports = {
@@ -51,16 +53,21 @@ module.exports = {
         if(!userDatabase){
             res.status(404).json({message:'Invalid Email'})
         }else{
-            userHelper.doLogin(user,userDatabase).then((response)=>{
-                if(response){
-                    const userData = response
-                    TokenHelper.generateToken(userData).then((token)=>{
-                        res.status(200).json({token , message:"Login successful!"})
-                    })
-                }else{
-                    res.status(404).json({message:'Incorrect Password'})
-                }
-            })
+
+            if(userDatabase.block){
+                res.status(404).json({message:'You are blocked by the Admin'})
+            }else{
+                userHelper.doLogin(user,userDatabase).then((response)=>{
+                    if(response){
+                        const userData = response
+                        TokenHelper.generateToken(userData).then((token)=>{
+                            res.status(200).json({token , message:"Login successful!"})
+                        })
+                    }else{
+                        res.status(404).json({message:'Incorrect Password'})
+                    }
+                })
+            }
         }
     },
     ForgotPasswordOtp: async(req,res)=>{
@@ -115,6 +122,22 @@ module.exports = {
             }else{
                 res.status(403).json({message:'JWT Expired'})
             }
+        }
+    },
+    viewDepartments: async(req,res)=>{
+        const departments = await departmentModel.find({show:true})
+        if(departments){
+            res.status(200).json({departments})
+        }else{
+            res.status(404).json({message:'No departments found'})
+        }
+    },
+    viewDoctors: async(req,res)=>{
+        try{
+            const doctors = await doctorModel.find({verificationStatus:true})
+            res.status(200).json({doctors})
+        }catch(err){
+            res.status(500).json({message:"Internal Server error"})
         }
     }
 }

@@ -14,10 +14,14 @@ module.exports = {
     if (doctorExist) {
       res.status(404).json({ message: "Email Already Exist" });
     } else {
-      await mailOptions.sendOtp(doctor.email).then((OTP) => {
-        process.env.OTP = OTP;
-        res.status(200).json({ message: `Otp send to ${doctor.email}` });
-      });
+      try {
+         await mailOptions.sendOtp(doctor.email).then((OTP) => {
+          process.env.OTP = OTP;
+          res.status(200).json({ message: `Otp send to ${doctor.email}` });
+        });
+      } catch (error) {
+        res.status(500).json({message:'Unable to send Otp'})
+      }
     }
   },
 
@@ -41,27 +45,31 @@ module.exports = {
     mailOptions.sendOtp(doctor.email).then((OTP) => {
         process.env.OTP = OTP;
         res.status(200).json({ message: `Otp resend to ${doctor.email}` });
-      })
-      .catch((error) => {
+      }).catch((error) => {
         res.status(500).json({ message: "We are sorry internal server error" });
       });
   },
   Login: async (req, res) => {
     const doctor = req.body.value;
     const doctorDatabase = await doctorModel.findOne({ email: doctor.email });
+
     if (!doctorDatabase) {
       res.status(404).json({ message: "Email doesnot exist" });
     } else {
-      drHelper.doLogin(doctor,doctorDatabase).then((response) => {
-        if (response) {
-          const doctorData = response;
-          TokenHelper.generateToken(doctorData).then((token) => {
-            res.status(200).json({ token, message: "Login successful!" });
-          });
-        } else {
-          res.status(404).json({ message: "Incorrect Password" });
-        }
-      });
+      if (doctorDatabase.block) {
+        res.status(404).json({ message: "You are Blocked by the Admin" });
+      } else {
+        drHelper.doLogin(doctor,doctorDatabase).then((response) => {
+          if (response) {
+            const doctorData = response;
+            TokenHelper.generateToken(doctorData).then((token) => {
+              res.status(200).json({ token, message: "Login successful!" });
+            });
+          } else {
+            res.status(404).json({ message: "Incorrect Password" });
+          }
+        });
+      }
     }
   },
   ForgotPasswordOtp:async(req,res)=>{
@@ -103,5 +111,31 @@ module.exports = {
                 }
             })
         }
-  }
+      },
+      addDoctorDetails: async(req,res)=>{
+        const Email = req.body.value.email
+        delete req.body.value.email
+        const details = req.body.value
+        const idCardImage = req.body.IdcardImage
+        const certificateImage  = req.body.certificateImage
+        const emailVerify = await doctorModel.findOne({email:Email})
+        if(!emailVerify){
+        res.status(404).json({message:'Please enter your registered Email'})
+        }else{
+          const fee= details.fee
+          const idNumber = details.idNumber
+          const qualification = details.qualification
+          const departmentName = details.departmentName
+          const experience = details.experience
+          try {
+          await doctorModel.updateOne({email:Email},{fee,idNumber,qualification,departmentName,experience,idCardImage,certificateImage,showRequest:true})
+          res.status(200).json({message:'Verification Submitted successfully!'})
+          } catch (error) {
+            res.status(404).json({message:'Unable to upload your Details'})
+          }
+        }
+      },
+      doctorVerificationStatus: async(req,res)=>{
+
+      }
 };

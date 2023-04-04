@@ -4,6 +4,7 @@ const morgan  = require('morgan')
 const database = require('./database/config')
 const userRouter = require('./routes/userRouter')
 const doctorRouter = require('./routes/doctorRouter')
+const adminRouter = require('./routes/adminRouter')
 
 
 // Requiring DOTENV
@@ -26,6 +27,7 @@ const port = process.env.PORT
 // API 
 app.use('/api',userRouter)
 app.use('/api/doctor',doctorRouter)
+app.use('/api/admin',adminRouter)
 
 
 

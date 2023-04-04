@@ -82,7 +82,7 @@ const DoctorLogin = () => {
             </div>
           </form>
           <div className="flex items-baseline  mt-6 justify-center">
-            <Link to={'/signup'} className="text-sm text-gray-600">
+            <Link to={'/doctor/signup'} className="text-sm text-gray-600">
               Create an account
             </Link>
           </div>

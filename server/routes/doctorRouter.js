@@ -10,9 +10,12 @@ router.post('/login',Controller.Login)
 router.post('/forgotPasswordOtp',Controller.ForgotPasswordOtp)
 router.post('/ForgotPasswordOtpVerify',Controller.ForgotPasswordOtpVerify)
 router.post('/resetPassword',Controller.resetPassword)
+router.post('/addDoctorDetails',Controller.addDoctorDetails)
+
 
 // Get method 
 router.get('/resendOtp',Controller.resendOtp)
+router.get('/verificationStatus',Controller.doctorVerificationStatus)
 
 
 

@@ -1,0 +1,28 @@
+const { Router } = require('express')
+const router = Router()
+const Controller = require('../controllers/adminControllers')
+
+
+// Post 
+router.post('/login',Controller.login)
+router.post('/addDepartment',Controller.addDepartment)
+router.post('/blockUser',Controller.blockUser)
+router.post('/unBlockUser',Controller.unBlockUser)
+router.post('/blockDoctor',Controller.blockDoctor)
+router.post('/unBlockDoctor',Controller.unBlockDoctor)
+router.post('/hideDepartment',Controller.hideDepartment)
+router.post('/showDepartment',Controller.showDepartment)
+router.post('/verifyDoctor',Controller.verifyDoctor)
+router.post('/unVerifyDoctor',Controller.unVerifyDoctor)
+
+// get 
+router.get('/getUsers',Controller.getUsers)
+router.get('/getDoctors',Controller.getDoctors)
+router.get('/viewDepartments',Controller.viewDepartments)
+router.get('/verificationRequests',Controller.getVerificationRequests)
+
+
+
+
+
+module.exports = router ;

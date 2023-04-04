@@ -28,11 +28,39 @@ const doctorSchema = mongoose.Schema({
     idNumber:{
         type:Number
     },
-    age:{
+    qualification:{
+        type:String
+    },
+    departmentName:{
+        type:String
+    },
+    fee:{
         type:Number
     },
     experience:{
         type:Number
+    },
+    idCardImage:{
+        type:String
+    },
+    certificateImage:{
+        type:String
+    },
+    verificationStatus:{
+        type:Boolean,
+        default:false
+    },
+    showRequest:{
+        type:Boolean,
+        default:false
+    },
+    profilePhoto:{
+        type:String,
+        default:"https://img.freepik.com/premium-vector/cartoon-male-doctor-holding-clipboard_29190-4660.jpg?w=2000"
+    },
+    coverPhoto:{
+        type:String,
+        default:"https://png.pngtree.com/thumb_back/fh260/background/20190223/ourmid/pngtree-medical-doctor-science-background-backgroundbackgrounddoctorsmedicalmedicinehealth-image_68227.jpg"
     }
 });
 

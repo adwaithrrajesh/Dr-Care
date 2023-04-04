@@ -69,3 +69,34 @@ export async function passwordValidation(value){
         return error.confirmPassword = toast.error('Password Doesnot Match')
     }
 }
+
+// Department Form Validation
+export async function DepartmentValidation(value){
+    const error = {}
+    if(!value.departmentName){
+        return error.departmentName = toast.error('Please enter department Name')
+    }else if(! value.departmentDiscription){
+        return error.departmentDiscription = toast.error('Please enter Department Discription')
+    }
+}
+
+// Doctor upload form validation
+export async function DoctorUploadValidation(value){
+    const error = {}
+
+    if(!value.email){
+        return error.email = toast.error('Registered Email Required...!')
+    }else if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i.test(value.email)){
+        return error.email = toast.error('Invalid Email...!')
+    }if(!value.idNumber){
+        return error.idNumber = toast.error('Please enter Id Number')
+    }else if(! value.qualification){
+        return error.qualification = toast.error('Please enter Qualification')
+    }else if(! value.departmentName){
+        return error.departmentName = toast.error('Please enter DepartmentName')
+    }else if(!value.fee){
+        return error.fee = toast.error('Please add your fee')
+    }else if(! value.experience){
+        return error.experience = toast.error('Please enter year of experience')
+    }
+}

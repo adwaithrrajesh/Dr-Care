@@ -13,6 +13,7 @@ import About from './components/patient/pages/About/About'
 import ForgotPassword from './components/patient/pages/forgotPassword/ForgotPassword'
 import OtpForgotPassword from './components/patient/pages/forgotPassword/Otp/OtpForgotPassword'
 import ResetPassword from './components/patient/pages/forgotPassword/resetpassword/ResetPassword'
+import DoctorBooking from './components/patient/pages/booking/DoctorBooking'
 // Otp
 import Otp from './components/patient/pages/otp/Otp'
 
@@ -26,19 +27,27 @@ import DrOtp from './components/doctor/pages/Otp/DrOtp'
 import DoctorForgotPassword from './components/doctor/pages/ForgotPassword/ForgotPasswordDoctor'
 import DoctorOtpForgotPassword from './components/doctor/pages/ForgotPassword/otp/ForgotPasswordOtp'
 import DoctorResetPassword from './components/doctor/pages/ForgotPassword/resetpassword/ResetPassword'
+import DrChat from './components/doctor/pages/DrChat/DrChat'
+
+import Appointments from './components/doctor/pages/Appointments/Appointments'
 
 // Import Admin Page
-import AdminLogin from './components/admin/login/adminLogin'
-import AdminHome from './components/admin/home/AdminHome'  
-import DrChat from './components/doctor/pages/DrChat/DrChat'
-import DoctorBooking from './components/patient/pages/booking/DoctorBooking'
-import Appointments from './components/doctor/pages/Appointments/Appointments'
+import AdminLogin from './components/admin/pages/login/adminLogin'
+import ListUsers from './components/admin/pages/users/Users'  
+import DoctorList from './components/admin/pages/doctors/Doctors'
+import AddDepartment from './components/admin/pages/department/AddDepartment'
+import DepartmentManagement from './components/admin/pages/department/DepartmentManagement'
+import DoctorVerification from './components/admin/pages/doctors/verifyDoctor/doctorVerification'
+
 
 // Import Public and Protected Routes
 import ClientPublicRoutes from './utils/ClientPublicRoutes'
 import ClientProtectedRoutes from './utils/ClientProtectedRoutes'
 import DoctorPublicRoutes from './utils/DoctorPublicRoutes'
 import DoctorProtectedRoutes from './utils/DoctorPrivateRoute'
+import AdminPublicRoute from './utils/AdminPublicRoute'
+import AdminProtectedRoute from './utils/AdminProtectedRoute'
+import ViewVerificationImage from './components/admin/pages/doctors/verifyDoctor/viewVerifyImages/ViewVerificationImage'
 
 
 
@@ -77,6 +86,7 @@ function App() {
         <Route element={<DoctorPublicRoutes/>}> 
         <Route path='/doctor/login' element={<DoctorLogin/>}/>
         <Route path='/doctor/signup' element={<DoctorSignup/>}/>
+        <Route path='/doctor/otp' element={<DrOtp/>}/>
         </Route>
 
         <Route element={<DoctorProtectedRoutes/>}>
@@ -85,18 +95,27 @@ function App() {
         <Route path='/doctor/uploadDetails' element={<UploadDetails/>}/>
         <Route path='/doctor/chat' element={<DrChat/>}/>
         <Route path='/doctor/appointments' element={<Appointments/>}/>
-        <Route path='/doctor/otp' element={<DrOtp/>}/>
+        </Route>
+        
         <Route path='/doctor/forgotpassword' element={<DoctorForgotPassword/>}/>
         <Route path='/doctor/forgot-password-otp' element={<DoctorOtpForgotPassword/>}/>
         <Route path='/doctor/resetPassword' element={<DoctorResetPassword/>}/>
-        </Route>
 
 
         {/* Admin */}
+        <Route element={<AdminPublicRoute/>}>
         <Route path='/admin/login' element={<AdminLogin/>}/>
-        <Route path='/admin/home' element={<AdminHome/>}/>
-
-
+        </Route>
+        
+        <Route element={<AdminProtectedRoute/>}>
+        <Route path='/admin' element={<ListUsers/>}/>
+        <Route path='/admin/doctors' element={<DoctorList/>}/>
+        <Route path='/admin/addDepartment' element={<AddDepartment/>}/>
+        <Route path='/admin/departmentManagement' element={<DepartmentManagement/>}/>
+        <Route path='/admin/doctorVerification' element={<DoctorVerification/>}/>
+        <Route path='/admin/viewVerificationImage' element={<ViewVerificationImage/>}/>
+        </Route>
+        
 
       </Routes>
       </BrowserRouter>

@@ -6,7 +6,6 @@ import { Navigate, Outlet } from "react-router-dom";
 const ClientProtectedRoutes = () => {
 
   const clientToken = JSON.parse(localStorage.getItem("clientToken"));
-  console.log('here')
 
   return(
     clientToken ?  <Outlet/> :  <Navigate to="/login"/>

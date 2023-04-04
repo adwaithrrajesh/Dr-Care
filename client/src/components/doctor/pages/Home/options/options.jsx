@@ -1,9 +1,20 @@
 import React from "react";
+import { useEffect,useState } from "react";
 import { useNavigate } from "react-router-dom";
+import instance from "../../../../../instance/instance";
 
 const Options = () => {
 
   const navigate = useNavigate();
+  const[submit,setSubmit] = useState()
+
+
+  useEffect(() => {
+    instance.get('/doctor/verificationStatus').then((response)=>{
+      
+    })
+  }, []);
+  
 
   return (
     <div>
