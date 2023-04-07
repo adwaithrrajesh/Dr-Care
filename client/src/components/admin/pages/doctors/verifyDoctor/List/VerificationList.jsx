@@ -7,18 +7,17 @@ import { toast } from "react-hot-toast";
 const VerificationList = () => {
   const navigate = useNavigate();
   const [doctor, setDoctor] = useState([]);
-  console.log(doctor);
+  const [reload,setReload] = useState()
 
   useEffect(() => {
     instance.get("/admin/verificationRequests").then((response) => {
       setDoctor(response.data.doctorData);
     });
-  }, []);
+  }, [reload]);
 
   const verifyDoctor = (doctorId) => {
-    instance
-      .post("/admin/verifyDoctor", { doctorId })
-      .then((response) => {
+    instance.post("/admin/verifyDoctor", { doctorId }).then((response) => {
+      setReload(!reload,"!")
         toast.success(response.data.message);
       })
       .catch((error) => {
@@ -31,6 +30,7 @@ const VerificationList = () => {
     instance
       .post("/admin/unVerifyDoctor", { doctorId })
       .then((response) => {
+      setReload(!reload,"!")
         toast.success(response.data.message);
       })
       .catch((error) => {
@@ -80,7 +80,7 @@ const VerificationList = () => {
                   {doctor.experience} years
                 </td>
                 <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">
-                  {doctor.fee}
+                ₹{doctor.fee}
                 </td>
                 <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">
                   {doctor.qualification}

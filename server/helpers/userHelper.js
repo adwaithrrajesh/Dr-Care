@@ -2,6 +2,8 @@ const userModel = require("../model/user");
 const bcrypt = require("bcrypt");
 
 module.exports = {
+// ----------------------------------------------------------------USER STORE-------------------------------------------------------------------//
+
   userStore: (user) => {
     return new Promise(async(resolve,reject)=>{
         const newUser = new userModel(user);
@@ -18,6 +20,9 @@ module.exports = {
         });
     })
   },
+
+// ----------------------------------------------------------------LOGIN-------------------------------------------------------------------//
+  
   doLogin:(user,userDatabase)=>{
     return new Promise(async(resolve,reject)=>{
       const password = user.password
@@ -34,6 +39,9 @@ module.exports = {
       }
     })
   },
+
+// ----------------------------------------------------------------RESET PASSWORD-------------------------------------------------------------------//
+
   resetPassword:(userEmail,Password)=>{
     return new Promise(async(resolve,reject)=>{
       const saltRound = 10

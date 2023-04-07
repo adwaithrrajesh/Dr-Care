@@ -3,11 +3,10 @@ import { Navigate, Outlet } from "react-router-dom"
 
 const DoctorPublicRoutes = () => {
     
-const clientToken = JSON.parse(localStorage.getItem('doctorToken'))
-console.log(clientToken,"bingoooooo")
+const doctorToken = JSON.parse(localStorage.getItem('doctorToken'))
 
 return (
-    clientToken ? <Navigate to="/doctor/home"/> :  <Outlet/>
+    doctorToken ? <Navigate to="/doctor/home"/> :  <Outlet/>
 )
    
 

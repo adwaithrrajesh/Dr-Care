@@ -2,6 +2,7 @@ const drModel = require("../model/doctor");
 const bcrypt = require("bcrypt");
 
 module.exports = {
+// ----------------------------------------------------------------STORE DOCTOR-------------------------------------------------------------------//
   drStore: (doctorDetails) => {
     return new Promise((resolve, reject) => {
       const newDoctor = new drModel(doctorDetails);
@@ -18,6 +19,9 @@ module.exports = {
       });
     });
   },
+
+// ----------------------------------------------------------------DO LOGIN-------------------------------------------------------------------//
+
   doLogin:(doctor,doctorDatabase)=>{
     return new Promise(async(resolve,reject)=>{
       const password = doctor.password
@@ -34,6 +38,9 @@ module.exports = {
       }
     })
   },
+
+// ----------------------------------------------------------------RESET PASSWORD-------------------------------------------------------------------//
+
   resetPassword:(doctorEmail,Password)=>{
     return new Promise(async(resolve,reject)=>{
       const saltRound = 10

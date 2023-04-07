@@ -11,7 +11,6 @@ module.exports = {
                 adminId : adminDatabase._id,
                 email: adminDatabase.email
             }
-
             if(passwordVerify){
                 resolve(adminData)
             }else{

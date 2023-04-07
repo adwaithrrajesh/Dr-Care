@@ -1,7 +1,8 @@
 import {toast} from 'react-hot-toast'
 
 
-// Signup Validation
+// -----------------------------------------------------Signup Validation----------------------------------------------------------------
+
 export async function signupValidation(value){
 
     const error = {}
@@ -28,7 +29,9 @@ export async function signupValidation(value){
         return error.confirmPassword = toast.error('Password Doesnot Match')
     }
 }
-// Login validation
+
+  // -----------------------------------------------------LOGIN VALIDATION----------------------------------------------------------------
+
 export async function loginValidation(value){
     
     const error = {}
@@ -44,7 +47,8 @@ export async function loginValidation(value){
     }
 }
 
-// fogot password validation
+// -----------------------------------------------------FORGOT PASSWORD VALIDATION----------------------------------------------------------------
+
 
 // Email validation
 export async function emailValidation(value){
@@ -70,7 +74,8 @@ export async function passwordValidation(value){
     }
 }
 
-// Department Form Validation
+  // -----------------------------------------------------DEPARTMENT VALIDATION----------------------------------------------------------------
+
 export async function DepartmentValidation(value){
     const error = {}
     if(!value.departmentName){
@@ -80,7 +85,8 @@ export async function DepartmentValidation(value){
     }
 }
 
-// Doctor upload form validation
+  // -----------------------------------------------------DOCTOR UPLOAD VALIDATION----------------------------------------------------------------
+
 export async function DoctorUploadValidation(value){
     const error = {}
 
@@ -88,7 +94,7 @@ export async function DoctorUploadValidation(value){
         return error.email = toast.error('Registered Email Required...!')
     }else if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i.test(value.email)){
         return error.email = toast.error('Invalid Email...!')
-    }if(!value.idNumber){
+    }else if(!value.idNumber){
         return error.idNumber = toast.error('Please enter Id Number')
     }else if(! value.qualification){
         return error.qualification = toast.error('Please enter Qualification')
@@ -98,5 +104,28 @@ export async function DoctorUploadValidation(value){
         return error.fee = toast.error('Please add your fee')
     }else if(! value.experience){
         return error.experience = toast.error('Please enter year of experience')
+    }
+}
+
+  // -----------------------------------------------------EDIT DOCTOR PROFILE----------------------------------------------------------------
+
+  export async function editDoctorProfileValidation(value){
+    const error = {}
+    if(!value.firstName){
+        return error.firstName = toast.error('FirstName Required...!')
+    }else if(!value.lastName){
+        return error.lastName = toast.error('LastName Required ...!')
+    }else if(!value.email){
+        return error.email = toast.error('Registered Email Required...!')
+    }else if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i.test(value.email)){
+        return error.email = toast.error('Invalid Email...!')
+    }else if(! value.departmentName){
+        return error.departmentName = toast.error('Please enter DepartmentName')
+    }else if(!value.fee){
+        return error.fee = toast.error('Please add your fee')
+    }else if(! value.experience){
+        return error.experience = toast.error('Please enter year of experience')
+    }else if(!value.phoneNumber){
+        return error.phoneNumber = toast.error('PhoneNumber Required ...!')
     }
 }

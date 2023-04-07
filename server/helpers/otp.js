@@ -4,6 +4,7 @@ require('dotenv').config()
 
 
 module.exports = {
+
   sendOtp: (mail) => {
     return new Promise(async(resolve, reject) => {
       const transporter = nodemailer.createTransport({

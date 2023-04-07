@@ -1,34 +1,33 @@
-import React, { Children } from "react";
-import { Navigate, Outlet } from "react-router-dom";
-// import instance from "../components/patient/instance/instance";
+import React, {useEffect, useState } from "react";
+import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import instance from '../../src/instance/instance'
 
 
 const ClientProtectedRoutes = () => {
 
   const clientToken = JSON.parse(localStorage.getItem("clientToken"));
+  const navigate = useNavigate()
+  const [client,setClient] = useState(false)
+ 
+  useEffect(() => {
+    instance.get("/tokenVerify", {
+      headers: {Authorization: `Bearer ${clientToken}`,}}).then((response)=>{
+        console.log(response)
+      setClient(true)
+    }).catch((error)=>{
+      localStorage.clear()
+      navigate('/login')
+    })
+
+  }, []);
+
 
   return(
-    clientToken ?  <Outlet/> :  <Navigate to="/login"/>
+    client && <Outlet/>
   )
 
   
-//   if (clientToken) {
-//     instance.get("/tokenVerify", {
-//         headers: {
-//           Authorization: `Bearer ${clientToken}`,
-//         },
-//       })
-//       .then((response) => {
-
-//       })
-//       .catch((error) => {
-//         localStorage.clear();
-//         window.location.reload() 
-//         return <Navigate to ={"/login"}></Navigate>
-//       });
-//   }else{
-//     return <Navigate to={"/login"}></Navigate>
-//   }
+  
 };
 
 export default ClientProtectedRoutes;

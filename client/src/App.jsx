@@ -28,6 +28,7 @@ import DoctorForgotPassword from './components/doctor/pages/ForgotPassword/Forgo
 import DoctorOtpForgotPassword from './components/doctor/pages/ForgotPassword/otp/ForgotPasswordOtp'
 import DoctorResetPassword from './components/doctor/pages/ForgotPassword/resetpassword/ResetPassword'
 import DrChat from './components/doctor/pages/DrChat/DrChat'
+import EditProfile from './components/doctor/pages/Profile/EditProfile/EditProfile'
 
 import Appointments from './components/doctor/pages/Appointments/Appointments'
 
@@ -95,6 +96,7 @@ function App() {
         <Route path='/doctor/uploadDetails' element={<UploadDetails/>}/>
         <Route path='/doctor/chat' element={<DrChat/>}/>
         <Route path='/doctor/appointments' element={<Appointments/>}/>
+        <Route path='/doctor/editProfile' element={<EditProfile/>}/>
         </Route>
         
         <Route path='/doctor/forgotpassword' element={<DoctorForgotPassword/>}/>

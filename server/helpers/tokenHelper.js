@@ -3,6 +3,8 @@ require('dotenv').config()
 
 
 module.exports = {
+// ----------------------------------------------------------------GENERATE TOKEN--------------------------------------------------------------//
+
     generateToken:async (user)=>{
         try {
             return await new Promise((resolve) => {
@@ -13,6 +15,9 @@ module.exports = {
             console.log(err)
         }
     },
+
+// ----------------------------------------------------------------VERIFY TOKEN------------------------------------------------------------------//
+
     verifyToken:(token)=>{
         return new Promise((resolve,reject)=>{
             try {

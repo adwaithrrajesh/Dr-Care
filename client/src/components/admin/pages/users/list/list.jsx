@@ -6,7 +6,7 @@ import "../../../style/tablestyle.css";
 
 const List = () => {
   const [user, setUser] = useState([]);
-  const [reload,setReload] = useState(false)
+  const [reload,setReload] = useState()
 
   useEffect(() => {
     instance.get("/admin/getUsers").then((response) => {
@@ -16,7 +16,7 @@ const List = () => {
 
   const blockUser = (userId) =>{
     instance.post('/admin/blockUser',{userId}).then((response)=>{
-      setReload('blocked')
+      setReload(!reload,'!')
       toast.success(response.data.message)
     }).catch((error)=>{
       toast.error(error.response.data.message)
@@ -24,7 +24,7 @@ const List = () => {
   }
   const unBlockUser = (userId) =>{
     instance.post('/admin/unBlockUser',{userId}).then((response)=>{
-      setReload('unblocked')
+      setReload(!reload,'!')
       toast.success(response.data.message)
     }).catch((error)=>{
       toast.error(error.response.data.message)

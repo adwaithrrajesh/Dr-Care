@@ -18,7 +18,7 @@ const List = () => {
 
   const blockDoctor = (doctorId) =>{
     instance.post('/admin/blockDoctor',{doctorId}).then((response)=>{
-      setReload('blocked')
+      setReload(!reload,"1")
       toast.success(response.data.message)
     }).catch((error)=>{
       toast.error(error.response.data.message)
@@ -26,7 +26,7 @@ const List = () => {
   }
   const unBlockDoctor = (doctorId) =>{
     instance.post('/admin/unBlockDoctor',{doctorId}).then((response)=>{
-      setReload('unblocked')
+      setReload(!reload,"2")
       toast.success(response.data.message)
     }).catch((error)=>{
       toast.error(error.response.data.message)

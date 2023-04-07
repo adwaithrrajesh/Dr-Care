@@ -8,49 +8,69 @@ const doctorModel = require("../model/doctor");
 const departmentModel = require("../model/department");
 
 module.exports = {
+
+// ----------------------------------------------------------------LOGIN-------------------------------------------------------------------//
+  
   login: async (req, res) => {
+    
     const admin = req.body.value;
     const adminDetails = await adminModel.findOne({ email: admin.email });
-    if (adminDetails) {
-      try {
-         adminHelper.doLogin(admin, adminDetails).then((response) => {
-           const adminData = response;
-          TokenHelper.generateToken(adminData).then((token) => {
-            res.status(200).json({ token, message: "Login successful!" });
-          })})
-        } catch (error) {
-        res.status(500).json({message:'Internal server Error'})
-      }
-    } else {
-      res.status(404).json({ message: "Email not found" });
+    if (!adminDetails) {
+      return res.status(404).json({ message: "Email not found" });
     }
-
+    try {
+      const adminData = await adminHelper.doLogin(admin, adminDetails)
+      if(adminData){
+        const token = await TokenHelper.generateToken(adminData);
+        res.status(200).json({ token, message: "Login successful!" });
+      }else{
+        res.status(404).json({message:'Incorrect Password'})
+      }
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
   },
+// ----------------------------------------------------------------GET USER-------------------------------------------------------------------//
+
   getUsers: async (req, res) => {
+    try {
     const users = await userModel.find();
     res.status(200).json({ users });
+    } catch (error) {
+       console.log(error)
+    }
   },
+
+// ----------------------------------------------------------------GET DOCTORS-------------------------------------------------------------------//
+
   getDoctors: async (req, res) => {
     const doctors = await doctorModel.find();
     res.status(200).json({ doctors });
   },
+
+// ----------------------------------------------------------------ADD DEPARTMENT-------------------------------------------------------------------//
+
   addDepartment: async(req, res) => {
-    const departmentName = req.body.value.departmentName;
-    const departmentDiscription = req.body.value.departmentDiscription;
-    const departmentImage = req.body.departmentImage;
-    const department = {departmentName,departmentDiscription,departmentImage};
-    const departmentExist = await departmentModel.findOne({departmentName : department.departmentName})
-      
-    if(departmentExist){
-        res.status(404).json({message:'Department Already Exist'})
-      }else{
-      departmentModel.create(department).then((response) => {
-        res.status(200).json({ message: `${departmentName} added Successfully` });
-      }).catch((err) => {
-        res.status(500).json({ message: "Internal Server Error" });
-      });
+
+    const departmentImage = req.body.departmentImage
+
+    const { departmentName, departmentDiscription } = req.body.value;
+    const department = { departmentName, departmentDiscription, departmentImage };
+
+    try {
+      const departmentExist = await departmentModel.findOne({ departmentName });
+      if (departmentExist) {
+        return res.status(404).json({ message: 'Department Already Exist' });
+      }
+      await departmentModel.create(department);
+      return res.status(200).json({ message: `${departmentName} added Successfully` });
+    } catch (err) {
+      return res.status(500).json({ message: 'Internal Server Error' });
     }
   },
+
+// ----------------------------------------------------------------VIEW DEPARTMENTS-------------------------------------------------------------------//
+
   viewDepartments: async (req, res) => {
     try {
     const departments = await departmentModel.find();
@@ -58,8 +78,10 @@ module.exports = {
     } catch (error) {
       res.status(500).json({message:'Internal Server Error'})
     }
-   
   },
+
+// ----------------------------------------------------------------BLOCK USER-------------------------------------------------------------------//
+
   blockUser: async (req, res) => {
     const userId = req.body.userId;
     try {
@@ -69,6 +91,9 @@ module.exports = {
       res.status(404).json({ message: "Unable to Block the User" });
     }
   },
+
+// ----------------------------------------------------------------UNBLOCK USER-------------------------------------------------------------------//
+
   unBlockUser: async (req, res) => {
     const userId = req.body.userId;
     try {
@@ -78,6 +103,9 @@ module.exports = {
       res.status(404).json({ message: "Unable to unBlock the User" });
     }    
   },
+
+// ----------------------------------------------------------------BLOCK DOCTOR-------------------------------------------------------------------//
+
   blockDoctor: async (req, res) => {
     const doctorId = req.body.doctorId;
     try {
@@ -87,6 +115,9 @@ module.exports = {
       res.status(404).json({ message: "Unable to Block the Doctor" });
     }
   },
+
+// ----------------------------------------------------------------UNBLOCK DOCTOR-------------------------------------------------------------------//
+
   unBlockDoctor: async (req, res) => {
     const doctorId = req.body.doctorId;
     try {
@@ -96,6 +127,9 @@ module.exports = {
       res.status(404).json({ message: "Unable to unblock the Doctor" });
     }
   },
+
+// ----------------------------------------------------------------HIDE DEPARTMENT-------------------------------------------------------------------//
+
   hideDepartment: async (req, res) => {
     const departmentId = req.body.departmentId;
     try {
@@ -105,6 +139,9 @@ module.exports = {
       res.status(404).json({ message: "Unable to hide the department" });
     }
   },
+
+// ----------------------------------------------------------------SHOW DEPARTMENT-------------------------------------------------------------------//
+
   showDepartment: async (req, res) => {
     const departmentId = req.body.departmentId;
     try {
@@ -114,6 +151,9 @@ module.exports = {
       res.status(404).json({message:'Unable to show the department'})
     }
   },
+
+// ----------------------------------------------------------------GET VERIFICATION REQUESTS---------------------------------------------------------//
+
   getVerificationRequests: async(req,res)=>{
     try{
     const doctorData  = await doctorModel.find({showRequest:true}) 
@@ -122,8 +162,10 @@ module.exports = {
       console.log(error)
       res.status(404).json({message:'There is an error'})
     }
-
   },
+
+// ----------------------------------------------------------------VERIFY DOCTOR-------------------------------------------------------------------//
+
   verifyDoctor: async(req,res)=>{
     const doctorId = req.body.doctorId
     try{
@@ -133,6 +175,9 @@ module.exports = {
       res.status(404).json({message:"Unable to verify the doctor"})
     }
   },
+
+// ----------------------------------------------------------------UNVERIFY DOCTOR-------------------------------------------------------------------//
+
   unVerifyDoctor: async(req,res)=>{
     const doctorId = req.body.doctorId
     try{
@@ -141,5 +186,19 @@ module.exports = {
     }catch(err){
       res.status(404).json({message:"Unable to unverify the doctor"})
     }
+  },
+
+// ----------------------------------------------------------------VERIFY TOKEN-------------------------------------------------------------------//
+
+  tokenVerify:(req,res)=>{
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(" ")[1];
+    try {
+     jwt.verify(token, process.env.JWT_SECRET_KEY);
+     res.status(200).json({ message: "JWT Verified" });
+   } catch (error) {
+     console.log(error)
+       res.status(404).json({error})
+   }
   }
 };

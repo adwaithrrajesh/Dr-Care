@@ -14,6 +14,7 @@ const Form = () => {
   const [department,setDepartment] = useState([])
   const [idCard,setIdCard] = useState('')
   const [certificate,setCertificate] = useState('')
+  
 
 
   // Fetching Departments
@@ -49,46 +50,41 @@ const Form = () => {
 
     // Submit
     onSubmit: async (value) => {
-      const idImage = idCard
-      const certificationImage = certificate
-      if(!idImage){
-        toast.error('Please add your Id Image')
-      }else if(!certificationImage){
-        toast.error('Please add your certificate')
-      }else{
+      const idImage = idCard;
+      const certificationImage = certificate;
+
+      if (!idImage) {
+        toast.error("Please add your Id Image");
+      } else if (!certificationImage) {
+        toast.error("Please add your certificate");
+      } else {
         toast.loading("Processing...");
-        // Upload Image to cloudinary
-        const idCardData = new FormData();
-        idCardData.append("file", idImage);
-        idCardData.append("upload_preset", "drcareStorage");
-
-        const certificateData = new FormData()
-        certificateData.append("file", certificate);
-        certificateData.append("upload_preset", "drcareStorage");
-
-        try {
-          await axios.post("https://api.cloudinary.com/v1_1/dg047twga/image/upload",idCardData).then(async(response)=>{
-          const IdcardImage = response.data.url
-
-          await axios.post('https://api.cloudinary.com/v1_1/dg047twga/image/upload',certificateData).then(async(response)=>{
-            const certificateImage = response.data.url
-
-            instance.post("/doctor/addDoctorDetails", { value, IdcardImage , certificateImage }).then((response) => {
-              toast.dismiss()
-              toast.success(response.data.message)
-              navigate('/doctor/home')
-            }).catch((error) => {
-              toast.dismiss();
-              toast.error(error.response.data.message);
+       
+        const uploadImage = async (image, name) => {
+          const data = new FormData();
+          data.append("file", image);
+          data.append("upload_preset", "drcareStorage");
+          const response = await axios.post("https://api.cloudinary.com/v1_1/dg047twga/image/upload",data);
+          return response.data.url;
+        };
+      
+        Promise.all([uploadImage(idImage, "IdcardImage"),uploadImage(certificationImage, "certificateImage")
+            ]).then(([IdcardImage, certificateImage]) => {
+            return instance.patch("/doctor/addDoctorDetails", {
+              value,
+              IdcardImage,
+              certificateImage
             });
-          })
-        })
-        } catch (err) {
-          toast.dismiss()
-          console.log(err)
-          toast.error("An unkown error occured please try again later.");
-        }
+          }).then((response) => {
+            toast.dismiss();
+            toast.success(response.data.message);
+            navigate("/doctor/home");
+          }).catch((error) => {
+            toast.dismiss();
+            toast.error(error.response?.data?.message || "An unknown error occurred. Please try again later.");
+          });
       }
+      
     }
   });
 
@@ -157,7 +153,7 @@ const Form = () => {
             <select
               class="w-full px-9 py-2 mt-2 border rounded-md focus:outline-none bg-white focus:ring-1 focus:ring-cyan-600" name="departmentName" 
               {...Formik.getFieldProps("departmentName")}>
-                  <option selected disabled className="text-gray-500">Choose Department</option>
+                  <option selected hidden className="text-gray-500">Choose Department</option>
                 {
                   department.map((department)=>
                     <option>{department.departmentName}</option>

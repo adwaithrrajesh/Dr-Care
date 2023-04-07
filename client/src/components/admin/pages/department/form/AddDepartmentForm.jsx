@@ -36,7 +36,6 @@ const AddDepartmentForm = () => {
         const formData = new FormData();
         formData.append("file", image);
         formData.append("upload_preset", "drcareStorage");
-
         try {
           await axios.post("https://api.cloudinary.com/v1_1/dg047twga/image/upload",formData).then((response)=>{
           toast.dismiss();

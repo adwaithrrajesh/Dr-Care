@@ -20,7 +20,7 @@ const DoctorResetPassword = () => {
 
     // Submit
     onSubmit: async (value) => {
-        instance.post('/doctor/resetPassword',{value}).then((response)=>{
+        instance.patch('/doctor/resetPassword',{value}).then((response)=>{
             toast.success(response.data.message)
             navigate('/doctor/login')
         }).catch((error)=>{

@@ -3,19 +3,26 @@ const router = Router()
 const Controller = require('../controllers/doctorControllers')
 
 
-// Post Methods
+// ----------------------------------------------------------------GET-------------------------------------------------------------------//
+
+router.get('/resendOtp',Controller.resendOtp)
+router.get('/verifyToken',Controller.tokenVerify)
+router.get('/verificationStatus',Controller.verificationStatus)
+router.get('/doctorDetails',Controller.getDoctorDetails)
+
+// ----------------------------------------------------------------POST-------------------------------------------------------------------//
 router.post('/otp',Controller.otp)
 router.post('/otpVerify',Controller.otpVerify)
 router.post('/login',Controller.Login)
 router.post('/forgotPasswordOtp',Controller.ForgotPasswordOtp)
 router.post('/ForgotPasswordOtpVerify',Controller.ForgotPasswordOtpVerify)
-router.post('/resetPassword',Controller.resetPassword)
-router.post('/addDoctorDetails',Controller.addDoctorDetails)
 
+// ----------------------------------------------------------------PATCH-------------------------------------------------------------------//
+router.patch('/resetPassword',Controller.resetPassword)
+router.patch('/addDoctorDetails',Controller.addDoctorDetails)
+router.patch('/updateProfile',Controller.updateProfile)
+router.patch('/updateProfileDetails',Controller.updateProfileDetails)
 
-// Get method 
-router.get('/resendOtp',Controller.resendOtp)
-router.get('/verificationStatus',Controller.doctorVerificationStatus)
 
 
 

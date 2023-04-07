@@ -68,10 +68,10 @@ const DepartmentList = () => {
                 {department.departmentDiscription}
               </td>
               {
-                department.show ?<td class="border-grey-light border hover:bg-gray-100 p-3 text-red-400 hover:text-red-600 hover:font-medium cursor-pointer" onClick={()=>{hideDepartment(department._id); setReload('reload')}}>
+                department.show ?<td class="border-grey-light border hover:bg-gray-100 p-3 text-red-400 hover:text-red-600 hover:font-medium cursor-pointer" onClick={()=>{hideDepartment(department._id); setReload(!reload,"i")}}>
                 Hide
               </td> :
-              <td class="border-grey-light border hover:bg-gray-100 p-3 text-green-400 hover:text-green-600 hover:font-medium cursor-pointer" onClick={()=>{showDepartment(department._id); setReload(!reload)}}>
+              <td class="border-grey-light border hover:bg-gray-100 p-3 text-green-400 hover:text-green-600 hover:font-medium cursor-pointer" onClick={()=>{showDepartment(department._id); setReload(!reload,"1")}}>
               Show
              </td>
               }
