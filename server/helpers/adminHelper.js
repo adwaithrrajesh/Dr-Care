@@ -1,7 +1,8 @@
 const bcrypt = require('bcrypt')
 
-
 module.exports = {
+// ----------------------------------------------------------------LOGIN-------------------------------------------------------------------//
+
     doLogin:(admin,adminDatabase)=>{
         return new Promise(async(resolve,reject)=>{
             const realPassword = admin.password

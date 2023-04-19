@@ -12,7 +12,6 @@ const ClientProtectedRoutes = () => {
   useEffect(() => {
     instance.get("/tokenVerify", {
       headers: {Authorization: `Bearer ${clientToken}`,}}).then((response)=>{
-        console.log(response)
       setClient(true)
     }).catch((error)=>{
       localStorage.clear()

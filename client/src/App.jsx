@@ -2,43 +2,43 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 
 // Import Patient Page
-import Login from './components/patient/pages/login/Login'
-import Signup from './components/patient/pages/signup/Signup'
-import Home from './components/patient/pages/home/Home'
-import Departments from './components/patient/pages/DepartmentList/Departments'
-import Doctors from './components/patient/pages/DoctorsList/Doctors'
-import DoctorProfile from './components/patient/pages/DoctorProfile/DoctorProfile'
-import Chat from './components/patient/pages/chat/Chat'
-import About from './components/patient/pages/About/About'
-import ForgotPassword from './components/patient/pages/forgotPassword/ForgotPassword'
-import OtpForgotPassword from './components/patient/pages/forgotPassword/Otp/OtpForgotPassword'
-import ResetPassword from './components/patient/pages/forgotPassword/resetpassword/ResetPassword'
-import DoctorBooking from './components/patient/pages/booking/DoctorBooking'
+import Login from './pages/patient/Login'
+import Signup from './pages/patient/Signup'
+import Home from './pages/patient/Home'
+import Departments from './pages/patient/Departments'
+import Doctors from './pages/patient/Doctors'
+import DoctorProfile from './pages/patient/DoctorProfile'
+import Chat from './pages/patient/Chat'
+import About from './pages/patient/About'
+import ForgotPassword from './pages/patient/ForgotPassword'
+import OtpForgotPassword from './components/patient/OtpForgotPassword'
+import ResetPassword from './components/patient/ResetPassword'
+import DoctorBooking from './pages/patient/DoctorBooking'
 // Otp
-import Otp from './components/patient/pages/otp/Otp'
+import Otp from './pages/patient/Otp'
 
 // Import Doctor Page
-import DoctorLogin from './components/doctor/pages/DoctorLogin/DoctorLogin'
-import DoctorSignup from './components/doctor/pages/DoctorSignup/DoctorSignup'
-import DoctorHome from './components/doctor/pages/Home/DoctorHome'
-import Profile from './components/doctor/pages/Profile/Profile'
-import UploadDetails from './components/doctor/pages/uploadDetails/UploadDetails'
-import DrOtp from './components/doctor/pages/Otp/DrOtp'
-import DoctorForgotPassword from './components/doctor/pages/ForgotPassword/ForgotPasswordDoctor'
-import DoctorOtpForgotPassword from './components/doctor/pages/ForgotPassword/otp/ForgotPasswordOtp'
-import DoctorResetPassword from './components/doctor/pages/ForgotPassword/resetpassword/ResetPassword'
-import DrChat from './components/doctor/pages/DrChat/DrChat'
-import EditProfile from './components/doctor/pages/Profile/EditProfile/EditProfile'
-
-import Appointments from './components/doctor/pages/Appointments/Appointments'
+import DoctorLogin from './pages/doctor/DoctorLogin'
+import DoctorSignup from './pages/doctor/DoctorSignup'
+import DoctorHome from './pages/doctor/DoctorHome'
+import Profile from './pages/doctor/Profile'
+import UploadDetails from './pages/doctor/UploadDetails'
+import DrOtp from './pages/doctor/DrOtp'
+import DoctorForgotPassword from './pages/doctor/ForgotPasswordDoctor'
+import DoctorOtpForgotPassword from './components/doctor/ForgotPasswordOtp'
+import DoctorResetPassword from './pages/doctor/ResetPassword'
+import DrChat from './pages/doctor/DrChat'
+import EditProfile from './components/doctor/Profile/EditProfile/EditProfile'
+import ScheduleTime from './pages/doctor/ScheduleTime'
+import Appointments from './pages/doctor/Appointments'
 
 // Import Admin Page
-import AdminLogin from './components/admin/pages/login/adminLogin'
-import ListUsers from './components/admin/pages/users/Users'  
-import DoctorList from './components/admin/pages/doctors/Doctors'
-import AddDepartment from './components/admin/pages/department/AddDepartment'
-import DepartmentManagement from './components/admin/pages/department/DepartmentManagement'
-import DoctorVerification from './components/admin/pages/doctors/verifyDoctor/doctorVerification'
+import AdminLogin from './pages/admin/adminLogin'
+import ListUsers from './pages/admin/Users'  
+import DoctorList from './pages/admin/Doctors'
+import AddDepartment from './pages/admin/AddDepartment'
+import DepartmentManagement from './pages/admin/DepartmentManagement'
+import DoctorVerification from './pages/admin/doctorVerification'
 
 
 // Import Public and Protected Routes
@@ -48,7 +48,7 @@ import DoctorPublicRoutes from './utils/DoctorPublicRoutes'
 import DoctorProtectedRoutes from './utils/DoctorPrivateRoute'
 import AdminPublicRoute from './utils/AdminPublicRoute'
 import AdminProtectedRoute from './utils/AdminProtectedRoute'
-import ViewVerificationImage from './components/admin/pages/doctors/verifyDoctor/viewVerifyImages/ViewVerificationImage'
+import ViewVerificationImage from './pages/admin/ViewVerificationImage'
 
 
 
@@ -97,6 +97,7 @@ function App() {
         <Route path='/doctor/chat' element={<DrChat/>}/>
         <Route path='/doctor/appointments' element={<Appointments/>}/>
         <Route path='/doctor/editProfile' element={<EditProfile/>}/>
+        <Route path='/doctor/scheduleTime' element={<ScheduleTime/>}/>
         </Route>
         
         <Route path='/doctor/forgotpassword' element={<DoctorForgotPassword/>}/>

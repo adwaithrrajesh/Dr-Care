@@ -5,6 +5,7 @@ const TokenHelper = require("../helpers/tokenHelper");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+const appointmentModel = require('../model/appointment')
 let doctor; //Doctor details will store here
 
 module.exports = {
@@ -48,8 +49,7 @@ module.exports = {
 // ----------------------------------------------------------------RESEND OTP-------------------------------------------------------------------//
 
   resendOtp: (req, res) => {
-    mailOptions
-      .sendOtp(doctor.email).then((OTP) => {
+    mailOptions.sendOtp(doctor.email).then((OTP) => {
         process.env.OTP = OTP;
         res.status(200).json({ message: `Otp resend to ${doctor.email}` });
       })
@@ -86,7 +86,7 @@ module.exports = {
 // ----------------------------------------------------------------FORGOTPASSWORD-------------------------------------------------------------------//
 
   ForgotPasswordOtp: async (req, res) => {
-    const doctor = req.body.value;
+    doctor = req.body.value;
     const emailVerified = await doctorModel.findOne({ email: doctor.email });
 
     if (!emailVerified) {
@@ -118,10 +118,7 @@ module.exports = {
     const newPassword = req.body.value.password;
     const doctorEmail = doctor.email;
     const doctorDetails = await doctorModel.findOne({ email: doctorEmail });
-    const passwordMatch = await bcrypt.compare(
-      newPassword,
-      doctorDetails.password
-    );
+    const passwordMatch = await bcrypt.compare(newPassword,doctorDetails.password);
     if (passwordMatch) {
       return res
         .status(404)
@@ -179,10 +176,7 @@ module.exports = {
       const authHeader = req.headers["authorization"];
       const token = authHeader && authHeader.split(" ")[1];
       const doctor = jwt.decode(token);
-      const verificationStatus = await doctorModel.findOne(
-        { _id: doctor.doctorId },
-        { showRequest: true }
-      );
+      const verificationStatus = await doctorModel.findOne({ _id: doctor.doctorId },{ showRequest: true });
       res.status(200).json(verificationStatus.showRequest);
     } catch (err) {
       console.log(err);
@@ -229,7 +223,47 @@ module.exports = {
       console.log(error)
       res.status(404).json({message:'Unable to update Profile Details'})
     })
+  },
+// ---------------------------------------------------------------Adding Scheduled time-------------------------------------------------------------------//
 
-  }
+  addScheduleTime: async(req,res)=>{
+    const { date, startingTime, endingTime,slot } = req.body.details;
+    const { doctorId } = jwt.decode(req.headers.authorization?.split(" ")[1]);
+    // Checking whether Date is already existed 
+    const checkDateExist = await appointmentModel.findOne({doctorId:doctorId,date:date})
+
+    if(checkDateExist){
+
+    }
+
+    new appointmentModel({ date, startingTime, endingTime, doctorId,slot }).save().then((response)=>{
+      res.status(200).json({message:`Successfully created an Appointment at ${startingTime} to ${endingTime}`})
+    }).catch((err)=>{
+      res.status(500).json({message:'Internal server error'})
+    })
+  },
+
+// ---------------------------------------------------------------Add Scheduled time-------------------------------------------------------------------//
+
+  getScheduledTime: async(req,res)=>{
+    const { doctorId } = jwt.decode(req.headers.authorization?.split(" ")[1]);
+    await appointmentModel.find({doctorId:doctorId}).then((response)=>{
+      res.status(200).json({scheduledTime:response})
+    })
+  },
+
+// ---------------------------------------------------------------Delete Scheduled time-------------------------------------------------------------------//
+
+  deleteScheduleTime: async(req,res)=>{
+   const scheduleTimeId = req.body.scheduledTimeId
+   await appointmentModel.deleteOne({_id:scheduleTimeId}).then((response)=>{
+    res.status(200).json({message:"Scheduled Time deleted successfully"})
+   }).catch((error)=>{
+    res.status(404).json({message:'Unable to delete the scheduled time'})
+   })
+  },
+  
+// ---------------------------------------------------------------Delete Scheduled time-------------------------------------------------------------------//
+
 
 };

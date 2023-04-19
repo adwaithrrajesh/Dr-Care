@@ -1,8 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import userSlice from "./Slices/userSlice";
+import  searchSlice from "./Slices/searchSlice";
+import doctorCertificateSlice from "./Slices/doctorCertificateSlice";
+import doctorProfileDetail from "./Slices/doctorProfileDetail";
 
 export default configureStore({
     reducer:{
-        user:userSlice
+        search:searchSlice,
+        doctorProof: doctorCertificateSlice,
+        doctorProfile : doctorProfileDetail
     }
 })

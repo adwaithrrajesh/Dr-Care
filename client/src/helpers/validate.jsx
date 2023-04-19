@@ -129,3 +129,9 @@ export async function DoctorUploadValidation(value){
         return error.phoneNumber = toast.error('PhoneNumber Required ...!')
     }
 }
+
+  // -----------------------------------------------------EDIT DOCTOR PROFILE----------------------------------------------------------------
+
+  export async function scheduleTimeValidation(value){
+    console.log(value,"fjjjjjjjjjjjjj")
+  }

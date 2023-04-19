@@ -11,8 +11,7 @@ module.exports = {
 
 // ----------------------------------------------------------------LOGIN-------------------------------------------------------------------//
   
-  login: async (req, res) => {
-    
+  login: async (req, res) => { 
     const admin = req.body.value;
     const adminDetails = await adminModel.findOne({ email: admin.email });
     if (!adminDetails) {
@@ -51,12 +50,9 @@ module.exports = {
 // ----------------------------------------------------------------ADD DEPARTMENT-------------------------------------------------------------------//
 
   addDepartment: async(req, res) => {
-
     const departmentImage = req.body.departmentImage
-
     const { departmentName, departmentDiscription } = req.body.value;
     const department = { departmentName, departmentDiscription, departmentImage };
-
     try {
       const departmentExist = await departmentModel.findOne({ departmentName });
       if (departmentExist) {
@@ -145,7 +141,7 @@ module.exports = {
   showDepartment: async (req, res) => {
     const departmentId = req.body.departmentId;
     try {
-      await departmentModel.updateOne({ _id: departmentId },{$set: {show: true}});
+      await departmentModel.updateOne({ _id: departmentId },{$set: {show: true}})
       res.status(200).json({message:'Department shown successfully'})
     } catch (error) {
       res.status(404).json({message:'Unable to show the department'})
@@ -157,6 +153,7 @@ module.exports = {
   getVerificationRequests: async(req,res)=>{
     try{
     const doctorData  = await doctorModel.find({showRequest:true}) 
+    console.log(doctorData)
     res.status(200).json({doctorData})
     }catch(error){
       console.log(error)
@@ -196,9 +193,8 @@ module.exports = {
     try {
      jwt.verify(token, process.env.JWT_SECRET_KEY);
      res.status(200).json({ message: "JWT Verified" });
-   } catch (error) {
-     console.log(error)
+     } catch (error) {
        res.status(404).json({error})
-   }
+     }
   }
 };

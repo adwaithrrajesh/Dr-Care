@@ -9,6 +9,7 @@ router.get('/resendOtp',Controller.resendOtp)
 router.get('/verifyToken',Controller.tokenVerify)
 router.get('/verificationStatus',Controller.verificationStatus)
 router.get('/doctorDetails',Controller.getDoctorDetails)
+router.get('/getScheduledTime',Controller.getScheduledTime)
 
 // ----------------------------------------------------------------POST-------------------------------------------------------------------//
 router.post('/otp',Controller.otp)
@@ -16,6 +17,8 @@ router.post('/otpVerify',Controller.otpVerify)
 router.post('/login',Controller.Login)
 router.post('/forgotPasswordOtp',Controller.ForgotPasswordOtp)
 router.post('/ForgotPasswordOtpVerify',Controller.ForgotPasswordOtpVerify)
+router.post('/addScheduleTime',Controller.addScheduleTime)
+router.post('/deleteScheduledTime',Controller.deleteScheduleTime)
 
 // ----------------------------------------------------------------PATCH-------------------------------------------------------------------//
 router.patch('/resetPassword',Controller.resetPassword)

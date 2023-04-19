@@ -13,8 +13,7 @@ const AdminProtectedRoute = () => {
       instance.get('/admin/tokenVerify',{
         headers:{
           Authorization: `Bearer ${adminToken}`
-        }
-      }).then((response)=>{
+        }}).then((response)=>{
         setAdmin(true)
       }).catch((error)=>{
         localStorage.clear()

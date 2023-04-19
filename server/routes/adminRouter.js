@@ -3,7 +3,8 @@ const router = Router()
 const Controller = require('../controllers/adminControllers')
 
 
-// Post 
+// ----------------------------------------------------------------POST-------------------------------------------------------------------//
+
 router.post('/login',Controller.login)
 router.post('/addDepartment',Controller.addDepartment)
 router.post('/blockUser',Controller.blockUser)
@@ -15,7 +16,8 @@ router.post('/showDepartment',Controller.showDepartment)
 router.post('/verifyDoctor',Controller.verifyDoctor)
 router.post('/unVerifyDoctor',Controller.unVerifyDoctor)
 
-// get 
+// ----------------------------------------------------------------Get-------------------------------------------------------------------//
+
 router.get('/getUsers',Controller.getUsers)
 router.get('/getDoctors',Controller.getDoctors)
 router.get('/viewDepartments',Controller.viewDepartments)
