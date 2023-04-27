@@ -1,11 +1,11 @@
 import React from "react";
 import "../../styles/Login.css";
 import { Link } from "react-router-dom";
-import {toast,Toaster} from 'react-hot-toast'
-import {Formik, useFormik} from 'formik'
+import {toast} from 'react-hot-toast'
+import {useFormik} from 'formik'
 import { loginValidation } from '../../helpers/validate'
-import instance from "../../instance/instance";
 import { useNavigate } from "react-router-dom";
+import { doLogin } from "../../API/user";
 
 
 const Login = () => {
@@ -24,17 +24,11 @@ const Login = () => {
 
     // Submit
     onSubmit: async(value) =>{
-      try {
-        await instance.post('/login',{value}).then((response)=>{
-          localStorage.setItem('clientToken', JSON.stringify(response.data.token));
+         const response = await doLogin(value)
+         localStorage.setItem('clientToken', JSON.stringify(response.data.token))
           toast.success(response.data.message)
           navigate('/')
-        })
-      } catch (error) {
-        toast.error(error.response.data.message)
-      }
     }
-
   })
 
 

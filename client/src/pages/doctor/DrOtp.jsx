@@ -2,8 +2,9 @@ import React from "react";
 import OTPInput from "react-otp-input";
 import { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
-import instance from "../../instance/instance";
 import { useNavigate } from "react-router-dom";
+import { OtpVerification } from "../../API/doctor";
+import { doctorResendOtp } from "../../API/doctor";
 
 const Otp = () => {
   const [otpCode, setCode] = useState("");
@@ -22,32 +23,20 @@ const Otp = () => {
     if (otpCode.length < 6) {
       toast.error("Please enter Otp");
     } else {
-      try {
-        await instance.post("/doctor/otpVerify", { otpCode }).then((response) => {
+      const response = await OtpVerification(otpCode)
           toast.success(response.data.message);
-          setTimeout(() => {
-            navigate("/doctor/login");
-          }, 1500);
-        });
-      } catch (error) {
-        toast.error(error.response.data.message);
-      }
+          navigate("/doctor/login");
     }
   };
 
   // Resend Otp
 
-  const otpResend = () => {
-    try {
+  const otpResend = async() => {
       setCounter(60);
       toast.loading("Resending Otp");
-      instance.get("/doctor/resendOtp").then((response) => {
+      const response = await doctorResendOtp()
         toast.dismiss()
         toast.success(response.data.message);
-      });
-    } catch (error) {
-      toast.error(error.response.data.message);
-    }
   };
 
   return (

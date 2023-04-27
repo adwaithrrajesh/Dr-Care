@@ -12,8 +12,15 @@ import Chat from './pages/patient/Chat'
 import About from './pages/patient/About'
 import ForgotPassword from './pages/patient/ForgotPassword'
 import OtpForgotPassword from './components/patient/OtpForgotPassword'
-import ResetPassword from './components/patient/ResetPassword'
+import ResetPassword from './pages/patient/ResetPassword'
 import DoctorBooking from './pages/patient/DoctorBooking'
+import UserProfile from './pages/patient/userProfile'
+import EditUserProfile from './pages/patient/editUserProfile'
+import UserAppointments from './pages/patient/Appointments'
+import Wallet from './pages/patient/wallet'
+import CancelledAppointments from './pages/patient/CancelledAppointments'
+
+
 // Otp
 import Otp from './pages/patient/Otp'
 
@@ -28,7 +35,7 @@ import DoctorForgotPassword from './pages/doctor/ForgotPasswordDoctor'
 import DoctorOtpForgotPassword from './components/doctor/ForgotPasswordOtp'
 import DoctorResetPassword from './pages/doctor/ResetPassword'
 import DrChat from './pages/doctor/DrChat'
-import EditProfile from './components/doctor/Profile/EditProfile/EditProfile'
+import EditProfile from './pages/doctor/EditProfile'
 import ScheduleTime from './pages/doctor/ScheduleTime'
 import Appointments from './pages/doctor/Appointments'
 
@@ -66,13 +73,18 @@ function App() {
         </Route>
       
         <Route element={<ClientProtectedRoutes/>}>
-        <Route path='/doctorProfile' element={<DoctorProfile/>}/>
         <Route path='/chat' element={<Chat/>}/>
         <Route path='/book' element={<DoctorBooking/>}/>
+        <Route path='/departments' element={<Departments/>}/>
+        <Route path='/doctorProfile' element={<DoctorProfile/>}/>
+        <Route path='/profile' element={<UserProfile/>}/>
+        <Route path='/editProfile' element={<EditUserProfile/>}/>
+        <Route path='/appointments' element={<UserAppointments/>}/>
+        <Route path='/wallet' element={<Wallet/>}/>
+        <Route path='/viewCancelledAppointments' element={<CancelledAppointments/>}/>
         </Route>
 
         <Route path='/' element={<Home/>}/>
-        <Route path='/departments' element={<Departments/>}/>
         <Route path='/doctors' element={<Doctors/>}/>
 
         <Route path='/about' element={<About/>}/>

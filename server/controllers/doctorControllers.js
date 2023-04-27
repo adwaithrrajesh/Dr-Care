@@ -6,6 +6,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const appointmentModel = require('../model/appointment')
+const bookedAppointmentModel = require('../model/bookedAppointments');
+
 let doctor; //Doctor details will store here
 
 module.exports = {
@@ -135,20 +137,15 @@ module.exports = {
 // -----------------------------------------------------------ADDING DOCTOR ADDITIONAL DETAILS-------------------------------------------------------------------//
 
   addDoctorDetails: async (req, res) => {
-    const { email, ...details } = req.body.value;
+    const { ...details } = req.body.value;
     const idCardImage = req.body.IdcardImage;
     const certificateImage = req.body.certificateImage;
-    const doctor = await doctorModel.findOne({ email });
-    if (!doctor) {
-      return res
-        .status(404)
-        .json({ message: "Please enter your registered Email" });
-    }
+
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(" ")[1];
+    const doctor = jwt.decode(token);
     try {
-      await doctorModel.updateOne(
-        { email },
-        { ...details, idCardImage, certificateImage, showRequest: true }
-      );
+      await doctorModel.updateOne({ _id: doctor.doctorId },{ ...details, idCardImage, certificateImage, showRequest: true });
       res.status(200).json({ message: "Verification Submitted successfully!" });
     } catch (error) {
       res.status(404).json({ message: "Unable to upload your Details" });
@@ -231,25 +228,28 @@ module.exports = {
     const { doctorId } = jwt.decode(req.headers.authorization?.split(" ")[1]);
     // Checking whether Date is already existed 
     const checkDateExist = await appointmentModel.findOne({doctorId:doctorId,date:date})
-
     if(checkDateExist){
-
-    }
-
-    new appointmentModel({ date, startingTime, endingTime, doctorId,slot }).save().then((response)=>{
+      res.status(404).json({message:'Schedule already exist'})
+    }else{
+      new appointmentModel({ date, startingTime, endingTime, doctorId,slot }).save().then((response)=>{
       res.status(200).json({message:`Successfully created an Appointment at ${startingTime} to ${endingTime}`})
     }).catch((err)=>{
       res.status(500).json({message:'Internal server error'})
     })
+    }
   },
 
 // ---------------------------------------------------------------Add Scheduled time-------------------------------------------------------------------//
 
   getScheduledTime: async(req,res)=>{
     const { doctorId } = jwt.decode(req.headers.authorization?.split(" ")[1]);
-    await appointmentModel.find({doctorId:doctorId}).then((response)=>{
-      res.status(200).json({scheduledTime:response})
-    })
+    if(doctorId){
+      await appointmentModel.find({doctorId:doctorId}).then((response)=>{
+        res.status(200).json({scheduledTime:response})
+      })
+    }else{
+      res.status(500).json({message:'Internal Server Error'})
+    }
   },
 
 // ---------------------------------------------------------------Delete Scheduled time-------------------------------------------------------------------//
@@ -263,7 +263,32 @@ module.exports = {
    })
   },
   
-// ---------------------------------------------------------------Delete Scheduled time-------------------------------------------------------------------//
+// ---------------------------------------------------------------GET BOOKED APPOINTMENTS-------------------------------------------------------------------//
+getBookedAppointments: async(req,res)=>{
+  try {    
+    // Finding UserId 
+    const token = req?.headers["authorization"]?.split(" ")[1];
+    const doctor = await doctorModel.findOne({_id: jwt?.verify(token, process.env.JWT_SECRET_KEY)?.doctorId})
+    const appointments = await bookedAppointmentModel.find({doctorId:doctor._id, cancelled: false}).populate('userId')
 
+    res.status(200).json({appointments: appointments})
+  } catch (error) {
+    res.status(500).json({message:'Internal Server Error'})
+  }
+},
+
+// ---------------------------------------------------------------FILTERING APPOINTMENTS BY DATE-------------------------------------------------------------------//
+
+filterAppointmentsByDate: async(req,res)=>{
+  try{
+    const token = req?.headers["authorization"]?.split(" ")[1];
+    const doctor = await doctorModel.findOne({_id: jwt?.verify(token, process.env.JWT_SECRET_KEY)?.doctorId})
+    const date = req.body.date
+    const appointments = await bookedAppointmentModel.find({doctorId:doctor._id,date:date,cancelled:false}).populate('userId')
+    res.status(200).json({filteredAppointments:appointments})
+  }catch(error){
+    res.status(404).json({message:'Unable to process your request'})
+  }
+}
 
 };

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Navigate, Outlet, useNavigate } from "react-router-dom"
-import instance from "../instance/instance";
+import adminInstance from "../instance/adminInstance";
 
 
 const AdminProtectedRoute = () => {
@@ -10,10 +10,7 @@ const AdminProtectedRoute = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-      instance.get('/admin/tokenVerify',{
-        headers:{
-          Authorization: `Bearer ${adminToken}`
-        }}).then((response)=>{
+      adminInstance.get('/admin/tokenVerify').then((response)=>{
         setAdmin(true)
       }).catch((error)=>{
         localStorage.clear()

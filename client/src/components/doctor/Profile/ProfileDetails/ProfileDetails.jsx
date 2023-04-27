@@ -1,29 +1,33 @@
 import React, { useEffect, useState } from "react";
 import instance from "../../../../instance/instance";
 import { Link } from "react-router-dom";
+import { getDoctorDetails } from "../../../../API/doctor";
 
 const ProfileDetails = () => {
   const [doctor, setDoctor] = useState([]);
-  const doctorToken = JSON.parse(localStorage.getItem("doctorToken"));
 
   useEffect(() => {
-    instance.get("/doctor/doctorDetails", {headers: { Authorization: `Bearer ${doctorToken}` },}).then((response) => {
-        setDoctor(response.data.doctorDetails);
-      });
+    fetchDoctorDetails()
   }, []);
 
-  const DoctorImage = doctor.profilePhoto
+  const fetchDoctorDetails = async ()=>{
+    const response = await getDoctorDetails()
+    setDoctor(response.data.doctorDetails);
+  }
+
+  const DoctorImage = doctor?.profilePhoto
+  
   return (
     <div>
-      <div class=" h-[120px] flex flex-col justify-center items-center  bg-cover">
+      <div class=" h-48 flex flex-col justify-center items-center mt-24">
         <img
           src={DoctorImage}
-          className="bg-cover h-36 mt-44 rounded-full"
+          class="block h-48 w-48  rounded-full object-cover"
           alt=""
         />
       </div>
-      <div class=" mt-10 flex flex-col justify-center items-center">
-        <h6 class="text-gray-700 text-lg mt-16">{doctor.firstName}{doctor.lastName}</h6>
+      <div class=" flex flex-col justify-center items-center">
+        <h6 class="text-gray-700 text-lg mt-12">{doctor.firstName}{doctor.lastName}</h6>
         <p class="text-gray-400 mt-2 text-sm">{doctor.departmentName}</p>
       </div>
       <div>

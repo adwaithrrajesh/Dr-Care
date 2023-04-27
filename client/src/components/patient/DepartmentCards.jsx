@@ -1,23 +1,18 @@
 import React, { useState } from 'react';
-  import { Link, useNavigate } from "react-router-dom";
+  import { useNavigate } from "react-router-dom";
 import { useEffect } from 'react';
-import instance from '../../instance/instance';
 import { useSelector } from 'react-redux';
-import { toast } from 'react-hot-toast';
-import { useDispatch } from 'react-redux';
+import { getDepartments } from '../../API/user';
 
 
   const Cards = () => {
 
 
     const navigate = useNavigate()
-    const dispatch = useDispatch()
 // ----------------------------------------------------------------STATES-------------------------------------------------------------------//
 
     const [searchResult,setSearchResult] = useState([])
     const [department,setDepartment] = useState([])
-
-    console.log(searchResult)
 
 
 // ----------------------------------------------------------------REDUX SELECTOR-------------------------------------------------------------------//
@@ -31,10 +26,13 @@ import { useDispatch } from 'react-redux';
 // ----------------------------------------------------------------FETCHING DEPARTMENT-------------------------------------------------------------------//
   
     useEffect(() => {
-        instance.get('/viewDepartments').then((response)=>{
-            setDepartment(response.data.departments)
-        })
+      viewDepartments()
     }, []);
+    
+    const viewDepartments = async()=>{
+      const response = await getDepartments()
+      setDepartment(response.data.departments)
+    } 
 
 
 // ------------------------------------------------------------------------------CODE-------------------------------------------------------------------//

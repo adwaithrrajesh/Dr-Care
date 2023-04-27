@@ -1,10 +1,10 @@
 import React from "react";
 import '../../styles/Signup.css'
-import {toast,Toaster} from 'react-hot-toast'
+import {toast} from 'react-hot-toast'
 import {useFormik} from 'formik'
 import {signupValidation} from '../../helpers/validate'
 import { Link, useNavigate } from "react-router-dom";
-import instance from "../../instance/instance";
+import { userRegisterOtp } from "../../API/user";
 
 
 
@@ -26,19 +26,9 @@ const Signup = () => {
     validateOnChange:false,
 
     onSubmit: async(value) =>{
-
-      try {
-        toast.loading('processing')
-        await instance.post('/otp',{value}).then((response)=>{
-          toast.dismiss()
-          toast.success(response.data.message);
-            navigate('/otp');
-        })
-      } catch (error) {
-        toast.dismiss()
-        toast.error(error.response.data.message)
-      }
-
+       const response = await userRegisterOtp(value)
+       toast.success(response.data.message)
+       navigate('/otp')
     }
   })
 

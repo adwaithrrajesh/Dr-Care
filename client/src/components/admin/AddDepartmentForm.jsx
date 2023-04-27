@@ -11,8 +11,13 @@ const AddDepartmentForm = () => {
   const navigate = useNavigate();
 
   const handleImage = (event) => {
+    const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
     const inputImage = event.target.files[0];
-    setImage(inputImage);
+    if (inputImage && validImageTypes.includes(inputImage.type)) {
+       setImage(inputImage);
+    } else {
+      toast.error('Please select a valid image file (JPEG, PNG, GIF)');
+    }
   };
 
   const data = new FormData();

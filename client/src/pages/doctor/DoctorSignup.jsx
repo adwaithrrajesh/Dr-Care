@@ -4,7 +4,8 @@ import {toast} from 'react-hot-toast'
 import {useFormik} from 'formik'
 import {signupValidation} from '../../helpers/validate'
 import { Link, useNavigate } from "react-router-dom";
-import instance from "../../instance/instance";
+import { otpSend } from "../../API/doctor";
+
 
 
 const DoctorSignup = () => {
@@ -25,17 +26,10 @@ const DoctorSignup = () => {
 
     onSubmit: async(value) =>{
       toast.loading('Processing')
-
-      try {
-        await instance.post('/doctor/otp',{value}).then((response)=>{
+      const response =  await otpSend(value)
           toast.dismiss()
           toast.success(response.data.message);
           navigate('/doctor/otp');
-        })
-      } catch (error) {
-        toast.dismiss()
-        toast.error(error.response.data.message)
-      }
     }
   })
 

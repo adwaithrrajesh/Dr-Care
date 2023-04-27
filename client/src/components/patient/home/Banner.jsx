@@ -6,7 +6,7 @@ const Banner = () => {
 
   const slide = [
     {
-      URL:'https://img.pikbest.com/backgrounds/20190627/blue-pills-simple-medical-banner-background_1896626.jpg!bwr800'
+      URL:'https://img.freepik.com/premium-photo/abstract-blur-beautiful-luxury-hospital-clinic-interior-background_103324-624.jpg'
     },
     {
       URL:'https://t3.ftcdn.net/jpg/02/16/47/22/360_F_216472247_cT66WDoS0fp1s3wC7eaykMJNDGVbOBPq.jpg'

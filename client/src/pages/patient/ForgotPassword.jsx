@@ -1,14 +1,16 @@
 import React from "react";
-import { toast,Toaster } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import {Formik, useFormik} from 'formik'
 import { useNavigate } from "react-router-dom";
 import { emailValidation } from "../../helpers/validate";
-import instance from "../../instance/instance";
+import { forgotPasswordOtp } from "../../API/user";
 
 
 const ForgotPassword = () => {
 
     const navigate = useNavigate()
+
+// ------------------------------------------------------------------------FORMIK-------------------------------------------------------------------//
 
     const Formik = useFormik({
         initialValues:{
@@ -18,20 +20,20 @@ const ForgotPassword = () => {
         validateOnBlur : false,
         validateOnChange: false,
     
-        // Submit
+// ------------------------------------------------------------------------ONSUBMIT HANDLING-------------------------------------------------------------------//
+
         onSubmit: async(value) =>{
             toast.loading('processing...')
-            instance.post('/forgotPasswordOtp',{value}).then((response)=>{
-                toast.dismiss()
-                toast.success(response.data.message)
-                navigate('/forgot-password-otp')
-            }).catch((error)=>{
-                toast.dismiss()
-                toast.error(error.response.data.message)
-            })
+            const response = await forgotPasswordOtp(value)
+            toast.dismiss()
+            toast.success(response.data.message)
+            navigate('/forgot-password-otp')
         }
     
       })
+
+// -----------------------------------------------------------------------------CODE-------------------------------------------------------------------//
+
 
   return (
     <div>

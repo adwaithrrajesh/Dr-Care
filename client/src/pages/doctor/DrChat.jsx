@@ -6,7 +6,6 @@ const DrChat = () => {
     return (
         <div>
             <DoctorHeader />
-            
            <Chat />
         </div>
     );

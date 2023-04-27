@@ -52,14 +52,15 @@ module.exports = {
   addDepartment: async(req, res) => {
     const departmentImage = req.body.departmentImage
     const { departmentName, departmentDiscription } = req.body.value;
-    const department = { departmentName, departmentDiscription, departmentImage };
+    const department = { departmentName, departmentDiscription, departmentImage }
     try {
-      const departmentExist = await departmentModel.findOne({ departmentName });
+      const departmentExist = await departmentModel.findOne({ departmentName: { $regex: new RegExp(`^${departmentName}$`, 'i') } });
       if (departmentExist) {
         return res.status(404).json({ message: 'Department Already Exist' });
+      }else{
+        await departmentModel.create(department);
+        return res.status(200).json({ message: `${departmentName} added Successfully` });
       }
-      await departmentModel.create(department);
-      return res.status(200).json({ message: `${departmentName} added Successfully` });
     } catch (err) {
       return res.status(500).json({ message: 'Internal Server Error' });
     }
@@ -196,5 +197,7 @@ module.exports = {
      } catch (error) {
        res.status(404).json({error})
      }
-  }
+  },
+
+  
 };

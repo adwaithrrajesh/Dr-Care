@@ -1,5 +1,8 @@
 const userModel = require("../model/user");
 const bcrypt = require("bcrypt");
+const bookedAppointmentModel = require('../model/bookedAppointments')
+const appointmentModel = require('../model/appointment');
+const doctor = require("../model/doctor");
 
 module.exports = {
 // ----------------------------------------------------------------USER STORE-------------------------------------------------------------------//
@@ -53,7 +56,35 @@ module.exports = {
         resolve(false)
       }
     })
-  }
+  },
 
+// ----------------------------------------------------------------Booking Appointment-------------------------------------------------------------------//
+
+bookAppointment: (userId,appointmentId)=>{
+  return new Promise(async(resolve,reject)=>{
+
+    const appointment = await appointmentModel.findOne({_id: appointmentId}).populate('doctorId');
+    const booking = new bookedAppointmentModel({
+      userId,
+      time: `${appointment.startingTime} to ${appointment.endingTime}`,
+      date: appointment.date,
+      doctorId: appointment.doctorId._id,
+      amountPaid: appointment.doctorId.fee,
+      appointmentId:appointmentId
+    });
+    
+    try {
+      const response = await booking.save();
+      if(response){
+        const slotDecrease = await appointmentModel.findByIdAndUpdate(appointmentId,{ $inc: { slot: -1 } },{ new: true });
+        resolve(slotDecrease)
+      }
+    } catch (error) {
+      return error;
+    }
+    
+})
+},
+// --------------------------------------------------------------------------------------------------------------------------------------//
 
 };

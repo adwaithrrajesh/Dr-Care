@@ -1,12 +1,9 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import logo from '../../assets/logo.png'
 import { Link } from "react-router-dom";
 
 
 const DoctorHeader = () => {
-
-    const navigate = useNavigate()
 
 
   return (

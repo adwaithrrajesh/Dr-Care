@@ -8,7 +8,7 @@ module.exports = {
     generateToken:async (user)=>{
         try {
             return await new Promise((resolve) => {
-                const token  = jwt.sign(user, process.env.JWT_SECRET_KEY, { expiresIn: '2d' })
+                const token  = jwt.sign(user, process.env.JWT_SECRET_KEY, { expiresIn: '60d' })
                 resolve(token)
             })
         } catch (err) {
@@ -21,8 +21,11 @@ module.exports = {
     verifyToken:(token)=>{
         return new Promise((resolve,reject)=>{
             try {
+                if(token){
                 const decodedToken = jwt.verify(token,process.env.JWT_SECRET_KEY)
                 resolve(decodedToken)
+                }
+           
             } catch (error) {
                 resolve(false)
             }

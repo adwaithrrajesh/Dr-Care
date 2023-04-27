@@ -1,37 +1,28 @@
 import React from "react";
-import { toast,Toaster } from "react-hot-toast";
-import {Formik, useFormik} from 'formik'
+import { toast} from "react-hot-toast";
+import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { emailValidation } from "../../helpers/validate";
-import instance from "../../instance/instance";
-
+import { forgotPasswordOtpSend } from "../../API/doctor";
 
 const DoctorForgotPassword = () => {
+  const navigate = useNavigate();
 
-    const navigate = useNavigate()
+  const Formik = useFormik({
+    initialValues: {
+      email: "",
+    },
+    validate: emailValidation,
+    validateOnBlur: false,
+    validateOnChange: false,
 
-    const Formik = useFormik({
-        initialValues:{
-          email:''
-        },
-        validate: emailValidation,
-        validateOnBlur : false,
-        validateOnChange: false,
-    
-        // Submit
-        onSubmit: async(value) =>{
-            toast.loading('processing...')
-            instance.post('/doctor/forgotPasswordOtp',{value}).then((response)=>{
-                toast.dismiss()
-                toast.success(response.data.message)
-                navigate('/doctor/forgot-password-otp')
-            }).catch((error)=>{
-                toast.dismiss()
-                toast.error(error.response.data.message)
-            })
-        }
-    
-      })
+    // Submit
+    onSubmit: async (value) => {
+      const response = await forgotPasswordOtpSend(value);
+      toast.success(response.data.message);
+      navigate("/doctor/forgot-password-otp");
+    },
+  });
 
   return (
     <div>
@@ -52,7 +43,9 @@ const DoctorForgotPassword = () => {
                 </div>
               </div>
               <div className="flex items-baseline justify-center">
-                <button type="submit" className="px-14 py-2 mt-6 text-white bg-cyan-700 rounded-lg hover:bg-cyan-800">
+                <button
+                  type="submit"
+                  className="px-14 py-2 mt-6 text-white bg-cyan-700 rounded-lg hover:bg-cyan-800">
                   Send Otp
                 </button>
               </div>

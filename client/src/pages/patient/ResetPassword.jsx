@@ -4,6 +4,7 @@ import { Formik, useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { passwordValidation } from "../../helpers/validate";
 import instance from "../../instance/instance";
+import { resetPassword } from "../../API/user";
 
 
 const ResetPassword = () => {
@@ -20,14 +21,9 @@ const ResetPassword = () => {
 
     // Submit
     onSubmit: async (value) => {
-        instance.post('/resetPassword',{value}).then((response)=>{
-            toast.success(response.data.message)
-            setTimeout(() => {
-                navigate('/login')
-            }, 1500);
-        }).catch((error)=>{
-            toast.error(error.response.data.message)
-        })
+      const response = await resetPassword(value)
+      toast.success(response.data.message)
+      navigate('/login')
     },
   });
 

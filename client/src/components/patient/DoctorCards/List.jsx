@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import instance from "../../../instance/instance";
 import { toast } from "react-hot-toast";
-
+import { getDoctors } from "../../../API/user";
 const List = (props) => {
   const navigate = useNavigate();
 
@@ -20,15 +20,13 @@ const List = (props) => {
   // ----------------------------------------------------------------FINDING DOCTORS-------------------------------------------------------------------//
 
   useEffect(() => {
-    instance
-      .get("/viewDoctors")
-      .then((response) => {
-        setDoctor(response.data.doctors);
-      })
-      .catch((error) => {
-        toast.error(error.response.data.message);
-      });
+    callGetDoctors()
   }, []);
+
+  const callGetDoctors = async() =>{
+    const response = await getDoctors()
+    setDoctor(response.data.doctors)
+  }
 
   // ---------------------------------------------------------------- CODE-------------------------------------------------------------------//
 

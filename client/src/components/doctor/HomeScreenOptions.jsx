@@ -1,19 +1,21 @@
 import React from "react";
 import { useEffect,useState } from "react";
 import { useNavigate } from "react-router-dom";
-import instance from "../../instance/instance";
+import { getVerificationStatus } from "../../API/doctor";
 
 const Options = () => {
 
-  const navigate = useNavigate();
-  const doctorToken = JSON.parse(localStorage.getItem('doctorToken'))
+  const navigate = useNavigate()
   const [submit,setSubmit] = useState(false)
 
 useEffect(() => {
-    instance.get("/doctor/verificationStatus", {headers: {Authorization: `Bearer ${doctorToken}`}}).then((response)=>{
-      setSubmit(response.data)
-    })
+  verificationStatus()
   }, []);
+
+  const verificationStatus = async () =>{
+    const response = await getVerificationStatus()
+    setSubmit(response.data)
+  }
   
 
   return (

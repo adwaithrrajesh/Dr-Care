@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Navigate, Outlet, useNavigate } from "react-router-dom"
 import { useEffect } from "react"
-import instance from "../../src/instance/instance"
+import doctorInstance from "../instance/doctorInstance"
 
 const DoctorProtectedRoutes = () => {
     
@@ -11,7 +11,7 @@ const [doctor,setDoctor] = useState(false)
 
  
 useEffect(() => {
-    instance.get("/doctor/verifyToken", {headers: {Authorization: `Bearer ${doctorToken}`}}).then((response)=>{
+    doctorInstance.get("/doctor/verifyToken", {headers: {Authorization: `Bearer ${doctorToken}`}}).then((response)=>{
       setDoctor(true)
     }).catch((error)=>{
         localStorage.clear()

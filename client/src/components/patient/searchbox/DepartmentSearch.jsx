@@ -22,7 +22,6 @@ useEffect(()=>{
     instance.post('/departmentSearchResult',{search}).then((response)=>{
       toast.dismiss()
       if(response.data.results.length == 0){
-        toast.error('No search results found')
         dispatch(setSearchData(null))
       }else{
         toast.success(response.data.results.length +' Search Result found')

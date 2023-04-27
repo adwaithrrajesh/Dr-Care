@@ -4,11 +4,7 @@ const ObjectId = mongoose.Types.ObjectId
 const appointmentSchema = mongoose.Schema({
     doctorId:{
         type: ObjectId,
-        ref:'doctor'
-    },
-    userId:{
-        type: ObjectId,
-        ref:'user'
+        ref:'doctors'
     },
     date:{
         type:Date,

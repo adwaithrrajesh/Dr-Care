@@ -1,11 +1,13 @@
 import React from "react";
-import instance from "../../instance/instance";
-import { Formik, useFormik } from "formik";
+import doctorInstance from "../../instance/doctorInstance";
+import { useFormik } from "formik";
 import { toast } from "react-hot-toast";
 import { useState,useEffect } from "react";
 import { DoctorUploadValidation } from "../../helpers/validate";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { getDepartments } from "../../API/user";
+
 
 const Form = () => {
 
@@ -14,30 +16,41 @@ const Form = () => {
   const [department,setDepartment] = useState([])
   const [idCard,setIdCard] = useState('')
   const [certificate,setCertificate] = useState('')
+  const doctorToken = JSON.parse(localStorage.getItem("doctorToken"));
   
 
 
   // Fetching Departments
   useEffect(() => {
-      instance.get('/viewDepartments').then((response)=>{
-          setDepartment(response.data.departments)
-      }).catch((error)=>{
-        toast.error(error.response.data.message)
-      })
+    viewDepartments()
   }, []);
 
+  const viewDepartments = async()=>{
+    const response = await getDepartments()
+    setDepartment(response.data.departments)
+  }
+
   const handleIdCard = (event) => {
+    const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
     const idImage = event.target.files[0];
-    setIdCard(idImage);
+    if (idImage && validImageTypes.includes(idImage.type)) {
+      setIdCard(idImage);
+   } else {
+     toast.error('Please select a valid image file');
+   }
   };
   const handleCertificate = (event) => {
+    const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
     const certificate = event.target.files[0];
-    setCertificate(certificate)
+    if (certificate && validImageTypes.includes(certificate.type)) {
+      setCertificate(certificate)
+   } else {
+     toast.error('Please select a valid image file');
+   }
   };
   // Formik
   const Formik = useFormik({
     initialValues: {
-      email:"",
       fee:"",
       idNumber : "",
       qualification: "",
@@ -51,7 +64,7 @@ const Form = () => {
     // Submit
     onSubmit: async (value) => {
       const idImage = idCard;
-      const certificationImage = certificate;
+      const certificationImage = certificate; 
 
       if (!idImage) {
         toast.error("Please add your Id Image");
@@ -70,11 +83,7 @@ const Form = () => {
       
         Promise.all([uploadImage(idImage, "IdcardImage"),uploadImage(certificationImage, "certificateImage")
             ]).then(([IdcardImage, certificateImage]) => {
-            return instance.patch("/doctor/addDoctorDetails", {
-              value,
-              IdcardImage,
-              certificateImage
-            });
+            return doctorInstance.patch("/doctor/addDoctorDetails",{value,IdcardImage,certificateImage},{headers: { Authorization: `Bearer ${doctorToken}` }})
           }).then((response) => {
             toast.dismiss();
             toast.success(response.data.message);
@@ -106,19 +115,6 @@ const Form = () => {
           </div>
 
           <form onSubmit={Formik.handleSubmit}>
-
-             <div className="mt-4">
-             <div class="flex items-center justify-start w-full mt-3">
-              <label className="text-gray-500">Email</label>
-            </div>
-               <input
-                type="text"
-                placeholder="Your Registered Email Id"
-                className=" w-full px-9 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-cyan-600"
-                name="idNumber"
-              {...Formik.getFieldProps("email")}
-              />
-            </div>
 
             <div className="mt-4">
             <div class="flex items-center justify-start w-full mt-3">

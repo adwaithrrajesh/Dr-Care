@@ -9,6 +9,10 @@ const userSchema = mongoose.Schema({
         type:String,
         require:true
     },
+    wallet:{
+        type: Number,
+        default:0
+    },
     phoneNumber:{
         type:Number,
         require:true
@@ -24,6 +28,10 @@ const userSchema = mongoose.Schema({
     block:{
         type:Boolean,
         default:false
+    },
+    profilePhoto:{
+        type:String,
+        default:'https://static.vecteezy.com/system/resources/previews/008/442/086/original/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg'
     }
 });
 

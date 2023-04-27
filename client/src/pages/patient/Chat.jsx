@@ -7,7 +7,6 @@ const Chat = () => {
         <div>
             <Header />
             <ChatList />
-
         </div>
     );
 }

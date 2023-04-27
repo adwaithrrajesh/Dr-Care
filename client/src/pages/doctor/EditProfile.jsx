@@ -1,6 +1,6 @@
 import React from 'react';
-import DoctorHeader from '../../DoctorHeader';
-import EditDetails from './Details/EditDetails';
+import DoctorHeader from '../../components/doctor/DoctorHeader';
+import EditDetails from '../../components/doctor/Profile/EditProfile/EditDetails';
 
 const EditProfile = () => {
     return (

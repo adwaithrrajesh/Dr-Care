@@ -1,9 +1,10 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import instance from "../../../../../instance/instance";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { getDoctorDetails } from "../../../../API/doctor";
+import doctorInstance from "../../../../instance/doctorInstance";
 
 
 
@@ -28,30 +29,20 @@ const EditDetails = () => {
     lastName,
     email,
     fee,
-    setFee,
     experience,
     phoneNumber
   }
 
-  // -----------------------------------------------------Fetching Departments----------------------------------------------------------------
-
-    useEffect(() => {
-      instance.get('/viewDepartments').then((response)=>{
-          setDepartmentName(response.data.departments)
-      }).catch((error)=>{
-        toast.error(error.response.data.message)
-      })
-  }, []);
-
   // -----------------------------------------------------GET DOCTOR DETAILS----------------------------------------------------------------
 
   useEffect(() => {
-    instance.get("/doctor/doctorDetails", {
-        headers: { Authorization: `Bearer ${doctorToken}` }
-      }).then((response) => {
-        setDoctor(response.data.doctorDetails);
-      });
+    getDoctor()
   }, [reload]);
+
+  const getDoctor = async() =>{
+    const response = await getDoctorDetails()
+    setDoctor(response.data.doctorDetails);
+  }
 
   // -----------------------------------------------------------UPDATE PROFILE PHOTO----------------------------------------------------------------
   const profileUpload = async(profile) =>{
@@ -61,7 +52,7 @@ const EditDetails = () => {
     await axios.post("https://api.cloudinary.com/v1_1/dg047twga/image/upload",formData).then((response)=>{
         const profile = response.data.url
         const doctorId = doctor._id
-        instance.patch('/doctor/updateProfile',{profile,doctorId}).then((response)=>{
+        doctorInstance.patch('/doctor/updateProfile',{profile,doctorId}).then((response)=>{
             toast.success(response.data.message)
             setReload(!reload,'i')
         }).catch((error)=>{
@@ -74,12 +65,18 @@ const EditDetails = () => {
 
   const handleSubmit = (e) =>{
     e.preventDefault()
-    instance.patch('/doctor/updateProfileDetails',{details},{headers:{ Authorization: `Bearer ${doctorToken}` }}).then((response)=>{
-      navigate('/doctor/profile')
-    toast.success(response.data.message)
-  }).catch((err)=>{
-    toast.error(err.response.data.message)
-  })
+    const isEmpty = Object.values(details).every(x => !x);
+    if (isEmpty) {
+      toast.error('Please update something');
+    } else {
+      doctorInstance.patch('/doctor/updateProfileDetails', { details }, { headers: { Authorization: `Bearer ${doctorToken}` } }).then(response => {
+          navigate('/doctor/profile');
+          toast.success(response.data.message);
+        }).catch(err => {
+          toast.error(err.response.data.message);
+        });
+    }
+    
   }
 
   
@@ -89,15 +86,15 @@ const EditDetails = () => {
   return (
     <div>
       <div>
-        <div class=" h-[120px] flex flex-col justify-center items-center  bg-cover">
-          <img
-            src={doctor.profilePhoto}
-            className="bg-cover h-36 mt-44 rounded-full"
-            alt=""
-          />
-        </div>
-        <div class=" mt-10 flex flex-col justify-center items-center">
-          <h6 class="text-gray-700 text-lg mt-16">
+      <div class=" h-48 flex flex-col justify-center items-center mt-24">
+        <img
+          src={doctor.profilePhoto}
+          class="block h-48 w-48  rounded-full object-cover"
+          alt=""
+        />
+      </div>
+        <div class="flex flex-col justify-center items-center">
+          <h6 class="text-gray-700 text-lg mt-8">
             {doctor.firstName}
             {doctor.lastName}
           </h6>
@@ -122,7 +119,7 @@ const EditDetails = () => {
           <div className="rounded-t-3xl h-[600px] mt-36 w-full bg-blue-100">
             <div className="rounded-full h-1 w-full">
               <p className="text-3xl text-center text-cyan-900 pt-4">Edit Profile</p>
-            </div>
+          </div>
 
         <form onSubmit={handleSubmit}> 
 

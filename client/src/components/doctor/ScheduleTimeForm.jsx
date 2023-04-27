@@ -1,10 +1,10 @@
 import React from "react";
 import { useState } from "react";
 import toast from 'react-hot-toast'
-import instance from "../../instance/instance";
 import { useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { addScheduleTime,getScheduledTime,deletingScheduledTime } from "../../API/doctor";
 
 
 const ScheduleTime = () => {
@@ -27,43 +27,39 @@ const ScheduleTime = () => {
 // ---------------------------------------------------------------Fetching details to pass to the backend-------------------------------------------------------------------//
 
   const details ={date,startingTime,endingTime,slot}
-
-  const doctorToken = JSON.parse(localStorage.getItem("doctorToken"));
   
 // ---------------------------------------------------------------Passing every value to back end-------------------------------------------------------------------//
-  const handleSubmit = (e) =>{
+  const handleSubmit = async(e) =>{
     e.preventDefault()
 
     if(!date || !startingTime || !endingTime || !slot){
       toast.error('Please make sure that you entered everything')
     }else if(startingTime == endingTime){
       toast.error('Please enter a valid Time')
+    }else if(slot == 0){
+      toast.error(`slot can't be zero`)
     }else{
-      instance.post('/doctor/addScheduleTime',{details},{headers: { Authorization: `Bearer ${doctorToken}` }}).then((response)=>{
+      const response = await addScheduleTime(details)
         setRefresh(response)
-        toast.success(response.data.message)
-      }).catch((error)=>{
-        toast.error(error.response.data.message)
-      })
+       toast.success(response.data.message)
     }
   }
 
 // ---------------------------------------------------------------Fetching the scheduled time from backend-------------------------------------------------------------------//
 useEffect(() => {
-  instance.get('/doctor/getScheduledTime',{headers: {Authorization:`Bearer ${doctorToken}`}}).then((response)=>{
-    setScheduledTime(response.data.scheduledTime)
-    console.log(response.data.scheduledTime)
-  })
+  gettingSceduledTime()
 }, [refresh]);
 
-// ---------------------------------------------------------------Delete the scheduled time-------------------------------------------------------------------//
-const deleteScheduledTime =(scheduledTimeId)=>{
-  instance.post('/doctor/deleteScheduledTime',{scheduledTimeId}).then((response)=>{
+const gettingSceduledTime = async() =>{
+  const response = await getScheduledTime()
+  setScheduledTime(response.data.scheduledTime)
+}
+
+// --------------------------------------------------------------------Delete the scheduled time-------------------------------------------------------------------//
+const deleteScheduledTime = async(scheduledTimeId)=>{
+  const response = await deletingScheduledTime(scheduledTimeId)
     setRefresh(response)
     toast.success(response.data.message)
-  }).catch((error)=>{ 
-    toast.error(error.response.data.message)
-  })
 }
 
 

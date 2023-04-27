@@ -90,11 +90,7 @@ export async function DepartmentValidation(value){
 export async function DoctorUploadValidation(value){
     const error = {}
 
-    if(!value.email){
-        return error.email = toast.error('Registered Email Required...!')
-    }else if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i.test(value.email)){
-        return error.email = toast.error('Invalid Email...!')
-    }else if(!value.idNumber){
+    if(!value.idNumber){
         return error.idNumber = toast.error('Please enter Id Number')
     }else if(! value.qualification){
         return error.qualification = toast.error('Please enter Qualification')

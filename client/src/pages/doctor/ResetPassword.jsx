@@ -1,10 +1,9 @@
 import React from "react";
-import { toast, Toaster } from "react-hot-toast";
-import { Formik, useFormik } from "formik";
+import { toast } from "react-hot-toast";
+import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { passwordValidation } from "../../helpers/validate";
-import instance from "../../instance/instance";
-
+import { DoctorResetPasswordAPI } from "../../API/doctor";
 
 const DoctorResetPassword = () => {
   const navigate = useNavigate();
@@ -20,24 +19,19 @@ const DoctorResetPassword = () => {
 
     // Submit
     onSubmit: async (value) => {
-        instance.patch('/doctor/resetPassword',{value}).then((response)=>{
-            toast.success(response.data.message)
-            navigate('/doctor/login')
-        }).catch((error)=>{
-            toast.error(error.response.data.message)
-        })
+      const response = await DoctorResetPasswordAPI(value);
+      toast.success(response.data.message);
+      navigate("/doctor/login");
     },
   });
 
   return (
     <div className="doctorLogin">
       <div className="flex items-center justify-center min-h-screen">
-       
         <div className="px-12 py-20 mt-7 text-left bg-blue-100 shadow-lg rounded-lg">
           <p className="text-2xl text-center">Change Your Password</p>
-         
+
           <form onSubmit={Formik.handleSubmit}>
-           
             <div className="mt-4">
               <div className="mt-4">
                 <label className="block">Password</label>
@@ -66,7 +60,6 @@ const DoctorResetPassword = () => {
               </div>
             </div>
           </form>
-
         </div>
       </div>
     </div>
