@@ -17,20 +17,46 @@ const List = () => {
   }, [reload]);
 
   const blockDoctor = (doctorId) =>{
-    instance.post('/admin/blockDoctor',{doctorId}).then((response)=>{
+    Swal.fire({
+      title: 'Block doctor',
+      text: "Are you sure want to Block the doctor",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Block'
+    }).then((result) => {
+      if (result.isConfirmed) {
+      instance.post('/admin/blockDoctor',{doctorId}).then((response)=>{
       setReload(!reload,"1")
       toast.success(response.data.message)
     }).catch((error)=>{
       toast.error(error.response.data.message)
+    }) 
+      }
     })
+  
   }
   const unBlockDoctor = (doctorId) =>{
+    Swal.fire({
+      title: 'Unblock Doctor',
+      text: "Are you sure want to unBlock the Doctor",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Unblock'
+    }).then((result) => {
+      if (result.isConfirmed) {
     instance.post('/admin/unBlockDoctor',{doctorId}).then((response)=>{
       setReload(!reload,"2")
       toast.success(response.data.message)
     }).catch((error)=>{
       toast.error(error.response.data.message)
     })
+      }
+    })
+
   }
   
 
@@ -48,6 +74,7 @@ const List = () => {
 
             {doctor.map((doctor) => (
                <tr class="bg-blue-300 flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
+               <th class="p-3 text-left">Profile</th>
                <th class="p-3 text-left">Full Name</th>
                <th class="p-3 text-left">Email</th>
                <th class="p-3 text-left">PhoneNumber</th>
@@ -60,6 +87,9 @@ const List = () => {
 
           {doctor.map((doctor) => (
             <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0">
+               <td class="border-grey-light border hover:bg-gray-100 p-3 flex justify-center">
+                <img src={doctor.profilePhoto} className="h-10 rounded" alt="user Profile" />
+              </td>
               <td class="border-grey-light border hover:bg-gray-100 p-3">
                 {doctor.firstName} {doctor.lastName}
               </td>

@@ -16,18 +16,46 @@ const DepartmentList = () => {
       }, [reload]);
 
       const hideDepartment = (departmentId) =>{
-        instance.post('/admin/hideDepartment',{departmentId}).then((response)=>{
+        Swal.fire({
+          title: 'Hide Department',
+          text: "Are you sure want to Hide Department",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Hide'
+        }).then((result) => {
+          if (result.isConfirmed) {
+          instance.post('/admin/hideDepartment',{departmentId}).then((response)=>{
           toast.success(response.data.message)
+          setReload(response)
         }).catch((error)=>{
           toast.error(error.response.data.message)
         })
+          }
+        })
+        
       }
       const showDepartment = (departmentId)=>{
-        instance.post('/admin/showDepartment',{departmentId}).then((response)=>{
-          toast.success(response.data.message)
-        }).catch((error)=>{
-          toast.error(error.response.data.message)
+        Swal.fire({
+          title: 'Show Department',
+          text: "Are you sure want to show Department",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: 'green',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Show'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            instance.post('/admin/showDepartment',{departmentId}).then((response)=>{
+              setReload(response)
+              toast.success(response.data.message)
+            }).catch((error)=>{
+              toast.error(error.response.data.message)
+            })
+          }
         })
+    
       }
 
     return (

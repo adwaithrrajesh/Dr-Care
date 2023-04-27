@@ -65,6 +65,7 @@ const EditDetails = () => {
 
   const handleSubmit = (e) =>{
     e.preventDefault()
+    
     const isEmpty = Object.values(details).every(x => !x);
     if (isEmpty) {
       toast.error('Please update something');

@@ -15,19 +15,44 @@ const List = () => {
   }, [reload]);
 
   const blockUser = (userId) =>{
-    instance.post('/admin/blockUser',{userId}).then((response)=>{
+    Swal.fire({
+      title: 'Block user',
+      text: "Are you sure want to block the user",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Block'
+    }).then((result) => {
+      if (result.isConfirmed) {
+      instance.post('/admin/blockUser',{userId}).then((response)=>{
       setReload(!reload,'!')
       toast.success(response.data.message)
     }).catch((error)=>{
       toast.error(error.response.data.message)
     })
+      }
+    })
+  
   }
   const unBlockUser = (userId) =>{
-    instance.post('/admin/unBlockUser',{userId}).then((response)=>{
-      setReload(!reload,'!')
-      toast.success(response.data.message)
-    }).catch((error)=>{
-      toast.error(error.response.data.message)
+    Swal.fire({
+      title: 'Unblock user',
+      text: "Are you sure want to unBlock the user",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Unblock'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        instance.post('/admin/unBlockUser',{userId}).then((response)=>{
+          setReload(!reload,'!')
+          toast.success(response.data.message)
+        }).catch((error)=>{
+          toast.error(error.response.data.message)
+        })
+      }
     })
   }
 
@@ -44,6 +69,7 @@ const List = () => {
 
             {user.map((user) => (
                <tr class="bg-blue-300 flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
+               <th class="p-3 text-left">Profile</th>
                <th class="p-3 text-left">Full Name</th>
                <th class="p-3 text-left">Email</th>
                <th class="p-3 text-left">PhoneNumber</th>
@@ -56,6 +82,9 @@ const List = () => {
 
           {user.map((user) => (
             <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0">
+               <td class="border-grey-light border hover:bg-gray-100 p-3 flex justify-center">
+                <img src={user.profilePhoto} className="h-10 rounded" alt="user Profile" />
+              </td>
               <td class="border-grey-light border hover:bg-gray-100 p-3">
                 {user.firstName} {user.lastName}
               </td>

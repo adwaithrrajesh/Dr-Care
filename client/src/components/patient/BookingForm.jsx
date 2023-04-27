@@ -90,7 +90,29 @@ const BookingForm = () => {
     InitializePayement(doctorId)
   }else{
     const doctorId = location.state
-    doWalletPayment(doctorId)
+   
+    Swal.fire({
+      title: 'Pay with wallet',
+      text: "Are you sure want to pay From wallet",
+      imageUrl: 'https://i0.wp.com/www.maxwellmoney.com/wp-content/uploads/2016/07/icon-wallet-blue.png?ssl=1',
+      imageWidth: 200,
+      imageHeight: 200,
+      imageAlt: 'Custom image',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Pay money'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Money Debited',
+          'Money successfully debited from your wallet.',
+          'success'
+        ).then((response)=>{
+          doWalletPayment(doctorId)
+        })
+      }
+    })
   }
  }
   }  

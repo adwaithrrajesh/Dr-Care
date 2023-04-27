@@ -31,18 +31,31 @@ const ScheduleTime = () => {
 // ---------------------------------------------------------------Passing every value to back end-------------------------------------------------------------------//
   const handleSubmit = async(e) =>{
     e.preventDefault()
+    Swal.fire({
+      title: 'Scedule Time',
+      text: "Are you sure want to add time",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Schedule Time'
+    }).then(async(result) => {
+      if (result.isConfirmed) {
 
-    if(!date || !startingTime || !endingTime || !slot){
-      toast.error('Please make sure that you entered everything')
-    }else if(startingTime == endingTime){
-      toast.error('Please enter a valid Time')
-    }else if(slot == 0){
-      toast.error(`slot can't be zero`)
-    }else{
-      const response = await addScheduleTime(details)
-        setRefresh(response)
-       toast.success(response.data.message)
-    }
+        if(!date || !startingTime || !endingTime || !slot){
+          toast.error('Please make sure that you entered everything')
+        }else if(startingTime == endingTime){
+          toast.error('Please enter a valid Time')
+        }else if(slot == 0){
+          toast.error(`slot can't be zero`)
+        }else{
+          const response = await addScheduleTime(details)
+            setRefresh(response)
+           toast.success(response.data.message)
+        }
+      }
+    })
+    
   }
 
 // ---------------------------------------------------------------Fetching the scheduled time from backend-------------------------------------------------------------------//

@@ -4,8 +4,6 @@ import { getCancelledAppointments } from "../../API/user";
 
 const CancelledAppointmentDetails = () => {
   const [appointments, setAppointments] = useState([]);
-  const token = JSON.parse(localStorage.getItem("clientToken"));
-
   useEffect(() => {
     cancelledAppointments()
   }, []);

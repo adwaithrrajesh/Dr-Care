@@ -28,12 +28,31 @@ useEffect(() => {
 // ---------------------------------------------------------------CANCELLING APPOINTMENT-------------------------------------------------------------------//
 
 const cancelAppointment = (AppointmentId) =>{
-    instance.patch('/cancelAppointment',{AppointmentId}).then((response)=>{
-        toast.success(response.data.message)
-        setReload(!reload)
-    }).catch((error)=>{
-        toast.error(error.response.data.message)
-    })
+    Swal.fire({
+        title: 'Cancel Appointment',
+        text: "Are you sure want to cancel your appointment",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Cancel Appointment'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire(
+            'Appointment Cancelled',
+            'Your appointment has been cancelled successfully',
+            'success'
+          ).then(()=>{
+            instance.patch('/cancelAppointment',{AppointmentId}).then((response)=>{
+                toast.success(response.data.message)
+                setReload(!reload)
+            }).catch((error)=>{
+                toast.error(error.response.data.message)
+            })
+          })
+        }
+      })
+   
 }
   
 

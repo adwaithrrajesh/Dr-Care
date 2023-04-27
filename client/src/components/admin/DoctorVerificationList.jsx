@@ -20,8 +20,17 @@ const VerificationList = () => {
   }, [reload]);
 
   const verifyDoctor = (doctorId) => {
-    instance
-      .post("/admin/verifyDoctor", { doctorId })
+    Swal.fire({
+      title: 'Verify Doctor',
+      text: "Are you sure want to Verify the doctor",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: 'green',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Verify'
+    }).then((result) => {
+      if (result.isConfirmed) {
+      instance.post("/admin/verifyDoctor", { doctorId })
       .then((response) => {
         setReload(!reload, "!");
         toast.success(response.data.message);
@@ -29,12 +38,23 @@ const VerificationList = () => {
       .catch((error) => {
         toast.error(error.response.data.message);
       });
+      }
+    })
+   
   };
 
   const unVerifyDoctor = (doctorId) => {
-    console.log(doctorId);
-    instance
-      .post("/admin/unVerifyDoctor", { doctorId })
+    Swal.fire({
+      title: 'Unverify doctor',
+      text: "Are you sure want to unverify the doctor",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Unverify'
+    }).then((result) => {
+      if (result.isConfirmed) {
+      instance.post("/admin/unVerifyDoctor", { doctorId })
       .then((response) => {
         setReload(!reload, "!");
         toast.success(response.data.message);
@@ -42,6 +62,9 @@ const VerificationList = () => {
       .catch((error) => {
         toast.error(error.response.data.message);
       });
+      }
+    })
+  
   };
 
   return (
