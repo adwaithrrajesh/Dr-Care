@@ -1,5 +1,6 @@
 const drModel = require("../model/doctor");
 const bcrypt = require("bcrypt");
+const bookedAppointmentModel = require('../model/bookedAppointments')
 
 module.exports = {
 // ----------------------------------------------------------------STORE DOCTOR-------------------------------------------------------------------//
@@ -52,6 +53,25 @@ module.exports = {
         resolve(false)
       }
     })
+  },
+
+// -----------------------------------------------------------------GET APPOINTMENT GRAPH-------------------------------------------------------------------//
+  
+  getAppointmentGraph:(id) =>{
+    return new Promise(async(resolve, reject) => {
+      const year = new Date().getFullYear();
+      const appointmentCount = [];
+
+      for (let month = 1; month <= 12; month++) {
+        const start = new Date(`${year}-${month.toString().padStart(2, '0')}-01`);
+        const end = month === 12 
+          ? new Date(`${year}-12-31`) 
+          : new Date(`${year}-${(month + 1).toString().padStart(2, '0')}-01`);
+        const count = await bookedAppointmentModel.count({ doctorId: id,createdAt: {  $gte: start,  $lt: end}});
+        appointmentCount.push(count)
+      }
+     resolve(appointmentCount)
+    });
   }
 
 };

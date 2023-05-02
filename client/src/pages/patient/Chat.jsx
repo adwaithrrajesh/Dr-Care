@@ -1,12 +1,12 @@
 import React from 'react';
-import Header from '../../components/patient/Header';
-import ChatList from '../../components/patient/ChatList';
+import ChatDetails from '../../components/patient/chat/ChatDetails';
+import ChatHeader from '../../components/patient/chat/ChatHeader';
 
-const Chat = () => {
+const Chat = ({ socket }) => {
     return (
         <div>
-            <Header />
-            <ChatList />
+            <ChatHeader />
+            <ChatDetails socket={socket} />
         </div>
     );
 }

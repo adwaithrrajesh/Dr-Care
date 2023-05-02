@@ -19,6 +19,8 @@ import EditUserProfile from './pages/patient/editUserProfile'
 import UserAppointments from './pages/patient/Appointments'
 import Wallet from './pages/patient/wallet'
 import CancelledAppointments from './pages/patient/CancelledAppointments'
+import ChatList from './pages/patient/ChatList'
+import DoctorChatList from './pages/doctor/DrChatList'
 
 
 // Otp
@@ -38,6 +40,8 @@ import DrChat from './pages/doctor/DrChat'
 import EditProfile from './pages/doctor/EditProfile'
 import ScheduleTime from './pages/doctor/ScheduleTime'
 import Appointments from './pages/doctor/Appointments'
+import DoctorDashboard from './pages/doctor/dashboard'
+import EditScheduledTime from './pages/doctor/EditScheduledTime'
 
 // Import Admin Page
 import AdminLogin from './pages/admin/adminLogin'
@@ -46,6 +50,7 @@ import DoctorList from './pages/admin/Doctors'
 import AddDepartment from './pages/admin/AddDepartment'
 import DepartmentManagement from './pages/admin/DepartmentManagement'
 import DoctorVerification from './pages/admin/doctorVerification'
+import AdminDashboard from './pages/admin/AdminDashboard'
 
 
 // Import Public and Protected Routes
@@ -56,6 +61,11 @@ import DoctorProtectedRoutes from './utils/DoctorPrivateRoute'
 import AdminPublicRoute from './utils/AdminPublicRoute'
 import AdminProtectedRoute from './utils/AdminProtectedRoute'
 import ViewVerificationImage from './pages/admin/ViewVerificationImage'
+
+
+// -------------------------------------------------------SOCKET IO------------------------------------------------------------------------------------
+import socketIO from 'socket.io-client';
+const socket = socketIO.connect('http://localhost:4000');
 
 
 
@@ -73,7 +83,7 @@ function App() {
         </Route>
       
         <Route element={<ClientProtectedRoutes/>}>
-        <Route path='/chat' element={<Chat/>}/>
+        <Route path='/chat' element={<Chat socket={socket}/>}/>
         <Route path='/book' element={<DoctorBooking/>}/>
         <Route path='/departments' element={<Departments/>}/>
         <Route path='/doctorProfile' element={<DoctorProfile/>}/>
@@ -82,6 +92,7 @@ function App() {
         <Route path='/appointments' element={<UserAppointments/>}/>
         <Route path='/wallet' element={<Wallet/>}/>
         <Route path='/viewCancelledAppointments' element={<CancelledAppointments/>}/>
+        <Route path='/chatList' element={<ChatList/>}/>
         </Route>
 
         <Route path='/' element={<Home/>}/>
@@ -103,13 +114,16 @@ function App() {
         </Route>
 
         <Route element={<DoctorProtectedRoutes/>}>
+        <Route path='/doctor/editScheduledTime' element={<EditScheduledTime/>}/>
         <Route path='/doctor/home' element={<DoctorHome/>}/>
         <Route path='/doctor/profile' element={<Profile/>}/>
         <Route path='/doctor/uploadDetails' element={<UploadDetails/>}/>
+        <Route path='/doctor/chatList' element={<DoctorChatList/>}/>
         <Route path='/doctor/chat' element={<DrChat/>}/>
         <Route path='/doctor/appointments' element={<Appointments/>}/>
         <Route path='/doctor/editProfile' element={<EditProfile/>}/>
         <Route path='/doctor/scheduleTime' element={<ScheduleTime/>}/>
+        <Route path='/doctor/dashboard' element={<DoctorDashboard/>}/>
         </Route>
         
         <Route path='/doctor/forgotpassword' element={<DoctorForgotPassword/>}/>
@@ -123,7 +137,8 @@ function App() {
         </Route>
         
         <Route element={<AdminProtectedRoute/>}>
-        <Route path='/admin' element={<ListUsers/>}/>
+        <Route path='/admin' element={<AdminDashboard/>}/>
+        <Route path='/admin/users' element={<ListUsers/>}/>
         <Route path='/admin/doctors' element={<DoctorList/>}/>
         <Route path='/admin/addDepartment' element={<AddDepartment/>}/>
         <Route path='/admin/departmentManagement' element={<DepartmentManagement/>}/>

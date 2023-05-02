@@ -2,6 +2,7 @@ import React from "react";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import { Link } from "react-router-dom";
 
+
 const Doctors = () => {
   const doctor = [
     {
@@ -63,6 +64,7 @@ const Doctors = () => {
 
   return (
     <div>
+
       <div>
         <div className="bg-white max-w-[2000px] h-[550px] px-10 text-center rounded-3xl justify-center mt-2">
           <div className="flex flex-col justify-center items-center">

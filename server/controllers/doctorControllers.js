@@ -7,6 +7,8 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const appointmentModel = require('../model/appointment')
 const bookedAppointmentModel = require('../model/bookedAppointments');
+const userModel = require('../model/user');
+const doctorHelper = require("../helpers/doctorHelper");
 
 let doctor; //Doctor details will store here
 
@@ -269,8 +271,7 @@ getBookedAppointments: async(req,res)=>{
     // Finding UserId 
     const token = req?.headers["authorization"]?.split(" ")[1];
     const doctor = await doctorModel.findOne({_id: jwt?.verify(token, process.env.JWT_SECRET_KEY)?.doctorId})
-    const appointments = await bookedAppointmentModel.find({doctorId:doctor._id, cancelled: false}).populate('userId')
-
+    const appointments = await bookedAppointmentModel.find({doctorId:doctor._id, cancelled: false,appointmentStatus: { $nin: [false, true] } }).populate('userId')
     res.status(200).json({appointments: appointments})
   } catch (error) {
     res.status(500).json({message:'Internal Server Error'})
@@ -284,11 +285,97 @@ filterAppointmentsByDate: async(req,res)=>{
     const token = req?.headers["authorization"]?.split(" ")[1];
     const doctor = await doctorModel.findOne({_id: jwt?.verify(token, process.env.JWT_SECRET_KEY)?.doctorId})
     const date = req.body.date
-    const appointments = await bookedAppointmentModel.find({doctorId:doctor._id,date:date,cancelled:false}).populate('userId')
+    const appointments = await bookedAppointmentModel.find({doctorId:doctor._id,date:date,cancelled:false}).sort({date: -1}).populate('userId')
     res.status(200).json({filteredAppointments:appointments})
   }catch(error){
     res.status(404).json({message:'Unable to process your request'})
   }
+},
+
+// ---------------------------------------------------------------CANCEL APPOINTMENT-------------------------------------------------------------------//
+
+cancelAppointment: async(req,res)=>{
+  try {
+    const { appointmentId } = req.body;
+    await bookedAppointmentModel.updateOne({ _id: appointmentId }, { appointmentStatus: false });
+    const { amountPaid, userId, appointmentIdFromBookedAppointments } = await bookedAppointmentModel.findOne({ _id: appointmentId });
+    await userModel.findByIdAndUpdate(userId, { $inc: { wallet: amountPaid } });
+    await appointmentModel.updateOne({ _id: appointmentIdFromBookedAppointments }, { $inc: { slot: 1 } });
+    res.json({ message: 'Appointment Cancelled Successfully' });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+},
+
+// --------------------------------------------------------------- PATIENT VISITED CLINIC -------------------------------------------------------------------//
+
+patientVisitedClinic:async(req,res)=>{
+  try {
+  const appointmentId = req.body.appointmentId
+  await bookedAppointmentModel.updateOne({_id:appointmentId},{$set:{appointmentStatus:true}}).then(()=>{
+    res.status(200).json({message:"Patient visited you clinic"})
+  }) 
+  } catch (error) {
+    res.status(500).json({message:'Internal Server Error'})
+  }
+},
+
+// --------------------------------------------------------------------------GETTING DASHBOARD COUNT-------------------------------------------------------------//
+
+getDashboardDetails : async(req,res) =>{
+  try {
+    const { doctorId } = req;
+    const visitedAppointments = await bookedAppointmentModel.find({ doctorId, appointmentStatus: true });
+    const visitedPatients = visitedAppointments.length;
+    const totalRevenue = visitedAppointments.reduce((sum, { amountPaid }) => sum + amountPaid, 0);
+    const cancelledAppointments = await bookedAppointmentModel.countDocuments({ doctorId, appointmentStatus: false });
+    const bookedAppointments = await bookedAppointmentModel.countDocuments({ doctorId, cancelled: false, appointmentStatus: { $nin: [false, true] } });
+    res.status(200).json({ visitedPatients, totalRevenue, cancelledAppointments, bookedAppointments })
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+
+},
+
+// ---------------------------------------------------------------------------GETTING APPOINTMENT DETAILS WITH ID-----------------------------------------------------------//
+
+getAppointmentDetailsWithId: async(req,res) =>{
+  try {
+  const appointmentId = req.body.appointmentId
+  const appointment = await appointmentModel.findOne({_id:appointmentId})
+  res.status(200).json({appointment:appointment})
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({message:"Internal Server Error"})
+  }
+
+},
+
+// ---------------------------------------------------------------------------GETTING DASHBOARD GRAPH DETAILS-----------------------------------------------------------//
+
+editAppointmentDetails: async(req,res)=>{
+  const {appointmentId,startingTime,endingTime,slot}= req.body
+  try {
+    const updatedAppointment = await appointmentModel.findOneAndUpdate({ _id: appointmentId },{ startingTime, endingTime, slot },{ new: true });
+    res.status(200).json({message:"Appointment Updated Successfully"})
+  } catch (error) {
+    res.status(500).json({message:"Internal Server Error"})
+  }
+},
+
+getAppointementGraph: async(req,res)=>{
+  try {
+  const doctorId = req.doctorId
+  const graphDetails = await doctorHelper.getAppointmentGraph(doctorId)
+  res.status(200).json({graphDetails:graphDetails})
+  } catch (error) {
+    res.status(500).json({message:"Internal Server Error"})
+  }
+ 
 }
+
+
 
 };

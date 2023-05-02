@@ -9,6 +9,7 @@ import { otpVerify } from "../../API/user";
 const Otp = () => {
   const [otpCode, setCode] = useState("");
   const [counter, setCounter] = useState(5);
+  const [loading,setLoading] = useState(false)
 
   useEffect(() => {
     counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
@@ -20,10 +21,13 @@ const Otp = () => {
   // Handle Submit
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true)
     if (otpCode.length < 6) {
+      setLoading(false)
       toast.error("Please enter Otp");
     } else {
         const response = await otpVerify(otpCode)
+        setLoading(false)
         toast.success(response.data.message)
         navigate("/login");
     }
@@ -46,6 +50,9 @@ const Otp = () => {
 
   return (
     <div>
+       {loading && <div className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-gray-500 bg-opacity-50 z-50">
+      <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
+    </div>}
       <div class=" bg-[url('https://www.uplead.com/wp-content/uploads/2022/05/How-to-write-an-email-to-ceo.png')] bg-no-repeat bg-cover relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-12">
         <div class="relative bg-blue-200 px-6 pt-10 pb-9 shadow-xl mx-auto w-full max-w-lg rounded-2xl">
           <div class="mx-auto flex w-full max-w-md flex-col space-y-16">

@@ -18,21 +18,25 @@ const Doctors = () => {
     const [filter,setFilter] = useState()
     const [sort,setSort] = useState()
     const [fetchedDetails,setFetchedDetails] = useState()
+    const [loading,setLoading] = useState(false)
 
     useEffect(() => {
-        toast.loading('processing...')
+        setLoading(true)
         setTimeout(() => {
         location.state?.departmentData && setDepartment(location.state.departmentData)
-        }, 100)
+        }, 200)
           instance.get(`/fetchDoctors?search=${search}&department=${department}&filter=${filter}&sort=${sort}`).then((response)=>{
-            toast.dismiss()
+            setLoading(false)
             setFetchedDetails(response.data.doctorDetails)
         })  
     }, [department,search,filter,sort])
 
     return (
-
+        
         <doctorData.Provider value={{setSearch,setFilter,setSort,filter,sort}}>
+             {loading && <div className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-gray-500 bg-opacity-50 z-50">
+      <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
+    </div>}
             <Header />
             <Search />
             <FilterandSort />

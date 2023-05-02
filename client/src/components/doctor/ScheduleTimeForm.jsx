@@ -4,6 +4,7 @@ import toast from 'react-hot-toast'
 import { useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import {useNavigate} from 'react-router-dom'
 import { addScheduleTime,getScheduledTime,deletingScheduledTime } from "../../API/doctor";
 
 
@@ -13,6 +14,8 @@ const ScheduleTime = () => {
   const startTime = ['7:00 am','8:00 am','9:00 am','10:00 am','11:00 am','12:00pm','1:00 pm','2:00 pm','3:00 pm','4:00 pm','5:00 pm','6:00 pm','7:00 pm','8:00 pm','9:00 pm','10:00 pm']
   const endTime = ['7:00 am','8:00 am','9:00 am','10:00 am','11:00 am','12:00pm','1:00 pm','2:00 pm','3:00 pm','4:00 pm','5:00 pm','6:00 pm','7:00 pm','8:00 pm','9:00 pm','10:00 pm']
 
+
+  const navigate = useNavigate()
 
 
 // ---------------------------------------------------------------States-------------------------------------------------------------------//
@@ -70,9 +73,22 @@ const gettingSceduledTime = async() =>{
 
 // --------------------------------------------------------------------Delete the scheduled time-------------------------------------------------------------------//
 const deleteScheduledTime = async(scheduledTimeId)=>{
-  const response = await deletingScheduledTime(scheduledTimeId)
+
+  Swal.fire({
+    title: 'Delete Sceduled Time',
+    text: "Are you sure want to delete the scheduled Time",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Delete'
+  }).then(async(result) => {
+    if (result.isConfirmed) {
+    const response = await deletingScheduledTime(scheduledTimeId)
     setRefresh(response)
     toast.success(response.data.message)
+    }
+  })
 }
 
 
@@ -209,19 +225,23 @@ const deleteScheduledTime = async(scheduledTimeId)=>{
             ○ {new Date(schedule.date).toLocaleDateString()} : {schedule.startingTime} to {schedule.endingTime}
             </div>
             <div className='flex justify-end'>
-            <button className='text-red-400 hover:text-red-600' onClick={()=>deleteScheduledTime(schedule._id)}>delete</button>
+            <button className='text-cyan-400 hover:text-cyan-600 mr-4'onClick={()=>navigate('/doctor/editScheduledTime',{state:schedule._id})} >Edit</button>
+            <button className='text-red-400 hover:text-red-600' onClick={()=>deleteScheduledTime(schedule._id)}>Delete</button>
             </div>
             <div class="no-underline font-serif text-gray-500">
-            ○ Slots : {schedule.slot}
+              {schedule.slot == 0 ? 
+              <p className="text-green-700">Every Slot got booked</p>
+              :
+              <>
+              ○ Slots : {schedule.slot}
+              </>
+            }
             </div>
           </h1>
         </div>
 
           ))
         }
-      
-       
-
 
       </article>
     </div>

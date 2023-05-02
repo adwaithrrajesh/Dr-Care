@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import '../../styles/Signup.css'
 import {toast} from 'react-hot-toast'
 import {useFormik} from 'formik'
@@ -11,6 +11,7 @@ import { userRegisterOtp } from "../../API/user";
 const Signup = () => {
 
   const navigate = useNavigate()
+  const [loading,setLoading] = useState(false)
 
   const Formik = useFormik({
     initialValues:{
@@ -26,7 +27,9 @@ const Signup = () => {
     validateOnChange:false,
 
     onSubmit: async(value) =>{
+      setLoading(true)
        const response = await userRegisterOtp(value)
+       setLoading(false)
        toast.success(response.data.message)
        navigate('/otp')
     }
@@ -35,6 +38,9 @@ const Signup = () => {
   
   return (
     <div className="signup">
+       {loading && <div className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-gray-500 bg-opacity-50 z-50">
+      <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
+    </div>}
       <div>
         <div className="flex items-center justify-center min-h-screen">
           <div className="px-16 py-20 mt-7 text-left bg-blue-100 shadow-lg rounded-lg">

@@ -104,13 +104,7 @@ const BookingForm = () => {
       confirmButtonText: 'Pay money'
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire(
-          'Money Debited',
-          'Money successfully debited from your wallet.',
-          'success'
-        ).then((response)=>{
           doWalletPayment(doctorId)
-        })
       }
     })
   }
@@ -119,12 +113,14 @@ const BookingForm = () => {
   // -------------------------------------------------------------------------------Initializing Razorpay------------------------------------------------------//
   const InitializePayement = async(doctorId) =>{
     toast.loading('loading...')
-    await instance.post('/initializePayment',{doctorId}).then((response)=>{
+    await instance.post('/initializePayment',{doctorId,appointmentId}).then((response)=>{
+      toast.dismiss()
       handleRazorPay(response?.data.order)
     }).catch((error)=>{
+      toast.dismiss()
       toast.error(error.response.data.message)
     })
-  }
+  } 
 
   // -------------------------------------------------------------------------------Verify Razorpay------------------------------------------------------//
   const handleRazorPay = (order) => {

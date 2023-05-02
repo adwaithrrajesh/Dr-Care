@@ -1,7 +1,7 @@
 const { Router } = require('express')
 const router = Router()
 const Controller = require('../controllers/userControllers')
-const tokenMiddleware = require('../middleware/tokenMiddleware')
+const tokenMiddleware = require('../middleware/userTokenMiddleware')
 
 // ----------------------------------------------------------------POST-------------------------------------------------------------------//
 
@@ -15,9 +15,10 @@ router.post('/resetPassword',Controller.resetPassword)
 router.post('/departmentSearchResult',Controller.departmentSearchResult)
 router.post('/fetchDoctorWithId',Controller.fetchDoctorWithId)
 router.post('/getBookingDetails',Controller.getBookingDetails)
-router.post('/initializePayment',Controller.initializePayment)
+router.post('/initializePayment',tokenMiddleware,Controller.initializePayment)
 router.post('/verifyPayment',tokenMiddleware,Controller.verifyPayment)
 router.post('/doWalletPayment',tokenMiddleware,Controller.doWalletPayment)
+router.post('/getDoctorWithId',Controller.getDoctorWithId)
 
 // ----------------------------------------------------------------GET-------------------------------------------------------------------//
 
@@ -31,6 +32,7 @@ router.get('/getUserDetails',tokenMiddleware,Controller.getUserDetails)
 router.get('/getBookedAppointments',tokenMiddleware,Controller.getBookedAppointments)
 router.get('/walletBalance',Controller.getWalletBalance)
 router.get('/getCancelledAppointments',tokenMiddleware,Controller.getCancelledAppointments)
+router.get('/getChattableDoctors',tokenMiddleware,Controller.getChattableDoctors)
 
 
 // ----------------------------------------------------------------PATCH-------------------------------------------------------------------//

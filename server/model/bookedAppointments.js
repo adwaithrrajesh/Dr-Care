@@ -18,6 +18,9 @@ const bookedAppointmentSchema = mongoose.Schema({
         type: Boolean,
         default : false
     },
+    appointmentStatus:{
+        type: Boolean
+    },
     date:{
         type: Date,
         require: true
@@ -29,6 +32,10 @@ const bookedAppointmentSchema = mongoose.Schema({
     amountPaid:{
         type:Number,
         require:true
+    },
+    createdAt:{
+        type:Date,
+        default: Date.now()
     }
 });
 

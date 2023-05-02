@@ -6,6 +6,7 @@ const TokenHelper = require("../helpers/tokenHelper");
 const userModel = require("../model/user");
 const doctorModel = require("../model/doctor");
 const departmentModel = require("../model/department");
+const bookedAppointments = require("../model/bookedAppointments");
 
 module.exports = {
 
@@ -198,6 +199,26 @@ module.exports = {
        res.status(404).json({error})
      }
   },
+
+// --------------------------------------------------------------GET DASHBOARD DETAILS---------------------------------------------------------------//
+getDashboardDetails : async(req,res)=>{
+  try {
+  const activeUsers = await userModel.find({block:false}).count()
+  const blockedUsers = await userModel.find({block:true}).count()
+  const activeDoctors = await doctorModel.find({block:false}).count()
+  const blockedDoctors = await doctorModel.find({block:true}).count()
+  const verifiedDoctors = await doctorModel.find({verificationStatus:true}).count()
+  const unVerifiedDoctors = await doctorModel.find({verificationStatus:false,showRequest:true}).count()
+  const revenue = await bookedAppointments.find({ appointmentStatus: true });
+  const totalRevenue = revenue.reduce((sum, { amountPaid }) => sum + amountPaid, 0)
+  const successfulAppointments = await bookedAppointments.find({ cancelled: false,appointmentStatus:true }).count()
+  const cancelledAppointments = await bookedAppointments.find({$or: [{ cancelled: true },{ appointmentStatus: false }]}).count()
+  
+  res.status(200).json({activeUsers,blockedUsers,activeDoctors,blockedDoctors,verifiedDoctors,unVerifiedDoctors,totalRevenue,successfulAppointments,cancelledAppointments})
+  } catch (error) {
+    res.status(500).json({message:"Internal Server Error"})
+  }
+}
 
   
 };

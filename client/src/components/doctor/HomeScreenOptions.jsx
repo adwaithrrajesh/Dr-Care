@@ -23,29 +23,26 @@ useEffect(() => {
       <div class="container my-12 mx-auto px-4 md:px-12">
         <div class="flex flex-wrap -mx-1 lg:-mx-4">
 
-            <div class="my-1 px-1 w-full md:w-1/2 sm:w-1/3 lg:my-4 lg:px-4 lg:w-1/4 cursor-pointer hover:scale-105 ease-in-out duration-200" onClick={()=>navigate('/doctor/profile')}>
+        <div class="my-1 px-1 w-full md:w-1/2 sm:w-1/3 lg:my-4 lg:px-4 lg:w-1/4 cursor-pointer hover:scale-105 ease-in-out duration-200" onClick={()=>navigate('/doctor/dashboard')}>
               <article class="overflow-hidden rounded-lg shadow-lg bg-white hover:bg-blue-50 h-[auto]">
                 <div className="flex items-center justify-center leading-tight p-2 md:p-4">
-                  <a href="#">
                     <img
                       alt="Placeholder"
                       class="block h-48 w-48 rounded-full object-cover"
-                      src='https://cdn-icons-png.flaticon.com/512/3774/3774299.png' />
-                  </a>
+                      src='https://st2.depositphotos.com/4352269/9400/v/600/depositphotos_94009984-stock-illustration-business-man-walking-standing-confident.jpg' />
                 </div>
 
                 <header class="flex items-center justify-center leading-tight">
                   <h1 class="text-lg">
-                    <p class="no-underline text-black">Profile</p>
+                    <p class="no-underline text-black">Dashboard</p>
                   </h1>
                 </header>
 
                 <div class="flex items-center justify-center  text-gray-500 text-center leading-tight p-2 md:p-4">
-                  <p>You can Setup Profile</p>
+                  <p>Click here to view Dashboard</p>
                 </div>
               </article>
             </div>
-    
 
             <div class="my-1 px-1 w-full md:w-1/2 sm:w-1/3 lg:my-4 lg:px-4 lg:w-1/4 cursor-pointer hover:scale-105 ease-in-out duration-200"
             onClick={()=>navigate('/doctor/scheduleTime')}>
@@ -93,14 +90,38 @@ useEffect(() => {
               </article>
             </div>
 
-            <div class="my-1 px-1 w-full md:w-1/2 sm:w-1/3 lg:my-4 lg:px-4 lg:w-1/4 cursor-pointer hover:scale-105 ease-in-out duration-200" onClick={()=>navigate('/doctor/chat')}>
+            <div class="my-1 px-1 w-full md:w-1/2 sm:w-1/3 lg:my-4 lg:px-4 lg:w-1/4 cursor-pointer hover:scale-105 ease-in-out duration-200" onClick={()=>navigate('/doctor/profile')}>
               <article class="overflow-hidden rounded-lg shadow-lg bg-white hover:bg-blue-50 h-[auto]">
                 <div className="flex items-center justify-center leading-tight p-2 md:p-4">
                   <a href="#">
                     <img
                       alt="Placeholder"
                       class="block h-48 w-48 rounded-full object-cover"
-                      src='https://cdn0.iconfinder.com/data/icons/social-messaging-ui-color-shapes/128/chat-circle-blue-512.png' />
+                      src='https://cdn-icons-png.flaticon.com/512/3774/3774299.png' />
+                  </a>
+                </div>
+
+                <header class="flex items-center justify-center leading-tight">
+                  <h1 class="text-lg">
+                    <p class="no-underline text-black">Profile</p>
+                  </h1>
+                </header>
+
+                <div class="flex items-center justify-center  text-gray-500 text-center leading-tight p-2 md:p-4">
+                  <p>You can Setup Profile</p>
+                </div>
+              </article>
+            </div>
+
+            <div class="my-1 px-1 w-full md:w-1/2 sm:w-1/2 lg:my-4 lg:px-4 lg:w-full cursor-pointer hover:scale-105 ease-in-out duration-200" onClick={()=>navigate('/doctor/chatList')}>
+              <article class="overflow-hidden rounded-lg shadow-lg bg-white hover:bg-blue-50 h-[auto]">
+                <div className="flex items-center justify-center leading-tight p-2 md:p-4">
+                  <a href="#">
+                    <img
+                      alt="Placeholder"
+                      class="block h-48 w-48  object-cover"
+                      src='https://cdn-icons-png.flaticon.com/512/2665/2665038.png'
+                    />
                   </a>
                 </div>
 
@@ -111,7 +132,7 @@ useEffect(() => {
                 </header>
 
                 <div class="flex items-center justify-center  text-gray-500 text-center leading-tight p-2 md:p-4">
-                  <p>You can view inbox chat</p>
+                  <p>Chat with patients</p>
                 </div>
               </article>
             </div>

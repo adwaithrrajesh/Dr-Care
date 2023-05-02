@@ -59,8 +59,7 @@ const List = (props) => {
                       <header class="flex items-center justify-center leading-tight">
                         <h1 class="text-lg">
                           <p class="no-underline text-black">
-                            {doctor.firstName}
-                            {doctor.lastName}
+                            {doctor.firstName} {doctor.lastName}
                           </p>
                         </h1>
                       </header>

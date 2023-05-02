@@ -24,7 +24,6 @@ useEffect(()=>{
       if(response.data.results.length == 0){
         dispatch(setSearchData(null))
       }else{
-        toast.success(response.data.results.length +' Search Result found')
         dispatch(setSearchData(response.data.results))
       }
     })
@@ -65,6 +64,7 @@ useEffect(()=>{
           class="block w-full mt-10 p-4 pl-10 text-sm text-gray-900 border border-blue-100 rounded-2xl bg-gray-50 focus:ring-cyan-500 focus:border-cyan-500 dark:bg-cyan-50 dark:border-cyan-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="Search"
           onChange={(e)=>setSearch(e.target.value)}
+          value={search}
         />
         <div>
         </div>

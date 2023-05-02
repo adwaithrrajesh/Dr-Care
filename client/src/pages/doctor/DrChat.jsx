@@ -1,12 +1,9 @@
 import React from 'react';
-import Chat from '../../components/doctor/ChatList';
-import DoctorHeader from '../../components/doctor/DoctorHeader';
-
+import DrChatDetails from '../../components/doctor/DrChatDetails';
 const DrChat = () => {
     return (
         <div>
-            <DoctorHeader />
-           <Chat />
+            <DrChatDetails />
         </div>
     );
 }

@@ -29,7 +29,7 @@ const SideBar = () => {
         class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
         aria-label="Sidebar">
        
-        <div class="h-full px-3 py-1 overflow-y-auto bg-blue-400">
+        <div class="h-full px-3 py-1 overflow-y-auto bg-blue-500">
           <ul class="space-y-2 font-medium">
             <li className="py-10">
               <Link
@@ -42,6 +42,14 @@ const SideBar = () => {
             <li className="py-1">
               <Link
               to={'/admin'}
+                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-blue-400">
+                    <img src="https://www.freeiconspng.com/thumbs/dashboard-icon/dashboard-icon-3.png" className="h-10" alt="" />
+                <span class="flex-1 ml-3 whitespace-nowrap">Dashboard</span>
+              </Link>
+            </li>
+            <li className="py-1">
+              <Link
+              to={'/admin/users'}
                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-blue-400">
                     <img src="https://cdn-icons-png.flaticon.com/512/1533/1533506.png" className="h-10" alt="" />
                 <span class="flex-1 ml-3 whitespace-nowrap">Users</span>

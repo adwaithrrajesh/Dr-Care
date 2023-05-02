@@ -139,3 +139,71 @@ export const otpSend = async(value)=>{
         toast.error(error.response.data.message)
     }
 }
+
+// ------------------------------------------------------------------CANCEL APPOINTMENT-------------------------------------------------------------------//
+
+export const doctorCancelAppointment = async(appointmentId)=>{
+    try {
+        const response = await doctorInstance.patch('/doctor/cancelAppointment',{appointmentId})
+        return response;
+    } catch (error) {
+        toast.error(error.response.data.message)
+    }
+}
+
+// ------------------------------------------------------------------PATIENT VISITED CLINIC-------------------------------------------------------------------//
+
+export const patientVisitedClinic = async(appointmentId)=>{
+    try {
+        const response = await doctorInstance.patch('/doctor/patientVisited',{appointmentId})
+        return response
+    } catch (error) {
+        toast.error(error.response.data.message)
+    }
+}
+
+// ------------------------------------------------------------------GET DASHBOARD DETAILS-------------------------------------------------------------------//
+
+export const getDashboardDetails = async() =>{
+    try {
+        const response = await doctorInstance.get('/doctor/getDashboardDetails')
+        return response
+    } catch (error) {
+        toast.error(error.response.data.message)
+    }
+}
+
+// ------------------------------------------------------------------GET APPOINTMENT DETAILS-------------------------------------------------------------------//
+
+export const getAppointmentDetailsWithId = async(appointmentId) =>{
+    try {
+        const response = await doctorInstance.post('/doctor/getAppointmentDetailsWithId',{appointmentId})
+        return response;
+    } catch (error) {
+        toast.error(error.response.data.message)
+    }
+}
+
+// -------------------------------------------------------------------EDIT APPOINTMENT DETAILS-------------------------------------------------------------------//
+ 
+export const editAppointmentDetails = async (appointmentId,startingTime,endingTime,slot) =>{
+    try {
+        const response = await doctorInstance.post('/doctor/editAppointmentDetails',{appointmentId,startingTime,endingTime,slot})
+        return response
+    } catch (error) {
+        toast.error(error.response.data.message)
+    }
+}
+
+// -------------------------------------------------------------------GET DASHBOARD GRAPH DETAILS-------------------------------------------------------------------//
+ 
+export const getAppointmentGraph = async() =>{
+    try {
+       const response = await doctorInstance.get('/doctor/getAppointmentGraph')
+       return response
+    } catch (error) {
+        toast.error(error.response.data.message)
+   }
+
+}  
+   

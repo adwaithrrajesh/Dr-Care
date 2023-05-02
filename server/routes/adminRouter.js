@@ -23,6 +23,7 @@ router.get('/getDoctors',Controller.getDoctors)
 router.get('/viewDepartments',Controller.viewDepartments)
 router.get('/verificationRequests',Controller.getVerificationRequests)
 router.get('/tokenVerify',Controller.tokenVerify)
+router.get('/getDashboardDetailsForAdmin',Controller.getDashboardDetails)
 
 
 

@@ -148,3 +148,25 @@ export const getWalletBalance = async () =>{
         toast.error(error.response.data.message)
     }
 }
+
+// -------------------------------------------------------------------------GETTING CHATTABLE DOCTORS----------------------------------------------------------------//
+
+export const getChattableDoctors = async () =>{
+    try {
+        const response = await instance.get('/getChattableDoctors')
+        return response
+    } catch (error) {
+        toast.error(error.response.data.message)
+    }
+}
+
+// -------------------------------------------------------------------------GETTING DOCTOR WITH ID----------------------------------------------------------------//
+
+export const getDoctorWithId = async (doctorId) =>{
+    try {
+       const response = await instance.post('/getDoctorWithId',{doctorId})
+       return response
+    } catch (error) {
+        toast.error(error.response.data.message)
+    }
+}

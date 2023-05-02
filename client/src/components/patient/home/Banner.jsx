@@ -39,7 +39,6 @@ const Banner = () => {
   return (
     <div className='max-w-[2000px] h-[700px] w-full m-auto relative'>
       <div style={{backgroundImage : `url(${slide[currentIndex].URL})`}} className='w-full h-full bg-center bg-cover duration-500'>
-
       </div>
       {/* Left arrow */}
       <div className='group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer'>

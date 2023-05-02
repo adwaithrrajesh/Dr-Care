@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 
 const Header = () => {
 
-  const [profile,setProfile] = useState()
   const [dropdown,setDropdown] = useState(false)
 
   const navigate = useNavigate()
@@ -42,6 +41,7 @@ const Header = () => {
                 clip-rule="evenodd"></path>
             </svg>
           </button>
+          
           <div class="hidden  w-full md:block md:w-auto " id="navbar-default">
             <ul class="flex flex-col p-2 mt-1 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8  md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-gray-100 dark:bg-white md:dark:bg-white-900 dark:border-gray-700">
              
@@ -101,6 +101,17 @@ const Header = () => {
               <div className="inline-flex">
               <img src='https://icon-library.com/images/windows-user-icon/windows-user-icon-14.jpg' className="rounded-full h-6 mr-3"  alt="" />
               <p className="text-cyan-800 font-medium text-base">View Profile</p>
+                </div>     
+              </Link>
+          </li>
+
+          <li className="hover:bg-blue-100">
+            <Link to={'/chatList'}
+              class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-black hover:bg-neutral-100 active:text-blue-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+              data-te-dropdown-item-ref>         
+              <div className="inline-flex">
+              <img src='https://cdn-icons-png.flaticon.com/512/134/134914.png' className="h-6 mr-3" alt="" />
+              <p className="text-cyan-800 font-medium text-base">Chat</p>
                 </div>     
               </Link>
           </li>
