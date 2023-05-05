@@ -12,7 +12,7 @@ const tokenMiddleware = async(req,res,next)=>{
       req.doctorId = doctor._id
       next()
     }else{
-      next()
+      res.status(404).json({message:"Please Login Again"})
     }
   } catch (error) {
     console.log(error)

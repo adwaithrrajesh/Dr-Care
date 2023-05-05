@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { getDashboardDetailsForAdmin } from '../../API/admin';
 import Chart from "react-apexcharts";
+import { getAppointmentGraphForAdmin } from '../../API/admin';
+
 
 const AdminDashboardDetails = () => {
 
   const [dashboardCount,setDashboardCount] = useState({})
+  const [appointmentGraph,setAppointmentGraph] = useState()
 
   useEffect(() => {
     dashboardDetails()
-    dashBoardGraphDetails()
+    dashBoardAppointmentGraphDetails()
   }, []);
 
   const dashboardDetails = async () =>{
@@ -16,8 +19,9 @@ const AdminDashboardDetails = () => {
     setDashboardCount(response.data)
   }
 
-  const dashBoardGraphDetails = async ()=>{
-    console.log('here')
+  const dashBoardAppointmentGraphDetails = async ()=>{
+    const response = await getAppointmentGraphForAdmin()
+    setAppointmentGraph(response.data.appointmentGraph)
   }
 
   const state = {
@@ -32,7 +36,7 @@ const AdminDashboardDetails = () => {
     series: [
       {
         name: "series-1",
-        data: [30, 40, 45, 50, 49, 60, 70, 91],
+        data: appointmentGraph,
       },
     ],
   };
@@ -248,23 +252,30 @@ const AdminDashboardDetails = () => {
                   </p>
                 </div>
               </article>
-              
             </div>
 
+{/* -----------------------------------------------------------REACT CHART--------------------------------------------------------------------------- */}
             <div class="my-1 px-1 w-full md:w-1/2 sm:w-1/2 lg:my-4 lg:px-4 lg:w-full cursor-pointer hover:scale-105 ease-in-out duration-200">
+              <div className='justify-center flex'>
+              <h1 className='text-lg text-cyan-800'>Appointments</h1>
+              </div>
               <article class="overflow-hidden rounded-lg shadow-lg bg-white hover:bg-blue-50 h-[auto]">
                 <div className="flex items-center justify-center leading-tight p-2 md:p-4">
                      <Chart
                   options={state.options}
                   series={state.series}
-                  type="line"
+                  type="bar"
                   width="800"
                 />
                 </div>
               </article>
             </div>
+{/* -------------------------------------------------------------------------------------------------------------------------------------- */}
+
           </div>
         </div>
+
+{/* -----------------------------------------------------------DASHBOARD REVENUE--------------------------------------------------------------------------- */}
 
         <div class="my-1 px-1 w-full md:w-1/2 sm:w-1/2 lg:my-4 lg:px-4 lg:w-full cursor-pointer hover:scale-105 ease-in-out duration-200">
               <article class="overflow-hidden rounded-lg shadow-lg bg-white hover:bg-blue-50 h-[auto]">
@@ -291,6 +302,9 @@ const AdminDashboardDetails = () => {
                 </div>
               </article>
             </div>
+
+{/* -------------------------------------------------------------------------------------------------------------------------------------- */}
+
 
         </div>
     );

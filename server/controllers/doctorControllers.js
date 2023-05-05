@@ -353,7 +353,7 @@ getAppointmentDetailsWithId: async(req,res) =>{
 
 },
 
-// ---------------------------------------------------------------------------GETTING DASHBOARD GRAPH DETAILS-----------------------------------------------------------//
+// ---------------------------------------------------------------------------EDITING APPOINTMENT-----------------------------------------------------------//
 
 editAppointmentDetails: async(req,res)=>{
   const {appointmentId,startingTime,endingTime,slot}= req.body
@@ -365,7 +365,9 @@ editAppointmentDetails: async(req,res)=>{
   }
 },
 
-getAppointementGraph: async(req,res)=>{
+// ---------------------------------------------------------------------------GETTING APPOINTMENT GRAPH DETAILS -----------------------------------------------------------//
+
+getAppointmentGraph: async(req,res)=>{
   try {
   const doctorId = req.doctorId
   const graphDetails = await doctorHelper.getAppointmentGraph(doctorId)
@@ -373,8 +375,34 @@ getAppointementGraph: async(req,res)=>{
   } catch (error) {
     res.status(500).json({message:"Internal Server Error"})
   }
- 
+},
+
+// ---------------------------------------------------------------------------GETTING CHATTABLE USERS-----------------------------------------------------------//
+
+getChattableUsers: async(req,res)=>{
+  try {
+    const doctorId = req.doctorId
+    const userIds = await bookedAppointmentModel.distinct("userId", { doctorId })
+    const users = await userModel.find({ _id: userIds});
+    res.status(200).json({chattableUsers:users})
+  } catch (error) {
+    res.status(500).json({message:"Internal Server Error"})
+  }
+},
+
+// ---------------------------------------------------------------------------GETTING USER DETAILS WITH ID -----------------------------------------------------------//
+
+getUserDetailsWithId: async(req,res)=>{
+  try {
+    const {userId} = req.body
+    const userDetails = await userModel.findOne({_id:userId})
+    res.status(200).json({userDetails:userDetails})
+  } catch (error) {
+    res.status(500).json({message:"Internal server error"})
+  }
+
 }
+
 
 
 

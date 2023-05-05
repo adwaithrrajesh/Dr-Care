@@ -1,6 +1,6 @@
 import React from 'react';
 import DoctorHeader from '../../components/doctor/DoctorHeader';
-import DoctorChatListDetails from '../../components/doctor/DrChatListDetails';
+import DoctorChatListDetails from '../../components/doctor/chat/DrChatListDetails';
 
 
 const DoctorChatList = () => {

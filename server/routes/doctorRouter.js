@@ -13,7 +13,8 @@ router.get('/doctorDetails',Controller.getDoctorDetails)
 router.get('/getScheduledTime',Controller.getScheduledTime)
 router.get('/getBookedAppointments',Controller.getBookedAppointments)
 router.get('/getDashboardDetails',tokenMiddleware,Controller.getDashboardDetails)
-router.get('/getAppointmentGraph',tokenMiddleware,Controller.getAppointementGraph)
+router.get('/getAppointmentGraph',tokenMiddleware,Controller.getAppointmentGraph)
+router.get('/getChattableUsers',tokenMiddleware,Controller.getChattableUsers)
 
 // ----------------------------------------------------------------POST-------------------------------------------------------------------//
 router.post('/otp',Controller.otp)
@@ -26,6 +27,7 @@ router.post('/deleteScheduledTime',Controller.deleteScheduleTime)
 router.post('/filterAppointmentsByDate',Controller.filterAppointmentsByDate)
 router.post('/getAppointmentDetailsWithId',Controller.getAppointmentDetailsWithId)
 router.post('/editAppointmentDetails',Controller.editAppointmentDetails)
+router.post('/getUserDetailsWithId',Controller.getUserDetailsWithId)
 
 // ----------------------------------------------------------------PATCH-------------------------------------------------------------------//
 router.patch('/resetPassword',Controller.resetPassword)

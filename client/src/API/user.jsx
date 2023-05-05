@@ -170,3 +170,28 @@ export const getDoctorWithId = async (doctorId) =>{
         toast.error(error.response.data.message)
     }
 }
+
+// -------------------------------------------------------------------------SEND MESSAGE----------------------------------------------------------------//
+export const sendMessage = async (currentChat,message) =>{
+    try{
+        const response = await instance.post('/message/addMessage',{
+            to: currentChat,
+            message:message
+        })
+        return response
+    }catch(error){
+        toast.error(error.response.data.message)
+    }
+}
+// -------------------------------------------------------------------------GET MESSAGE----------------------------------------------------------------//
+export const getMessagesForUsers = async(doctorId)=>{
+    try {
+        const response = await instance.post("/message/getMessages",{to:doctorId})
+        return response
+    } catch (error) {
+        toast.dismiss()
+        toast.error(error.response.data.message)
+    }
+}
+
+// -------------------------------------------------------------------------GET USER----------------------------------------------------------------//

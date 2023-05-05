@@ -64,8 +64,7 @@ import ViewVerificationImage from './pages/admin/ViewVerificationImage'
 
 
 // -------------------------------------------------------SOCKET IO------------------------------------------------------------------------------------
-import socketIO from 'socket.io-client';
-const socket = socketIO.connect('http://localhost:4000');
+
 
 
 
@@ -83,7 +82,7 @@ function App() {
         </Route>
       
         <Route element={<ClientProtectedRoutes/>}>
-        <Route path='/chat' element={<Chat socket={socket}/>}/>
+        <Route path='/chat' element={<Chat/>}/>
         <Route path='/book' element={<DoctorBooking/>}/>
         <Route path='/departments' element={<Departments/>}/>
         <Route path='/doctorProfile' element={<DoctorProfile/>}/>

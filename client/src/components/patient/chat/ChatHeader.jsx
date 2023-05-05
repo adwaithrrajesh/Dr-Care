@@ -10,13 +10,13 @@ const ChatHeader = () => {
 
     const location = useLocation()
     const doctorId = location.state
-    const[doctor,setDoctor] = useState()
+    const[doctor,setDoctor] = useState({})
 
 // -------------------------------------------------------------------GETTING DOCTOR DETAILS-------------------------------------------------------------------//
 
     useEffect(()=>{
         getDoctorDetails(doctorId)
-    },[])
+    },[doctorId])
 
     const getDoctorDetails = async (doctorId) =>{
        const response = await getDoctorWithId(doctorId)

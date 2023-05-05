@@ -3,6 +3,8 @@ import axios from 'axios'
 
   // ---------------------------------------------------------------------------Instance-----------------------------------------------------------//
 
+export const host = 'http://localhost:8080'
+
 
 const instance = axios.create({
     baseURL:'http://localhost:8080/api'

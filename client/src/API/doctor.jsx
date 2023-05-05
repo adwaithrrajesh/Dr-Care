@@ -204,6 +204,55 @@ export const getAppointmentGraph = async() =>{
     } catch (error) {
         toast.error(error.response.data.message)
    }
-
 }  
    
+// -------------------------------------------------------------------GET CHATTABLE USERS-------------------------------------------------------------------//
+
+export const getChattableUsers = async ()=>{
+    try {
+        const response = await doctorInstance.get('/doctor/getChattableUsers')
+        return response  
+    } catch (error) {
+        toast.error(error.response.data.message)
+    }
+}
+
+// -------------------------------------------------------------------GETTING USER DETAILS WITH ID-------------------------------------------------------------------//
+export const getUserDetailsWithId = async (userId) =>{
+    try {
+        const response = await doctorInstance.post('/doctor/getUserDetailsWithId',{userId})
+        return response
+    } catch (error) {
+        toast.error(error.response.data.message)
+    }
+}
+
+// -------------------------------------------------------------------GETTING MESSAGES FOR DOCTOR-------------------------------------------------------------------//
+
+export const getMessagesForDoctors = async (userId) =>{
+    try {
+        const response = await doctorInstance.post("/message/getMessagesForDoctor",{to:userId})
+        return response
+    } catch (error) {
+        toast.dismiss()
+        toast.error(error.response.data.message)
+    }
+}
+
+// -------------------------------------------------------------------GETTING MESSAGES FROM DOCTOR-------------------------------------------------------------------//
+
+export const sendMessageFromDoctor = async (currentChat,message) =>{
+    try {
+        try{
+            const response = await doctorInstance.post('/message/addMessageFromDoctor',{
+                to: currentChat,
+                message:message
+            })
+            return response
+        }catch(error){
+            toast.error(error.response.data.message)
+        }
+    } catch (error) {
+        
+    }
+}

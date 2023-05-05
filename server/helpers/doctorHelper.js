@@ -72,6 +72,8 @@ module.exports = {
       }
      resolve(appointmentCount)
     });
-  }
+  },
 
 };
+
+

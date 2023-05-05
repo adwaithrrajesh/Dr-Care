@@ -218,6 +218,18 @@ getDashboardDetails : async(req,res)=>{
   } catch (error) {
     res.status(500).json({message:"Internal Server Error"})
   }
+},
+
+// --------------------------------------------------------------GET DASHBOARD DETAILS---------------------------------------------------------------//
+
+getAppointmentGraphForAdmin : async(req,res)=>{
+  try {
+  const appointmentGraph = await adminHelper.getAppointmentGraphForAdmin()
+  res.status(200).json({appointmentGraph:appointmentGraph}) 
+  } catch (error) {
+    res.status(500).json({message:"Internal Server Error"})
+  }
+ 
 }
 
   

@@ -468,7 +468,7 @@ module.exports = {
     try {
     const bookingExisted = await bookedAppointmentModel.findOne({appointmentId,userId})
     if (bookingExisted) {
-      res.status(404).json({message:"You have already booked an appointment on this date"})
+      res.status(404).json({message:"You have already booked an appointment on this"})
     } else {
        const { wallet } = await userModel.findOne({ _id: userId });
       const { fee } = await doctorModel.findOne({ _id: req.body.doctorId });

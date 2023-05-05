@@ -10,3 +10,14 @@ export const getDashboardDetailsForAdmin = async() =>{
         toast.error(error.response.data.message)
     }
 }
+
+// ---------------------------------------------------------------- GETTING Appointment Graph -------------------------------------------------------------------//
+
+export const getAppointmentGraphForAdmin = async()=>{
+    try {
+        const response = await adminInstance.get('/admin/getAppointmentGraphForAdmin')
+        return response
+    } catch (error) {
+        toast.error(error.response.data.message)
+    }
+}
