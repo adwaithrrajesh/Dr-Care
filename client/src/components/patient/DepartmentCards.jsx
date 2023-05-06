@@ -124,7 +124,35 @@ import { getDepartments } from '../../API/user';
               </>
                 :
                 <>
-                {department.map((Department) => (
+                {
+                  department.length == 0 &&
+                  <div class="my-1 px-1 w-full md:w-1/2 sm:w-1/2 lg:my-4 lg:px-4 lg:w-full cursor-pointer ">
+                  <article class="overflow-hidden rounded-lg shadow-lg bg-white h-[auto]">
+                    <div className="flex items-center justify-center leading-tight p-2 md:p-4">
+                      <a href="#">
+                        <img
+                          alt="Placeholder"
+                          class="block h-96 w-full rounded-full object-cover"
+                          src="https://cdni.iconscout.com/illustration/premium/thumb/folder-is-empty-4064360-3363921.png"
+                        />
+                      </a>
+                    </div>
+  
+                    <header class="flex items-center justify-center leading-tight">
+                      <h1 class="text-lg">
+                        <p class="no-underline text-4xl text-black">
+                          Department Not found
+                        </p>
+                      </h1>
+                    </header>
+  
+                    <div class="flex items-center justify-center  text-gray-500 text-center leading-tight p-2 md:p-4">
+                      <p>We are really sorry we couldn't find the department that you entered</p>
+                    </div>
+                  </article>
+                </div>
+                }
+                {department?.map((Department) => (
              <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/4 cursor-pointer hover:scale-105 ease-in-out duration-200">
                <article class="overflow-hidden rounded-lg shadow-lg bg-white hover:bg-blue-50 h-[auto]">
                  <div className="flex items-center justify-center leading-tight p-2 md:p-4">

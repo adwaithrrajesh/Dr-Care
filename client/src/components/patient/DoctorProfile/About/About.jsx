@@ -7,13 +7,21 @@ const About = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [doctor, setDoctor] = useState("");
+  const [loading,setLoading] = useState(false)
+
 
   useEffect(() => {
+    setLoading(true)
     setDoctor(location.state);
+    setLoading(false)
+
   }, []);
 
   return (
     <div>
+          {loading && <div className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-gray-500 bg-opacity-50 z-50">
+      <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
+    </div>}
       <div class=" flex flex-col justify-center items-center">
         <h6 class="text-gray-700 text-lg mt-16">
           {doctor.firstName}

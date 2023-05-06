@@ -25,6 +25,8 @@ const BookingForm = () => {
   const [fee,setFee] = useState()
   const [appointmentId,setAppointmentId] = useState()
   const [reload,setReload] = useState(false)
+  const [loading,setLoading] = useState(false)
+
   
   const navigate = useNavigate()
 
@@ -36,18 +38,22 @@ const BookingForm = () => {
     }, []);
     
     const getBookingDetailsApi = async(doctorId) =>{
+      setLoading(true)
       const response = await getBookingDetails(doctorId)
       setAppointmentDetails(response.data.bookingDetails);
       setFee(response.data.fee)
+      setLoading(false)
   }
 
   // ----------------------------------------------------------------------------FILTERING THE DATES-------------------------------------------------------------------//
 
   useEffect(() => {
+    setLoading(true)
     const filteredDates = appointmentDetails.filter((item) => item.date).map((item) => new Date(item.date));
     const formattedDates = filteredDates.map((date) =>
       date.toISOString().slice(0, 10)
     )
+    setLoading(false)
     setSelectableDates(formattedDates);
   }, [appointmentDetails,reload]);
 
@@ -61,6 +67,7 @@ const BookingForm = () => {
   // ------------------------------------------------------------------GET TIME AND SLOT-------------------------------------------------------------------//
   const getTime = (date) => {
     setSelectedDate(date)
+
     const localDate = new Date(date)
     const inputDate = localDate.toISOString()
     appointmentDetails.map(obj => {
@@ -147,7 +154,7 @@ const BookingForm = () => {
 }
 
   // -------------------------------------------------------------------------------DOING WALLET PAYMENT------------------------------------------------------//
-  const doWalletPayment = (doctorId) =>{
+  const doWalletPayment = (doctorId) =>{  
     const clientToken = JSON.parse(localStorage.getItem('clientToken'))
     instance.post('/doWalletPayment',{doctorId,appointmentId},{headers: {Authorization: `Bearer ${clientToken}`}}).then((response)=>{
       toast.success(response.data.message)
@@ -164,6 +171,9 @@ const BookingForm = () => {
   // -----------------------------------------------------------------------CODE-------------------------------------------------------------------//
   return (
     <div>
+    {loading && <div className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-gray-500 bg-opacity-50 z-50">
+      <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
+    </div>}
       <div className="bg-[url('https://st2.depositphotos.com/3051589/46575/i/450/depositphotos_465750336-stock-photo-doctor-appointment-schedule-checkup-calendar.jpg')] bg-no-repeat bg-cover">
         <div>
           <div className="flex items-center justify-center min-h-screen">
