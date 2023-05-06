@@ -35,7 +35,8 @@ module.exports = {
       const projectedMessages = messages.map((msg) => {
         return {
           fromSelf: msg.sender.toString() == from,
-          message: msg.message.text
+          message: msg.message.text,
+          time:msg.updatedAt
         };
       });
       res.json(projectedMessages);
@@ -57,6 +58,7 @@ module.exports = {
         return {
           fromSelf: msg.sender.toString() == from,
           message: msg.message.text,
+          time:msg.updatedAt
         };
       });
       res.json(projectedMessages);

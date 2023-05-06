@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import instance from "../../instance/instance";
+// import instance from "../../instance/instance";
+import adminInstance from "../../instance/adminInstance";
 import { toast } from "react-hot-toast";
 import "../../styles/tablestyle.css";
 
@@ -11,7 +12,7 @@ const List = () => {
 
 
   useEffect(() => {
-    instance.get("/admin/getDoctors").then((response) => {
+    adminInstance.get("/admin/getDoctors").then((response) => {
       setDoctor(response.data.doctors);
     });
   }, [reload]);

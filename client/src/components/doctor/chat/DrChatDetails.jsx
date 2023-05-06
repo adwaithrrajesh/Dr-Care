@@ -7,10 +7,11 @@ import { getMessagesForDoctors } from '../../../API/doctor';
 import { getDoctorDetails } from '../../../API/doctor';
 import { sendMessageFromDoctor } from '../../../API/doctor';
 import { v4 as uuidv4 } from "uuid";
+import moment from 'moment';
 
 
 
-const DrChatDetails = ({socket,current}) => {
+const DrChatDetails = ({socket}) => {
 
     // ----------------------------------------------------------------GETTING STATES AND LOCATION-------------------------------------------------------------------//
 
@@ -116,7 +117,7 @@ const DrChatDetails = ({socket,current}) => {
         <div class="bg-cyan-800 text-white p-3 w-full rounded-l-lg rounded-br-lg">
         <p class="text-sm md:text-lg lg:text-xl">{data.message}</p>
         </div>
-        <span class="text-xs text-gray-500 leading-none">2 min ago</span>
+        <span class="text-xs text-gray-500 leading-none">{moment(data.time).fromNow()}</span>
     </div>
     <img src={doctor?.profilePhoto} class="flex-shrink-0 h-10 w-10 rounded-full object-cover bg-gray-300" />
 </div>
@@ -127,10 +128,13 @@ const DrChatDetails = ({socket,current}) => {
         <div class="bg-gray-300 p-3 rounded-r-lg rounded-bl-lg">
         <p class="text-sm md:text-lg lg:text-xl">{data.message}</p>
         </div>
-        <span class="text-xs text-gray-500 leading-none">2 min ago</span>
+        <span class="text-xs text-gray-500 leading-none">{moment(data.time).fromNow()}</span>
      </div>
    </div>
     ))}
+
+
+
 </div>
 
      {/*Message box  */}
