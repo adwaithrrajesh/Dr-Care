@@ -96,8 +96,7 @@ const EditDetails = () => {
       </div>
         <div class="flex flex-col justify-center items-center">
           <h6 class="text-gray-700 text-lg mt-8">
-            {doctor.firstName}
-            {doctor.lastName}
+            {doctor.firstName} {doctor.lastName}
           </h6>
           <p class="text-gray-400 mt-2 text-sm">{doctor.departmentName}</p>
 

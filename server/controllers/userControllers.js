@@ -516,6 +516,26 @@ module.exports = {
     } catch (error) {
       res.status(500).json({message:"Internal Server Error"})
     }
-  
+  },
+
+  // ----------------------------------------------------------------------------GET DOCTORS FOR HOME SCREEN-------------------------------------------------------//
+  getDoctorsForHomeScreen: async(req,res)=>{
+    try {
+      const doctors = await doctorModel.find({ verificationStatus: true, block: false,}).limit(5)
+      res.status(200).json({doctorDetails:doctors})
+    } catch (error) {
+      res.status(500).json({message:"Internal Server Error"})
+    }
+  },
+
+  // ----------------------------------------------------------------------------GET DEPARTMENTS FOR HOME SCREEN-------------------------------------------------------//
+
+  getDepartmentForHomeScreen : async(req,res)=>{
+    try {
+    const departments = await departmentModel.find({ show: true }).limit(10)
+    res.status(200).json({departmentData:departments})
+    } catch (error) {
+      res.status(500).json({message:"Internal Server Error"})
+    }
   }
 };

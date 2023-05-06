@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {toast,Toaster} from 'react-hot-toast'
 import {Formik, useFormik} from 'formik'
 import { loginValidation } from '../../helpers/validate'
-import instance from "../../instance/instance";
+import doctorInstance from '../../instance/doctorInstance'
 import { useNavigate } from "react-router-dom";
 import '../../styles/DoctorLogin.css'
 
@@ -12,6 +12,7 @@ const DoctorLogin = () => {
 
 
   const navigate = useNavigate()
+  const [loading,setLoading] = useState(false)
 
   const Formik = useFormik({
     initialValues:{
@@ -25,10 +26,12 @@ const DoctorLogin = () => {
     // Submit
     onSubmit: async(value) =>{
       try {
-        await instance.post('/doctor/login',{value}).then((response)=>{
+        setLoading(true)
+        await doctorInstance.post('/doctor/login',{value}).then((response)=>{
           localStorage.setItem('doctorToken', JSON.stringify(response.data.token));
           toast.success(response.data.message)
           navigate('/doctor/home')
+          setLoading(false)
         })
       } catch (error) {
         toast.error(error.response.data.message)
@@ -40,6 +43,9 @@ const DoctorLogin = () => {
 
   return (
     <div className="doctorLogin">
+          {loading && <div className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-gray-500 bg-opacity-50 z-50">
+      <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
+    </div>}
       <div className="flex items-center justify-center min-h-screen">
         <div className="px-12 py-20 mt-7 text-left bg-blue-100 shadow-lg rounded-lg">
           <p className="text-2xl text-center">Login to your account</p>

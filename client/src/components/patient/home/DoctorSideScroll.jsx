@@ -1,56 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { getDoctorsForHomeScreen } from "../../../API/user";
 
 
 const Doctors = () => {
-  const doctor = [
-    {
-      Name: "John",
-      Department: "Councelling",
-      Img: "https://hips.hearstapps.com/hmg-prod/images/portrait-of-a-happy-young-doctor-in-his-clinic-royalty-free-image-1661432441.jpg?crop=0.66698xw:1xh;center,top&resize=1200:*",
-    },
-    {
-      Name: "Nancy",
-      Department: "Cardiology",
-      Img: "https://img.freepik.com/free-photo/beautiful-young-female-doctor-looking-camera-office_1301-7807.jpg?w=2000",
-    },
-    {
-      Name: "Bruce",
-      Department: "Dermatologist",
-      Img: "https://hips.hearstapps.com/hmg-prod/images/portrait-of-a-happy-young-doctor-in-his-clinic-royalty-free-image-1661432441.jpg?crop=0.66698xw:1xh;center,top&resize=1200:*",
-    },
-    {
-      Name: "John",
-      Department: "Councelling",
-      Img: "https://hips.hearstapps.com/hmg-prod/images/portrait-of-a-happy-young-doctor-in-his-clinic-royalty-free-image-1661432441.jpg?crop=0.66698xw:1xh;center,top&resize=1200:*",
-    },
-    {
-      Name: "Mike",
-      Department: "Cardiology",
-      Img: "https://hips.hearstapps.com/hmg-prod/images/portrait-of-a-happy-young-doctor-in-his-clinic-royalty-free-image-1661432441.jpg?crop=0.66698xw:1xh;center,top&resize=1200:*",
-    },
-    {
-      Name: "Bruce",
-      Department: "Dermatologist",
-      Img: "https://hips.hearstapps.com/hmg-prod/images/portrait-of-a-happy-young-doctor-in-his-clinic-royalty-free-image-1661432441.jpg?crop=0.66698xw:1xh;center,top&resize=1200:*",
-    },
-    {
-      Name: "John",
-      Department: "Councelling",
-      Img: "https://hips.hearstapps.com/hmg-prod/images/portrait-of-a-happy-young-doctor-in-his-clinic-royalty-free-image-1661432441.jpg?crop=0.66698xw:1xh;center,top&resize=1200:*",
-    },
-    {
-      Name: "Mike",
-      Department: "Cardiology",
-      Img: "https://hips.hearstapps.com/hmg-prod/images/portrait-of-a-happy-young-doctor-in-his-clinic-royalty-free-image-1661432441.jpg?crop=0.66698xw:1xh;center,top&resize=1200:*",
-    },
-    {
-      Name: "Bruce",
-      Department: "Dermatologist",
-      Img: "https://hips.hearstapps.com/hmg-prod/images/portrait-of-a-happy-young-doctor-in-his-clinic-royalty-free-image-1661432441.jpg?crop=0.66698xw:1xh;center,top&resize=1200:*",
-    },
-  ];
+
+
+  const [doctor,setDoctor] = useState([])
 
   const slideLeft = () => {
     var slider = document.getElementById("slider");
@@ -61,6 +18,16 @@ const Doctors = () => {
     var slider = document.getElementById("slider");
     slider.scrollLeft = slider.scrollLeft + 500;
   };
+
+  useEffect(() => {
+    getDoctors()
+  }, []);
+
+  const getDoctors = async() =>{
+    const response = await getDoctorsForHomeScreen()
+    setDoctor(response.data.doctorDetails)
+  }
+
 
   return (
     <div>
@@ -86,7 +53,7 @@ const Doctors = () => {
                 id="slider"
                 className="w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide">
                 {doctor.map((doctor) => (
-                  <div class="h-19 bg-white border border-gray-200 rounded-lg shadow dark:bg-white dark:border-cyan-100 w-[220px] inline-block p-2 ml-5 cursor-pointer hover:scale-105 ease-in-out duration-200 ">
+                  <div class="h-19 sm md: lg lg: xl bg-white border border-gray-200 rounded-lg shadow dark:bg-white dark:border-cyan-100 w-[220px] inline-block p-2 ml-5 cursor-pointer hover:scale-105 ease-in-out duration-200 ">
                     <div className="relative flex items-center justify-center ">
                       <a href="#">
                         <img
@@ -98,9 +65,7 @@ const Doctors = () => {
                     </div>
                     <div class="p-5">
                       <a href="#">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-900">
-                          {doctor.Name}
-                        </h5>
+                   <p class="text-sm md:text-lg lg:text-xl">{doctor.Name}</p>
                       </a>
                       <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
                         {doctor.Department}

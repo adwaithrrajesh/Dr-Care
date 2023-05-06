@@ -1,65 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { getDepartmentForHomeScreen } from "../../../API/user";
+
 
 const Departments = () => {
-  const departments = [
-    {
-      Name: "Counselling",
-      URL: "https://img.freepik.com/premium-vector/psychotherapy-counseling-psychologist-psychotherapist-patient-sitting-armchairs-therapy-session-treatment-stress-addictions-mental-problems_458444-260.jpg",
-      Description:
-        "Mental health is one of the greatest thing in our human life and we are helping you to achieve it  ",
-    },
-    {
-      Name: "Child Care",
-      URL: "https://img.freepik.com/premium-vector/girl-cat-campaign-using-cloth-bags_99326-405.jpg",
-      Description:
-        "We are providing the best healthy treatment for below 10 childrens",
-    },
-    {
-      Name: "Dermatologist",
-      URL: "https://media.istockphoto.com/id/936016040/vector/male-hair-loss.jpg?s=612x612&w=0&k=20&c=E7omxqfZyVfOAgTBjvC9RXg_xKvcnYWpREgS21-FX8o=",
-      Description:
-        "Having a good healthy hair will improve our beauty we have the best doctor to take care of your hair",
-    },
-    {
-      Name: "Dermatologist",
-      URL: "https://media.istockphoto.com/id/936016040/vector/male-hair-loss.jpg?s=612x612&w=0&k=20&c=E7omxqfZyVfOAgTBjvC9RXg_xKvcnYWpREgS21-FX8o=",
-      Description:
-        "Having a good healthy hair will improve our beauty we have the best doctor to take care of your hair",
-    },
-    {
-      Name: "Counselling",
-      URL: "https://img.freepik.com/premium-vector/psychotherapy-counseling-psychologist-psychotherapist-patient-sitting-armchairs-therapy-session-treatment-stress-addictions-mental-problems_458444-260.jpg",
-      Description:
-        "Mental health is one of the greatest thing in our human life and we are helping you to achieve it  ",
-    },
-    {
-      Name: "Child Care",
-      URL: "https://img.freepik.com/premium-vector/girl-cat-campaign-using-cloth-bags_99326-405.jpg",
-      Description:
-        "We are providing the best healthy treatment for below 10 childrens",
-    },
-    {
-      Name: "Dermatologist",
-      URL: "https://media.istockphoto.com/id/936016040/vector/male-hair-loss.jpg?s=612x612&w=0&k=20&c=E7omxqfZyVfOAgTBjvC9RXg_xKvcnYWpREgS21-FX8o=",
-      Description:
-        "Having a good healthy hair will improve our beauty we have the best doctor to take care of your hair",
-    },
-    {
-      Name: "Counselling",
-      URL: "https://img.freepik.com/premium-vector/psychotherapy-counseling-psychologist-psychotherapist-patient-sitting-armchairs-therapy-session-treatment-stress-addictions-mental-problems_458444-260.jpg",
-      Description:
-        "Mental health is one of the greatest thing in our human life and we are helping you to achieve it  ",
-    },
-    {
-      Name: "Child Care",
-      URL: "https://img.freepik.com/premium-vector/girl-cat-campaign-using-cloth-bags_99326-405.jpg",
-      Description:
-        "We are providing the best healthy treatment for below 10 childrens",
-    }
 
-  ];
+
+  const [departments,setDepartments] = useState([])
 
   const LeftSlide = () => {
     var slider = document.getElementById("slider-department");
@@ -70,6 +18,17 @@ const Departments = () => {
     var slider = document.getElementById("slider-department");
     slider.scrollLeft = slider.scrollLeft + 500;
   };
+
+
+
+  useEffect(() => {
+    getDepartments()
+  }, []);
+
+  const getDepartments = async() =>{
+    const response = await getDepartmentForHomeScreen()
+    setDepartments(response.data.departmentData)
+  }
 
   return (
     <div>
@@ -107,7 +66,7 @@ const Departments = () => {
                       </div>
                       <div class="p-5">
                         <a href="#">
-                          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-900">
+                          <h5 class="sm md:text-lg lg:text-xl">
                             {department.Name}
                           </h5>
                         </a>

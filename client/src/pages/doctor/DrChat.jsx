@@ -15,7 +15,6 @@ const DrChat = () => {
     useEffect(() => {
         getDoctorIdWithToken()
     }, []);
-
         const getDoctorIdWithToken = async()=>{
             const response = await getDoctorDetails()
             setCurrentUser(response.data.doctorDetails)

@@ -4,7 +4,7 @@ import axios from 'axios'
   // ---------------------------------------------------------------------------Instance-----------------------------------------------------------//
 
 
-const doctorInstance = axios.create({
+export const doctorInstance = axios.create({
     baseURL:'https://dr-care.onrender.com/api'
 })
 

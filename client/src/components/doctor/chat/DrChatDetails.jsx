@@ -44,9 +44,7 @@ const DrChatDetails = ({socket}) => {
     
     // ----------------------------------------------------------------GETTING CHAT DETAILS-------------------------------------------------------------------//
     const getChatDetails = (async()=>{
-        // toast.loading('loading')
         const response = await getMessagesForDoctors(userId)
-        // toast.dismiss()
         setMessages(response?.data)
       })
 

@@ -2,12 +2,14 @@ import React from 'react';
 import {toast} from 'react-hot-toast'
 import {Formik, useFormik} from 'formik'
 import { loginValidation } from '../../helpers/validate'
-import instance from "../../instance/instance";
+import {adminInstance} from '../../instance/adminInstance'
 import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
 
 const AdminLogin = () => {
 
   const navigate = useNavigate()
+  const [loading,setLoading] = useState(false)
 
   const Formik = useFormik({
     initialValues:{
@@ -21,10 +23,12 @@ const AdminLogin = () => {
     // Submit
     onSubmit: async(value) =>{
       try {
-        await instance.post('/admin/login',{value}).then((response)=>{
+        setLoading(true)
+        await adminInstance.post('/admin/login',{value}).then((response)=>{
           localStorage.setItem('adminToken', JSON.stringify(response.data.token));
           toast.success(response.data.message)
           navigate('/admin')
+        setLoading(false)
         })
       } catch (error) {
         toast.error(error.response.data.message)
@@ -34,6 +38,9 @@ const AdminLogin = () => {
 
     return (
         <div>
+             {loading && <div className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-gray-500 bg-opacity-50 z-50">
+      <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
+    </div>}
             <div className="bg-[url('https://static.vecteezy.com/system/resources/previews/008/883/653/non_2x/administrator-concept-banner-flat-style-vector.jpg')]">
         <div className="flex items-center justify-center min-h-screen">
           <div className="px-12 py-20 mt-7 text-left bg-blue-100 shadow-lg rounded-lg">

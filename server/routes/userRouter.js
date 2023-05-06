@@ -33,6 +33,8 @@ router.get('/getBookedAppointments',tokenMiddleware,Controller.getBookedAppointm
 router.get('/walletBalance',Controller.getWalletBalance)
 router.get('/getCancelledAppointments',tokenMiddleware,Controller.getCancelledAppointments)
 router.get('/getChattableDoctors',tokenMiddleware,Controller.getChattableDoctors)
+router.get('/getDoctorsForHomeScreen',Controller.getDoctorsForHomeScreen)
+router.get('/getDepartmentForHomeScreen',Controller.getDepartmentForHomeScreen)
 
 
 // ----------------------------------------------------------------PATCH-------------------------------------------------------------------//

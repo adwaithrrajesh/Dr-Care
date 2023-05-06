@@ -231,7 +231,9 @@ export const getUserDetailsWithId = async (userId) =>{
 
 export const getMessagesForDoctors = async (userId) =>{
     try {
+        toast.loading('loading...')
         const response = await doctorInstance.post("/message/getMessagesForDoctor",{to:userId})
+        toast.dismiss()
         return response
     } catch (error) {
         toast.dismiss()
