@@ -2,12 +2,16 @@ import React, { useEffect, useState } from "react";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { getDoctorsForHomeScreen } from "../../../API/user";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 
 const Doctors = () => {
 
 
   const [doctor,setDoctor] = useState([])
+  const [loading,setLoading] = useState(false)
+  const navigate = useNavigate()
 
   const slideLeft = () => {
     var slider = document.getElementById("slider");
@@ -24,19 +28,23 @@ const Doctors = () => {
   }, []);
 
   const getDoctors = async() =>{
+    setLoading(true)
     const response = await getDoctorsForHomeScreen()
+    setLoading(false)
     setDoctor(response.data.doctorDetails)
   }
 
 
   return (
     <div>
-
+       {loading && <div className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-gray-500 bg-opacity-50 z-50">
+      <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
+    </div>}
       <div>
         <div className="bg-white max-w-[2000px] h-[550px] px-10 text-center rounded-3xl justify-center mt-2">
           <div className="flex flex-col justify-center items-center">
             <h1 class="mb-12 mt-10 text-3xl font-bold leading-none tracking-tight text-gray-900  dark:text-cyan-900">
-              Doctors
+              Popular Doctors
             </h1>
           </div>
           <div className="bg-blue-100 max-w-[2000px] h-[400px] px-10 text-center rounded-3xl justify-center ">
@@ -57,21 +65,21 @@ const Doctors = () => {
                     <div className="relative flex items-center justify-center ">
                       <a href="#">
                         <img
-                          class="rounded-full h-40 object-cover"
-                          src={doctor.Img}
+                          class="rounded-full h-40 w-40 object-cover"
+                          src={doctor.profilePhoto}
                           alt="doctor image"
                         />
                       </a>
                     </div>
                     <div class="p-5">
                       <a href="#">
-                   <p class="text-sm md:text-lg lg:text-xl">{doctor.Name}</p>
+                   <p class="text-sm md:text-lg lg:text-xl">{doctor.firstName} {doctor.lastName}</p>
                       </a>
                       <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                        {doctor.Department}
+                        {doctor.departmentName}
                       </p>
-                      <a
-                        href="#"
+                      <button
+                       onClick={() => {navigate("/doctorProfile",{state:doctor});}}
                         class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800">
                         View Profile
                         <svg
@@ -84,7 +92,7 @@ const Doctors = () => {
                             d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
                             clip-rule="evenodd"></path>
                         </svg>
-                      </a>
+                      </button>
                     </div>
                   </div>
                 ))}
