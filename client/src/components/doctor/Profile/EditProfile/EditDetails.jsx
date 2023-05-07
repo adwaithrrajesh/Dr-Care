@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { toast } from "react-hot-toast";
+import { toast, useToaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { getDoctorDetails } from "../../../../API/doctor";
 import doctorInstance from "../../../../instance/doctorInstance";
@@ -22,6 +22,7 @@ const EditDetails = () => {
   const [fee,setFee] = useState()
   const [experience,setExperience] = useState()
   const [phoneNumber,setPhoneNumber] = useState()
+  const [loading,setLoading] = useState(false)
 
 
   const details = {
@@ -40,7 +41,9 @@ const EditDetails = () => {
   }, [reload]);
 
   const getDoctor = async() =>{
+    setLoading(true)
     const response = await getDoctorDetails()
+    setLoading(false)
     setDoctor(response.data.doctorDetails);
   }
 
@@ -49,13 +52,16 @@ const EditDetails = () => {
     const formData = new FormData();
     formData.append("file", profile);
     formData.append("upload_preset", "drcareStorage");
+    setLoading(true)
     await axios.post("https://api.cloudinary.com/v1_1/dg047twga/image/upload",formData).then((response)=>{
         const profile = response.data.url
         const doctorId = doctor._id
         doctorInstance.patch('/doctor/updateProfile',{profile,doctorId}).then((response)=>{
+            setLoading(false)
             toast.success(response.data.message)
             setReload(!reload,'i')
         }).catch((error)=>{
+          setLoading(false)
             toast.error(error.response.data.message)
         })
     })
@@ -65,7 +71,6 @@ const EditDetails = () => {
 
   const handleSubmit = (e) =>{
     e.preventDefault()
-    
     const isEmpty = Object.values(details).every(x => !x);
     if (isEmpty) {
       toast.error('Please update something');
@@ -86,6 +91,9 @@ const EditDetails = () => {
  
   return (
     <div>
+         {loading && <div className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-gray-500 bg-opacity-50 z-50">
+      <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
+    </div>}
       <div>
       <div class=" h-48 flex flex-col justify-center items-center mt-24">
         <img

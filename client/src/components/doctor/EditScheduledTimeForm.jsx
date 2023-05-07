@@ -16,6 +16,7 @@ const EditScheduledTimeForm = () => {
     const[endingTime,setEndingTime] = useState()
     const[slot,setSlot] = useState()
     const [scheduleTime,setScheduledTime] = useState()
+    const [loading,setLoading] = useState(false)
 
     const navigate = useNavigate()
 
@@ -51,7 +52,9 @@ const EditScheduledTimeForm = () => {
     }, []);
 
     const findScheduledTime = async() =>{
+      setLoading(true)
       const response = await getScheduledTimeWithId(appointmentId)
+      setLoading(false)
       setScheduledTime(response.data?.scheduledTime)
     }
 
@@ -59,6 +62,9 @@ const EditScheduledTimeForm = () => {
 
     return (
         <div>
+             {loading && <div className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-gray-500 bg-opacity-50 z-50">
+      <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
+    </div>}
         <div class="container my-20 mx-auto px-4 md:px-12">
           <div class="flex flex-wrap -mx-1 lg:-mx-4">
             <div class="my-1 px-1 w-full md:w-1/2 sm:w-1/2 lg:my-4 lg:px-4 lg:w-full cursor-pointer">

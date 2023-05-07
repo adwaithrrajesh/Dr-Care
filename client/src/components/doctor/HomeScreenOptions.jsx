@@ -7,19 +7,25 @@ const Options = () => {
 
   const navigate = useNavigate()
   const [submit,setSubmit] = useState(false)
+  const [loading,setLoading] = useState(false)
 
 useEffect(() => {
   verificationStatus()
   }, []);
 
   const verificationStatus = async () =>{
+    setLoading(true)
     const response = await getVerificationStatus()
+    setLoading(false)
     setSubmit(response.data)
   }
   
 
   return (
     <div>
+         {loading && <div className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-gray-500 bg-opacity-50 z-50">
+      <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
+    </div>}
       <div class="container my-12 mx-auto px-4 md:px-12">
         <div class="flex flex-wrap -mx-1 lg:-mx-4">
 
