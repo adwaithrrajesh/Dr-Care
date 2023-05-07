@@ -400,7 +400,18 @@ getUserDetailsWithId: async(req,res)=>{
   } catch (error) {
     res.status(500).json({message:"Internal server error"})
   }
+},
 
+// ---------------------------------------------------------------------------GETTING SCHEDULED TIME WITH ID -----------------------------------------------------------//
+
+getScheduledTimeWithId: async(req,res)=>{
+  try {
+    const {appointmentId} = req.body
+    const scheduledTime = await appointmentModel.findOne({_id:appointmentId})
+    res.status(200).json({scheduledTime:scheduledTime})
+  } catch (error) {
+    res.status(500).json({message:"Internal server error"})
+  }
 }
 
 

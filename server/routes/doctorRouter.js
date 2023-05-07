@@ -28,6 +28,7 @@ router.post('/filterAppointmentsByDate',Controller.filterAppointmentsByDate)
 router.post('/getAppointmentDetailsWithId',Controller.getAppointmentDetailsWithId)
 router.post('/editAppointmentDetails',Controller.editAppointmentDetails)
 router.post('/getUserDetailsWithId',Controller.getUserDetailsWithId)
+router.post('/getScheduledTimeWithId',Controller.getScheduledTimeWithId)
 
 // ----------------------------------------------------------------PATCH-------------------------------------------------------------------//
 router.patch('/resetPassword',Controller.resetPassword)

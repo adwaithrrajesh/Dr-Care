@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { editAppointmentDetails } from '../../API/doctor';
+import { getScheduledTimeWithId } from '../../API/doctor';
 
 const EditScheduledTimeForm = () => {
     const location = useLocation()
@@ -14,6 +15,7 @@ const EditScheduledTimeForm = () => {
     const[startingTime,setStartingTime] = useState()
     const[endingTime,setEndingTime] = useState()
     const[slot,setSlot] = useState()
+    const [scheduleTime,setScheduledTime] = useState()
 
     const navigate = useNavigate()
 
@@ -42,6 +44,15 @@ const EditScheduledTimeForm = () => {
               }
             }
           })
+    }
+
+    useEffect(() => {
+      findScheduledTime()
+    }, []);
+
+    const findScheduledTime = async() =>{
+      const response = await getScheduledTimeWithId(appointmentId)
+      setScheduledTime(response.data?.scheduledTime)
     }
 
 
@@ -80,7 +91,7 @@ const EditScheduledTimeForm = () => {
                   id="countries"  
                   class="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5   bg-white dark:text-black border-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   onChange={(e)=>setStartingTime(e.target.value)}>
-                  <option hidden selected>Set Time</option>
+                  <option selected hidden>{scheduleTime?.startingTime}</option>
                   {
                     startTime.map((time)=>(
                       <option>{time}</option>
@@ -101,7 +112,7 @@ const EditScheduledTimeForm = () => {
                   class="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5   bg-white dark:text-black border-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   onChange={(e)=>setEndingTime(e.target.value)}>
 
-                  <option selected hidden>Set Time</option>
+                  <option selected hidden>{scheduleTime?.endingTime}</option>
 
                   {
                     endTime.map((time)=>(
@@ -121,6 +132,7 @@ const EditScheduledTimeForm = () => {
                   id="countries"  
                   type="number"
                   min={0}
+                  defaultValue={scheduleTime?.slot}
                   onChange={(e)=>setSlot(e.target.value)}
                   class="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5   bg-white dark:text-black border-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
 

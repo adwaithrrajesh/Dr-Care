@@ -244,7 +244,6 @@ export const getMessagesForDoctors = async (userId) =>{
 // -------------------------------------------------------------------GETTING MESSAGES FROM DOCTOR-------------------------------------------------------------------//
 
 export const sendMessageFromDoctor = async (currentChat,message) =>{
-    try {
         try{
             const response = await doctorInstance.post('/message/addMessageFromDoctor',{
                 to: currentChat,
@@ -254,7 +253,13 @@ export const sendMessageFromDoctor = async (currentChat,message) =>{
         }catch(error){
             toast.error(error.response.data.message)
         }
+}
+
+export const getScheduledTimeWithId = async(appointmentId) =>{
+    try {
+       const response =  doctorInstance.post('/doctor/getScheduledTimeWithId',{appointmentId})
+       return response
     } catch (error) {
-        
+        toast.error(error.response.data.message)
     }
 }
