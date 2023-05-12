@@ -3,11 +3,11 @@ import axios from 'axios'
 
   // ---------------------------------------------------------------------------Instance-----------------------------------------------------------//
 
-export const host = 'https://dr-care.onrender.com'
+export const host = 'https://echo-cart.shop'
 
 
 const instance = axios.create({
-    baseURL:'https://dr-care.onrender.com/api'
+    baseURL:'https://echo-cart.shop/api'
 })
 
   // ------------------------------------------------------------------------Axios Interceptors-----------------------------------------------------------//
