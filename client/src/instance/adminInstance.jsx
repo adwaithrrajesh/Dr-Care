@@ -5,7 +5,7 @@ import axios from 'axios'
 
 
 export const adminInstance = axios.create({
-    baseURL:'https://echo-cart.shop/api'
+    baseURL:'https://echo-cart.shop/api/'
 })
 
   // ------------------------------------------------------------------------Axios Interceptors-----------------------------------------------------------//
