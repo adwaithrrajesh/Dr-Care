@@ -5,7 +5,7 @@ import axios from 'axios'
 
 
 export const doctorInstance = axios.create({
-    baseURL:'https://echo-cart.shop/api/'
+    baseURL:'https://commercefox.ml/api/'
 })
 
   // ------------------------------------------------------------------------Axios Interceptors-----------------------------------------------------------//

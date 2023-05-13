@@ -3,11 +3,11 @@ import axios from 'axios'
 
   // ---------------------------------------------------------------------------Instance-----------------------------------------------------------//
 
-export const host = 'https://echo-cart.shop/'
+export const host = 'https://commercefox.ml/'
 
 
 const instance = axios.create({
-    baseURL:'https://echo-cart.shop/api/'
+    baseURL:'https://commercefox.ml/api/'
 })
 
   // ------------------------------------------------------------------------Axios Interceptors-----------------------------------------------------------//
