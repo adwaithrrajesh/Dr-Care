@@ -5,7 +5,7 @@ import axios from 'axios'
 
 
 export const adminInstance = axios.create({
-    baseURL:'https://commercefox.ml/api/'
+    baseURL:'https://dr-care.onrender.com/api/'
 })
 
   // ------------------------------------------------------------------------Axios Interceptors-----------------------------------------------------------//

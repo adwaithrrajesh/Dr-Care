@@ -2,10 +2,6 @@ import { ToastIcon, toast } from "react-hot-toast";
 import instance from "../instance/instance";
 
 
-// ----------------------------------------------------------------USER REGISTER OTP-------------------------------------------------------------------//
-
-const token = JSON.parse(localStorage.getItem("clientToken"));
-
 
 // ----------------------------------------------------------------USER REGISTER OTP-------------------------------------------------------------------//
 

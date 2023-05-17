@@ -18,7 +18,7 @@ require('dotenv').config()
 
 app.use(express.json())
 app.use(cors({
-    origin: 'https://drcare-online.netlify.app/',
+    origin: '*',
     methods:["GET","POST","PUT","PATCH","DELETE"],
     credentials:true,
 }))
