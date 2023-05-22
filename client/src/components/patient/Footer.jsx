@@ -18,9 +18,15 @@ const Footer = () => {
           <p>adwaithrrajesh.k@gmail.com</p>
         </div>
         <div className="flex  justify-center items-center">
+          <a href="https://instagram.com/adwaithrrajesh">   
         <img src='https://cdn-icons-png.flaticon.com/512/174/174855.png' className="h-8 mt-8 " alt="logo" />
+          </a>
+          <a href="https://www.linkedin.com/in/adwaith-r-rajesh-333545243/">  
         <img src='https://cdn-icons-png.flaticon.com/512/174/174857.png' className="h-8 mt-8 ml-3 mr-3" alt="logo" />
+          </a>
+          <a href="https://github.com/adwaithrrajesh">
         <img src='https://cdn-icons-png.flaticon.com/512/25/25231.png' className="h-8 mt-8 " alt="logo" />
+          </a>
         </div>
       </div>
     </div>
