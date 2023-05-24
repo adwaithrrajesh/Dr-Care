@@ -6,7 +6,7 @@ const userRouter = require('./routes/userRouter')
 const doctorRouter = require('./routes/doctorRouter')
 const adminRouter = require('./routes/adminRouter')
 const messageRouter = require('./routes/messagesRoute')
-const app = express()
+const app = express()   
 const socket = require('socket.io')
 
 //------------------------------------------------ Requiring DOTENV -------------------------------------
