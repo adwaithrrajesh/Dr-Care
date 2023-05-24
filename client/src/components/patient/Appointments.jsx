@@ -13,6 +13,7 @@ const token = JSON.parse(localStorage.getItem("clientToken"));
 
 const [appointments,setAppointments] = useState([])
 const [reload,setReload] = useState(false)
+const [loading,setLoading] = useState(false)
   
 // ---------------------------------------------------------------FETCHING APPOINTMENTS-------------------------------------------------------------------//
 
@@ -21,7 +22,9 @@ useEffect(() => {
   }, [reload]);
 
   const getAppointmentApi = async() =>{
+    setLoading(true)
     const response = await getAppointments()
+    setLoading(false)
     setAppointments(response.data.appointments)
   }
 
@@ -58,6 +61,10 @@ const cancelAppointment = (AppointmentId) =>{
 
   return (
     <div>
+
+{loading && <div className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-gray-500 bg-opacity-50 z-50">
+      <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
+    </div>}
       
             <div className="flex items-center justify-center leading-tight p-2 md:p-4  w-100">
                     <img

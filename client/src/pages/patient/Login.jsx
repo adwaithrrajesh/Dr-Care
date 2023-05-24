@@ -6,12 +6,14 @@ import {useFormik} from 'formik'
 import { loginValidation } from '../../helpers/validate'
 import { useNavigate } from "react-router-dom";
 import { doLogin } from "../../API/user";
+import { useState } from "react";
 
 
 const Login = () => {
 
 
   const navigate = useNavigate()
+  const [loading,setLoading] = useState(false)
 
   const Formik = useFormik({
     initialValues:{
@@ -24,8 +26,10 @@ const Login = () => {
 
     // Submit
     onSubmit: async(value) =>{
+      setLoading(true)
          const response = await doLogin(value)
          localStorage.setItem('clientToken', JSON.stringify(response.data.token))
+         setLoading(false)
           toast.success(response.data.message)
           navigate('/')
     }
@@ -34,6 +38,9 @@ const Login = () => {
 
   return (
     <div className="login">
+           {loading && <div className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-gray-500 bg-opacity-50 z-50">
+      <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
+    </div>}
       <div className="flex items-center justify-center min-h-screen">
         <div className="px-12 py-20 mt-7 text-left bg-blue-100 shadow-lg rounded-lg">
           <p className="text-2xl text-center">Login to your account</p>

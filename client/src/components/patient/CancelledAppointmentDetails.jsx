@@ -4,17 +4,23 @@ import { getCancelledAppointments } from "../../API/user";
 
 const CancelledAppointmentDetails = () => {
   const [appointments, setAppointments] = useState([]);
+  const [loading,setLoading] = useState(false)
   useEffect(() => {
     cancelledAppointments()
   }, []);
   
   const cancelledAppointments = async()=>{
+    setLoading(true)
     const response = await getCancelledAppointments()
+    setLoading(false)
     setAppointments(response.data.appointments);
   }
 
   return (
     <div>
+           {loading && <div className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-gray-500 bg-opacity-50 z-50">
+      <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
+    </div>}
       <div className="flex items-center justify-center leading-tight p-2 md:p-4  w-100">
         <img
           src="https://icons.iconarchive.com/icons/custom-icon-design/flatastic-1/512/cancel-icon.png"

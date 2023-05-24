@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 const Details = () => {
 
     const About  = [
-        {
+        { 
             Name:'Chat',
             Description:'You can chat with doctor',
             Img:'https://cdn0.iconfinder.com/data/icons/social-messaging-ui-color-shapes/128/chat-circle-blue-512.png'

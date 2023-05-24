@@ -119,9 +119,9 @@ const BookingForm = () => {
   }  
   // -------------------------------------------------------------------------------Initializing Razorpay------------------------------------------------------//
   const InitializePayement = async(doctorId) =>{
-    toast.loading('loading...')
+    setLoading(true)
     await instance.post('/initializePayment',{doctorId,appointmentId}).then((response)=>{
-      toast.dismiss()
+      setLoading(false)
       handleRazorPay(response?.data.order)
     }).catch((error)=>{
       toast.dismiss()
@@ -155,9 +155,11 @@ const BookingForm = () => {
 
   // -------------------------------------------------------------------------------DOING WALLET PAYMENT------------------------------------------------------//
   const doWalletPayment = (doctorId) =>{  
+    setLoading(true)
     const clientToken = JSON.parse(localStorage.getItem('clientToken'))
     instance.post('/doWalletPayment',{doctorId,appointmentId},{headers: {Authorization: `Bearer ${clientToken}`}}).then((response)=>{
       toast.success(response.data.message)
+      setLoading(false)
       setReload(!reload)
       navigate('/appointments')
     }).catch((error)=>{
