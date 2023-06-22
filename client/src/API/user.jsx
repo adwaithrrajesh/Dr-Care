@@ -6,7 +6,7 @@ import instance from "../instance/instance";
 // ----------------------------------------------------------------USER REGISTER OTP-------------------------------------------------------------------//
 
 export const userRegisterOtp = async(value)=>{
-    try { 
+    try {
         const response =  await instance.post('/otp',{value})
         return response
     } catch (error) {

@@ -18,16 +18,20 @@ module.exports = {
   // ----------------------------------------------------------------OTP-------------------------------------------------------------------//
 
   otp: async (req, res) => {
-    delete req.body.value.confirmPassword;
-    user = req.body.value;
-    const userExist = await userModel.findOne({ email: user.email });
-    if (!userExist) {
-      await mailOptions.sendOtp(user.email).then((OTP) => {
-        process.env.OTP = OTP;
-        res.status(200).json({ message: `Otp send to ${user.email}` });
-      });
-    } else {
-      res.status(404).json({ message: "Email already exist" });
+    try {    
+      delete req.body.value.confirmPassword;
+      user = req.body.value;
+      const userExist = await userModel.findOne({ email: user.email });
+      if (!userExist) {
+        await mailOptions.sendOtp(user.email).then((OTP) => {
+          process.env.OTP = OTP;
+          res.status(200).json({ message: `Otp send to ${user.email}` });
+        });
+      } else {
+        res.status(404).json({ message: "Email already exist" });
+      }
+    } catch (error) {
+      console.log(error)
     }
   },
   // ------------------------------------------------------------OTP verification--------------------------------------------------------------------//
