@@ -95,6 +95,15 @@ const SideBar = () => {
 
             <li className="py-1">
               <Link
+              to={'/admin/viewReports'}
+                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-blue-400">
+                    <img src="https://pngimg.com/d/exclamation_mark_PNG64.png" className="h-10" alt="" />
+                <span class="flex-1 ml-3 whitespace-nowrap">Reports</span>
+              </Link>
+            </li>
+
+            <li className="py-1">
+              <Link
               onClick={()=>localStorage.clear()}
               to={'/admin/login'}
                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-blue-400">
@@ -102,6 +111,7 @@ const SideBar = () => {
                 <span class="flex-1 ml-3 whitespace-nowrap">Logout</span>
               </Link>
             </li>
+            
           </ul>
         </div>
       </aside>

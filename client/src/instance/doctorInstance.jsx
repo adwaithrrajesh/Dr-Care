@@ -5,7 +5,7 @@ import axios from 'axios'
 
 
 export const doctorInstance = axios.create({
-    baseURL:'https://dr-care.onrender.com/api/'
+    baseURL:'http://localhost:8080/api/'
 })
 
   // ------------------------------------------------------------------------Axios Interceptors-----------------------------------------------------------//

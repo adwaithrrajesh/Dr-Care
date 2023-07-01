@@ -14,7 +14,7 @@ const tokenMiddleware = async(req,res,next)=>{
       req.userId = user._id
       next()
     }else{
-      next()
+      res.status(404).json({message:"Please login again"})
     }
   } catch (error) {
     console.log(error)

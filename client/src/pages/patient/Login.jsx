@@ -26,7 +26,7 @@ const Login = () => {
 
     // Submit
     onSubmit: async(value) =>{
-      setLoading(true)
+         setLoading(true)
          const response = await doLogin(value)
          localStorage.setItem('clientToken', JSON.stringify(response.data.token))
          setLoading(false)

@@ -10,6 +10,7 @@ const AppointmentModel = require("../model/appointment");
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
 const bookedAppointmentModel = require("../model/bookedAppointments");
+const reportModel = require('../model/report')
 require("dotenv").config();
 
 let user;
@@ -53,9 +54,7 @@ module.exports = {
   },
   // ---------------------------------------------------------------------Resend Otp--------------------------------------------------------------//
   resendOtp: (req, res) => {
-    mailOptions
-      .sendOtp(user.email)
-      .then((OTP) => {
+    mailOptions.sendOtp(user.email).then((OTP) => {
         process.env.OTP = OTP;
         res.status(200).json({ message: `Otp resend to ${user.email}` });
       })
@@ -167,10 +166,7 @@ module.exports = {
   // ---------------------------------------------------------------------------View Doctors--------------------------------------------------------//
   viewDoctors: async (req, res) => {
     try {
-      const doctors = await doctorModel.find({
-        verificationStatus: true,
-        block: false,
-      });
+      const doctors = await doctorModel.find({verificationStatus: true,block: false,});
       res.status(200).json({ doctors });
     } catch (err) {
       res.status(500).json({ message: "Internal Server error" });
@@ -541,5 +537,24 @@ module.exports = {
     } catch (error) {
       res.status(500).json({message:"Internal Server Error"})
     }
+  },
+
+  // ----------------------------------------------------------------------------Report Doctor-------------------------------------------------------//
+  reportDoctor: async(req,res)=>{  
+    try {
+      const userId = req.userId;
+      const { reportDiscription, doctorId } = req.body;
+      const reportDetails = { userId, reportDiscription, doctorId };
+      const userAlreadyReported = await reportModel.findOne({ userId, doctorId });
+      if (userAlreadyReported) {
+       return res.status(404).json({ message: "You already reported the Doctor" });
+      }
+      await reportModel.create(reportDetails);
+      return res.status(200).json({ message: "Successfully Reported" });
+    } catch (error) {
+      return res.status(500).json({ message: "Internal Server Error" });
+    }
+    
   }
+
 };

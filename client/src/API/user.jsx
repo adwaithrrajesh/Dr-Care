@@ -1,4 +1,4 @@
-import { ToastIcon, toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import instance from "../instance/instance";
 
 
@@ -7,6 +7,7 @@ import instance from "../instance/instance";
 
 export const userRegisterOtp = async(value)=>{
     try {
+        console.log(value)
         const response =  await instance.post('/otp',{value})
         return response
     } catch (error) {
@@ -201,11 +202,24 @@ export const getDoctorsForHomeScreen = async() =>{
     }
 }
 
+// -------------------------------------------------------------------------GET DEPARTMENT FOR HOME SCREEN----------------------------------------------------------------//
+
 export const getDepartmentForHomeScreen = async () =>{
     try {
         const response = await instance.get('/getDepartmentForHomeScreen')
         return response 
     } catch (error) {
         toast.error(error.response.data.message)
+    }
+}
+
+// -------------------------------------------------------------------------REPORT DOCTOR----------------------------------------------------------------//
+
+export const reportDoctor = async(reportDiscription,doctorId)=>{
+    try {
+        const response = await instance.post('/reportDoctor',{reportDiscription,doctorId})
+        return response
+    } catch (error) {
+        console.log(error)
     }
 }

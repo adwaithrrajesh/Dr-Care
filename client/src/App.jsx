@@ -51,6 +51,7 @@ import AddDepartment from './pages/admin/AddDepartment'
 import DepartmentManagement from './pages/admin/DepartmentManagement'
 import DoctorVerification from './pages/admin/doctorVerification'
 import AdminDashboard from './pages/admin/AdminDashboard'
+import ViewReports from './pages/admin/viewReports'
 
 
 // Import Public and Protected Routes
@@ -143,6 +144,8 @@ function App() {
         <Route path='/admin/departmentManagement' element={<DepartmentManagement/>}/>
         <Route path='/admin/doctorVerification' element={<DoctorVerification/>}/>
         <Route path='/admin/viewVerificationImage' element={<ViewVerificationImage/>}/>
+        <Route path='/admin/viewReports' element={<ViewReports/>}/>
+
         </Route>
         
 

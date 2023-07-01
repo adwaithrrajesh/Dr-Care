@@ -19,6 +19,7 @@ router.post('/initializePayment',tokenMiddleware,Controller.initializePayment)
 router.post('/verifyPayment',tokenMiddleware,Controller.verifyPayment)
 router.post('/doWalletPayment',tokenMiddleware,Controller.doWalletPayment)
 router.post('/getDoctorWithId',Controller.getDoctorWithId)
+router.post('/reportDoctor',tokenMiddleware,Controller.reportDoctor)
 
 // ----------------------------------------------------------------GET-------------------------------------------------------------------//
 

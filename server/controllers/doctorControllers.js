@@ -21,7 +21,7 @@ module.exports = {
     const doctorExist = await doctorModel.findOne({ email: doctor.email });
     if (doctorExist) {
       res.status(404).json({ message: "Email Already Exist" });
-    }
+    }else{  
       try {
         await mailOptions.sendOtp(doctor.email).then((OTP) => {
           process.env.OTP = OTP;
@@ -30,6 +30,7 @@ module.exports = {
       } catch (error) {
         res.status(500).json({ message: "Unable to send Otp" });
       }
+    }
   },
 
 // ----------------------------------------------------------------OTP Verify-------------------------------------------------------------------//
