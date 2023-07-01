@@ -7,6 +7,7 @@ const userModel = require("../model/user");
 const doctorModel = require("../model/doctor");
 const departmentModel = require("../model/department");
 const bookedAppointments = require("../model/bookedAppointments");
+const reportModel = require('../model/report')
 
 module.exports = {
 
@@ -229,7 +230,39 @@ getAppointmentGraphForAdmin : async(req,res)=>{
   } catch (error) {
     res.status(500).json({message:"Internal Server Error"})
   }
- 
+},
+
+// --------------------------------------------------------------GET REPORTED DOCTOR DETAILS---------------------------------------------------------------//
+
+getReportedDoctors: async(req,res)=>{
+  try {
+    const reports = await reportModel.find()
+      .populate('doctorId', 'firstName lastName _id profilePhoto')
+      .populate('userId', 'firstName lastName _id profilePhoto')
+      .exec();
+  
+    const reportData = reports.map((report) => {
+      const { doctorId, userId, reportDiscription } = report;
+      const doctorName = `${doctorId.firstName} ${doctorId.lastName}`;
+      const userName = `${userId.firstName} ${userId.lastName}`;
+      const doctorProfilePhoto = doctorId.profilePhoto;
+      const userProfilePhoto = userId.profilePhoto;
+      return {
+        doctorId: doctorId._id,
+        userId: userId._id,
+        doctorName,
+        userName,
+        doctorProfilePhoto,
+        userProfilePhoto,
+        reportDiscription: reportDiscription || 'No description available',
+      };
+    });
+  
+    res.status(200).json({ reports: reportData });
+  } catch (error) {
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+  
 }
 
   

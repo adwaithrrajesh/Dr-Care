@@ -10,7 +10,7 @@ const reportSchema = mongoose.Schema({
         type: ObjectId,
         ref:'doctors'
     },
-    description:{
+    reportDiscription:{
         type: String,
         require:true
     }

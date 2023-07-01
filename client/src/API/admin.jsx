@@ -21,3 +21,13 @@ export const getAppointmentGraphForAdmin = async()=>{
         toast.error(error.response.data.message)
     }
 }
+
+// ---------------------------------------------------------------- GETTING REPORTED DOCTORS -------------------------------------------------------------------//
+export const getReportedDoctorsForAdmin = async()=>{
+  try {
+    const response = await adminInstance.get('/admin/getReportedDoctors')
+    return response
+  } catch (error) {
+    toast.error(error.response.data.message)
+  }
+}

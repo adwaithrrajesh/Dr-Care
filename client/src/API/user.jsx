@@ -9,12 +9,11 @@ export const userRegisterOtp = async(value)=>{
     try {
         console.log(value)
         const response =  await instance.post('/otp',{value})
-        return response
-    } catch (error) {
+        return response 
+    } catch (error) { 
         toast.error(error.response.data.message)
     }
 }
-
 // ----------------------------------------------------------------VERIFY OTP IN REGISTERATION-------------------------------------------------------------------//
 
 export const otpVerify = async(otpCode)=>{
@@ -186,7 +185,7 @@ export const getMessagesForUsers = async(doctorId)=>{
         const response = await instance.post("/message/getMessages",{to:doctorId})
         return response
     } catch (error) {
-        toast.dismiss()
+        toast.dismiss()  
         toast.error(error.response.data.message)
     }
 }

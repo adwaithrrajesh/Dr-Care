@@ -57,6 +57,7 @@ export const getVerificationStatus = async ()=>{
 // ------------------------------------------------------------------ADD SCHEDULED TIME-------------------------------------------------------------------//
 export const addScheduleTime = async (details) =>{
     try {
+        console.log(details,"hereeeeeeeeeeeeeeeee")
         const response = await doctorInstance.post('/doctor/addScheduleTime',{details})
         return response
     } catch (error) {
@@ -245,15 +246,14 @@ export const getMessagesForDoctors = async (userId) =>{
 
 export const sendMessageFromDoctor = async (currentChat,message) =>{
         try{
-            const response = await doctorInstance.post('/message/addMessageFromDoctor',{
-                to: currentChat,
-                message:message
-            })
+            const response = await doctorInstance.post('/message/addMessageFromDoctor',{ to: currentChat,message:message})
             return response
         }catch(error){
             toast.error(error.response.data.message)
         }
 }
+
+// -------------------------------------------------------------------GETTING SCHEDULED TIME FOR DOCTORS-------------------------------------------------------------------//
 
 export const getScheduledTimeWithId = async(appointmentId) =>{
     try {

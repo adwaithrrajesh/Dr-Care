@@ -25,7 +25,7 @@ router.get('/verificationRequests',Controller.getVerificationRequests)
 router.get('/tokenVerify',Controller.tokenVerify)
 router.get('/getDashboardDetailsForAdmin',Controller.getDashboardDetails)
 router.get('/getAppointmentGraphForAdmin',Controller.getAppointmentGraphForAdmin)
-
+router.get('/getReportedDoctors',Controller.getReportedDoctors)
 
 
 
