@@ -82,54 +82,43 @@ module.exports = {
 // ----------------------------------------------------------------BLOCK USER-------------------------------------------------------------------//
 
   blockUser: async (req, res) => {
+    const userId = req.body.userId;
     try {
-      const userId = req.body.userId;
-      const userExist = await userModel.findOne({ _id: userId });
-      if (!userExist) {
-        return res.status(404).json({ message: "Invalid UserId" });
-      }
-      await userModel.updateOne({ _id: userId }, { $set: { block: true } });
-      return res.status(200).json({ message: "User Blocked Successfully" });
+     await userModel.updateOne({ _id: userId },{ $set: { block: true } });
+     res.status(200).json({ message: "User Blocked Successfully" });
     } catch (error) {
-      return res.status(500).json({ message: "Unable to Unblock the User" });
+      res.status(404).json({ message: "Unable to Block the User" });
     }
   },
 
 // ----------------------------------------------------------------UNBLOCK USER-------------------------------------------------------------------//
 
-unblockUser: async (req, res) => {
-  try {
+  unBlockUser: async (req, res) => {
     const userId = req.body.userId;
-    const userExist = await userModel.findOne({ _id: userId });
-
-    if (!userExist) {
-      return res.status(404).json({ message: "Invalid UserId" });
-    }
-
-    await userModel.updateOne({ _id: userId }, { $set: { block: false } });
-    return res.status(200).json({ message: "User Unblocked Successfully" });
-  } catch (error) {
-    return res.status(500).json({ message: "Unable to Unblock the User" });
-  }
-}
-
+    try {
+      await userModel.updateOne({ _id: userId },{ $set: { block: false } });
+      res.status(200).json({ message: "User unBlocked Successfully" });
+    } catch (error) {
+      res.status(404).json({ message: "Unable to unBlock the User" });
+    }    
+  },
 
 // ----------------------------------------------------------------BLOCK DOCTOR-------------------------------------------------------------------//
 
-blockDoctor: async (req, res) => {
-  try {
+  blockDoctor: async (req, res) => {
     const doctorId = req.body.doctorId;
-    const doctorExist = await doctorModel.findOne({ _id: doctorId });
-    if (!doctorExist) {
-      return res.status(404).json({ message: "Invalid Doctor Id" });
+    try {
+      const doctorExist = await doctorModel.findOne({_id:doctorId})
+      if(doctorExist){
+        await doctorModel.updateOne({ _id: doctorId },{ $set: { block: true } });
+        res.status(200).json({ message: "Doctor Blocked Successfully" });
+      }else{
+        res.status(404).json({message:"Invalid Doctor Id"})
+      }
+    } catch (error) {
+      res.status(404).json({ message: "Unable to Block the Doctor" });
     }
-    await doctorModel.updateOne({ _id: doctorId }, { $set: { block: true } });
-    return res.status(200).json({ message: "Doctor Blocked Successfully" });
-  } catch (error) {
-    return res.status(500).json({ message: "Unable to Block the Doctor" });
-  }
-}
-
+  },
 
 // ----------------------------------------------------------------UNBLOCK DOCTOR-------------------------------------------------------------------//
 
