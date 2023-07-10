@@ -143,7 +143,6 @@ module.exports = {
     const { ...details } = req.body.value;
     const idCardImage = req.body.IdcardImage;
     const certificateImage = req.body.certificateImage;
-
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
     const doctor = jwt.decode(token);

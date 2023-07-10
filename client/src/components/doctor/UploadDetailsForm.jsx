@@ -83,6 +83,7 @@ const Form = () => {
       
         Promise.all([uploadImage(idImage, "IdcardImage"),uploadImage(certificationImage, "certificateImage")
             ]).then(([IdcardImage, certificateImage]) => {
+              console.log(value)
             return doctorInstance.patch("/doctor/addDoctorDetails",{value,IdcardImage,certificateImage},{headers: { Authorization: `Bearer ${doctorToken}` }})
           }).then((response) => {
             toast.dismiss();

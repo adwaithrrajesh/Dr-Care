@@ -82,46 +82,67 @@ module.exports = {
 // ----------------------------------------------------------------BLOCK USER-------------------------------------------------------------------//
 
   blockUser: async (req, res) => {
-    const userId = req.body.userId;
     try {
-     await userModel.updateOne({ _id: userId },{ $set: { block: true } });
-     res.status(200).json({ message: "User Blocked Successfully" });
+      const userId = req.body.userId;
+      const userExist = await userModel.findOne({ _id: userId });
+      if (!userExist) {
+        return res.status(404).json({ message: "Invalid UserId" });
+      }
+      await userModel.updateOne({ _id: userId }, { $set: { block: true } });
+      return res.status(200).json({ message: "User Blocked Successfully" });
     } catch (error) {
-      res.status(404).json({ message: "Unable to Block the User" });
+      return res.status(500).json({ message: "Unable to Unblock the User" });
     }
   },
 
 // ----------------------------------------------------------------UNBLOCK USER-------------------------------------------------------------------//
 
-  unBlockUser: async (req, res) => {
+unblockUser: async (req, res) => {
+  try {
     const userId = req.body.userId;
-    try {
-      await userModel.updateOne({ _id: userId },{ $set: { block: false } });
-      res.status(200).json({ message: "User unBlocked Successfully" });
-    } catch (error) {
-      res.status(404).json({ message: "Unable to unBlock the User" });
-    }    
-  },
+    const userExist = await userModel.findOne({ _id: userId });
+
+    if (!userExist) {
+      return res.status(404).json({ message: "Invalid UserId" });
+    }
+
+    await userModel.updateOne({ _id: userId }, { $set: { block: false } });
+    return res.status(200).json({ message: "User Unblocked Successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: "Unable to Unblock the User" });
+  }
+}
+
 
 // ----------------------------------------------------------------BLOCK DOCTOR-------------------------------------------------------------------//
 
-  blockDoctor: async (req, res) => {
+blockDoctor: async (req, res) => {
+  try {
     const doctorId = req.body.doctorId;
-    try {
-        await doctorModel.updateOne({ _id: doctorId },{ $set: { block: true } });
-        res.status(200).json({ message: "Doctor Blocked Successfully" });
-    } catch (error) {
-      res.status(404).json({ message: "Unable to Block the Doctor" });
+    const doctorExist = await doctorModel.findOne({ _id: doctorId });
+    if (!doctorExist) {
+      return res.status(404).json({ message: "Invalid Doctor Id" });
     }
-  },
+    await doctorModel.updateOne({ _id: doctorId }, { $set: { block: true } });
+    return res.status(200).json({ message: "Doctor Blocked Successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: "Unable to Block the Doctor" });
+  }
+}
+
 
 // ----------------------------------------------------------------UNBLOCK DOCTOR-------------------------------------------------------------------//
 
   unBlockDoctor: async (req, res) => {
     const doctorId = req.body.doctorId;
     try {
+      const doctorExist = await doctorModel.findOne({_id:doctorId})
+      if(doctorExist){
         await doctorModel.updateOne({ _id: doctorId },{ $set: { block: false } });
         res.status(200).json({ message: "Doctor unblocked Successfully" });
+      }else{
+        res.status(404).json({message:"Invalid Doctor Id"})
+      }
     } catch (error) {
       res.status(404).json({ message: "Unable to unblock the Doctor" });
     }
@@ -132,8 +153,13 @@ module.exports = {
   hideDepartment: async (req, res) => {
     const departmentId = req.body.departmentId;
     try {
-      await departmentModel.updateOne({ _id: departmentId },{ $set: { show: false } });
-      res.status(200).json({ message: "Department Hidden successfully" });
+      const departmentExist = await departmentModel.findOne({_id:departmentId})
+      if(departmentExist){
+        await departmentModel.updateOne({ _id: departmentId },{ $set: { show: false } });
+        res.status(200).json({ message: "Department Hidden successfully" });
+      }else{
+        res.status(404).json({message:"Invalid Department Id"})
+      }
     } catch (error) {
       res.status(404).json({ message: "Unable to hide the department" });
     }
@@ -144,8 +170,13 @@ module.exports = {
   showDepartment: async (req, res) => {
     const departmentId = req.body.departmentId;
     try {
+      const departmentExist = await departmentModel.findOne({_id:departmentId})
+      if(departmentExist){
       await departmentModel.updateOne({ _id: departmentId },{$set: {show: true}})
       res.status(200).json({message:'Department shown successfully'})
+      }else{
+        res.status(404).json({message:"Invalid Department Id"})
+      }
     } catch (error) {
       res.status(404).json({message:'Unable to show the department'})
     }
