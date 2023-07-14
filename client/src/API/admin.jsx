@@ -31,3 +31,4 @@ export const getReportedDoctorsForAdmin = async()=>{
     toast.error(error.response.data.message)
   }
 }
+
