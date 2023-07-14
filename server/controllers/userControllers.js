@@ -298,8 +298,7 @@ module.exports = {
   verifyPayment: async (req, res) => {
     const userId = req.userId;
     const { appointmentId, response } = req.body;
-    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
-      response;
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = response;
     const expectedSignature = crypto
       .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
       .update(`${razorpay_order_id}|${razorpay_payment_id}`)
@@ -556,5 +555,6 @@ module.exports = {
     }
     
   }
+  // -----------------------------------------------------------------------------------------------------------------------------------------------------//
 
 };

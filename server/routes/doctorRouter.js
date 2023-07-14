@@ -33,7 +33,7 @@ router.post('/getScheduledTimeWithId',Controller.getScheduledTimeWithId)
 // ----------------------------------------------------------------PATCH-------------------------------------------------------------------//
 router.patch('/resetPassword',Controller.resetPassword)
 router.patch('/addDoctorDetails',Controller.addDoctorDetails)
-router.patch('/updateProfile',Controller.updateProfile)
+router.patch('/updateProfile',tokenMiddleware,Controller.updateProfile)
 router.patch('/updateProfileDetails',Controller.updateProfileDetails)
 router.patch('/cancelAppointment',Controller.cancelAppointment)
 router.patch('/patientVisited',Controller.patientVisitedClinic)

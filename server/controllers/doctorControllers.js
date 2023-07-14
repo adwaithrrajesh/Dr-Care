@@ -197,7 +197,7 @@ module.exports = {
   updateProfile: async (req, res) => {
     try {
       const profilePhoto = req.body.profile;
-      const doctorId = req.body.doctorId;
+      const doctorId = req.doctorId
       await doctorModel.updateOne({ _id: doctorId }, { profilePhoto });
       res.status(200).json({ message: "Profile Updated Successfully" });
     } catch (error) {

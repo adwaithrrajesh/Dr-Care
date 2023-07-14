@@ -11,7 +11,6 @@ import doctorInstance from "../../../../instance/doctorInstance";
 const EditDetails = () => {
   const [doctor, setDoctor] = useState([]);
   const [reload,setReload] = useState()
-  const doctorToken = JSON.parse(localStorage.getItem("doctorToken"));
 
   const navigate = useNavigate()
 
@@ -56,7 +55,7 @@ const EditDetails = () => {
     await axios.post("https://api.cloudinary.com/v1_1/dg047twga/image/upload",formData).then((response)=>{
         const profile = response.data.url
         const doctorId = doctor._id
-        doctorInstance.patch('/doctor/updateProfile',{profile,doctorId}).then((response)=>{
+        doctorInstance.patch('/doctor/updateProfile',{profile}).then((response)=>{
             setLoading(false)
             toast.success(response.data.message)
             setReload(!reload,'i')
@@ -75,7 +74,7 @@ const EditDetails = () => {
     if (isEmpty) {
       toast.error('Please update something');
     } else {
-      doctorInstance.patch('/doctor/updateProfileDetails', { details }, { headers: { Authorization: `Bearer ${doctorToken}` } }).then(response => {
+      doctorInstance.patch('/doctor/updateProfileDetails', { details }).then(response => {
           navigate('/doctor/profile');
           toast.success(response.data.message);
         }).catch(err => {
