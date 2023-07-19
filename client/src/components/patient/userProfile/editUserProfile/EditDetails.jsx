@@ -49,9 +49,7 @@ const profileUpload = async(profile) =>{
   formData.append("upload_preset", "drcareStorage");
   await axios.post("https://api.cloudinary.com/v1_1/dg047twga/image/upload",formData).then((response)=>{
       const profile = response.data.url
-      const userId = user._id
-      console.log(profile)
-      instance.patch('/updateProfilePhoto',{profile,userId}).then((response)=>{
+      instance.patch('/updateProfilePhoto',{profile}).then((response)=>{
           toast.success(response.data.message)
           setReload(!reload)
       }).catch((error)=>{

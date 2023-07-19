@@ -346,10 +346,9 @@ module.exports = {
   // ---------------------------------------------------------------------------UPDATE PROFILE PHOTO --------------------------------------------------------//
 
   updateProfilePhoto: async (req, res) => {
-    const userId = req.body.userId;
+    const userId = req.userId;
     const profilePhoto = req.body.profile;
-    await userModel
-      .updateOne({ _id: userId }, { profilePhoto })
+    await userModel.updateOne({ _id: userId }, { profilePhoto })
       .then((response) => {
         res.status(200).json({ message: "Profile Photo updated" });
       })
@@ -368,7 +367,7 @@ module.exports = {
     );
     await userModel
       .updateOne({ _id: userId }, { ...profileUpdateDetails })
-      .then((response) => {
+      .then((response) => { 
         res
           .status(200)
           .json({ message: "Profile Details uploaded Successfully" });

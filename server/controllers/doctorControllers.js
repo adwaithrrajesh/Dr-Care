@@ -12,7 +12,7 @@ const doctorHelper = require("../helpers/doctorHelper");
 
 let doctor; //Doctor details will store here
 
-module.exports = {
+module.exports = { 
 // ----------------------------------------------------------------OTP SEND-------------------------------------------------------------------//
 
   otp: async (req, res) => {
@@ -209,14 +209,11 @@ module.exports = {
 // ---------------------------------------------------------------UPDATE PROFILE-------------------------------------------------------------------//
 
   updateProfileDetails: async(req,res)=>{
-
     const details = req.body.details;
+    console.log(details)
+    const doctorId = req.doctorId
     const profileUpdateDetails = Object.fromEntries(Object.entries(details).filter(([key, value]) => value !== null));
-    const authHeader = req.headers["authorization"];
-    const token = authHeader && authHeader.split(" ")[1];
-    const doctor = jwt.decode(token);
-  
-    await doctorModel.updateOne({ _id: doctor.doctorId },{ ...profileUpdateDetails }).then((response)=>{
+    await doctorModel.updateOne({ _id: doctorId },{ ...profileUpdateDetails }).then((response)=>{
       res.status(200).json({message:"Profile Details updated Successfully"})
     }).catch((error)=>{
       console.log(error)

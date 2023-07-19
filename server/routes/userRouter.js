@@ -40,7 +40,7 @@ router.get('/getDepartmentForHomeScreen',Controller.getDepartmentForHomeScreen)
 
 // ----------------------------------------------------------------PATCH-------------------------------------------------------------------//
 
-router.patch('/updateProfilePhoto',Controller.updateProfilePhoto)
+router.patch('/updateProfilePhoto',tokenMiddleware,Controller.updateProfilePhoto)
 router.patch('/updateProfileDetails',tokenMiddleware,Controller.updateProfileDetails)
 router.patch('/cancelAppointment',Controller.cancelAppointment)
 
