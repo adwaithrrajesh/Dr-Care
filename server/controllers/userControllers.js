@@ -212,7 +212,6 @@ module.exports = {
       verificationStatus: true,
     };
     let sortBy = {};
-
     if (departmentName !== "undefined") {
       departmentName && (query.departmentName = departmentName);
     }
@@ -296,7 +295,7 @@ module.exports = {
   // ---------------------------------------------------------------------------Verifying Payment --------------------------------------------------------//
 
   verifyPayment: async (req, res) => {
-    const userId = req.userId;
+    const userId = req.userId; 
     const { appointmentId, response } = req.body;
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = response;
     const expectedSignature = crypto
@@ -348,11 +347,9 @@ module.exports = {
   updateProfilePhoto: async (req, res) => {
     const userId = req.userId;
     const profilePhoto = req.body.profile;
-    await userModel.updateOne({ _id: userId }, { profilePhoto })
-      .then((response) => {
+    await userModel.updateOne({ _id: userId }, { profilePhoto }).then((response) => {
         res.status(200).json({ message: "Profile Photo updated" });
-      })
-      .catch((error) => {
+      }).catch((error) => {
         res.status(500).json({ message: "Unable to update Profile Photo" });
       });
   },

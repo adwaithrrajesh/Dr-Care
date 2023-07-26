@@ -123,11 +123,12 @@ const BookingForm = () => {
     await instance.post('/initializePayment',{doctorId,appointmentId}).then((response)=>{
       setLoading(false)
       handleRazorPay(response?.data.order)
+      console.log(response?.data.order)
     }).catch((error)=>{
       toast.dismiss()
       toast.error(error.response.data.message)
     })
-  } 
+  }
 
   // -------------------------------------------------------------------------------Verify Razorpay------------------------------------------------------//
   const handleRazorPay = (order) => {
@@ -138,8 +139,8 @@ const BookingForm = () => {
         "name": 'Dr Care',
         "order_id": order.id,
         handler:async function (response) {
-        const clientToken = JSON.parse(localStorage.getItem('clientToken'))
-          instance.post('/verifyPayment',{appointmentId,response},{headers: {Authorization: `Bearer ${clientToken}`}}).then((response)=>{
+          console.log(response,"hereeeee")
+          instance.post('/verifyPayment',{appointmentId,response}).then((response)=>{
             toast.success(response.data.message)
             setReload(!reload)
             navigate('/appointments')
